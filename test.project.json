@@ -1,0 +1,28 @@
+{
+    "name": "paradoxical",
+    "tree": {
+      "$className": "DataModel",
+      "ServerScriptService": {
+        "$className": "ServerScriptService",
+        "Paradoxical": {
+          "$path": "src/server"
+        }
+      },
+      "ReplicatedStorage": {
+        "$className": "ReplicatedStorage",
+        "$path": "DevPackages",
+        "Paradoxical": {
+          "$path": "src/shared"
+        }
+      },
+      "TestService": {
+        "$properties": {
+          "ExecuteWithStudioRun": true
+        },
+        "$className": "TestService",
+        "run": {
+          "$path": "tests.server.lua"
+        }
+      }
+    }
+  }
