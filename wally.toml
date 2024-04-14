@@ -6,14 +6,17 @@ realm = "shared"
 
 [dependencies]
 matter = "matter-ecs/matter@0.7.1"
-rewire = "sayhisam1/rewire@0.3.0"
 plasma = "matter-ecs/plasma@0.4.3"
 react = "jsdotlua/react@17.1.0"
 react-roblox = "jsdotlua/react-roblox@17.1.0"
 t = "osyrisrblx/t@3.1.1"
+squash = "data-oriented-house/squash@1.1.6"
+yetanothernet = "yetanotherclown/yetanothernet@0.7.0"
+spark = "nezuo/spark@0.2.1"
 
 [server-dependencies]
 lapis = "nezuo/lapis@0.2.11"
 
 [dev-dependencies]
 testez = "ruizukun-dev/testez@0.4.8"
+rewire = "sayhisam1/rewire@0.3.0"
