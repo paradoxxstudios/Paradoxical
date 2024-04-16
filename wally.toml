@@ -4,9 +4,13 @@ version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
+[place]
+shared-packages = "game.ReplicatedStorage.Packages"
+
 [dependencies]
 matter = "matter-ecs/matter@0.7.1"
 plasma = "matter-ecs/plasma@0.4.3"
+rewire = "sayhisam1/rewire@0.3.0"
 react = "core-packages/react@17.0.1-rc.19"
 react-roblox = "core-packages/react-roblox@17.0.1-rc.19"
 react-spring = "chriscerie/react-spring@1.1.5"
@@ -20,4 +24,3 @@ lapis = "nezuo/lapis@0.2.11"
 
 [dev-dependencies]
 testez = "ruizukun-dev/testez@0.4.8"
-rewire = "sayhisam1/rewire@0.3.0"

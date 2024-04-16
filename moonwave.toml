@@ -25,11 +25,11 @@ position = "right"
 
 [footer]
 style = "dark"
-copyright = "Copyright © 2021 AuthorName. Built with Moonwave and Docusaurus"
+copyright = "Copyright © 2024 Apollycn. Built with Moonwave and Docusaurus"
 
-[[footer.links]]
-title = "examples"
+# [[footer.links]]
+# title = "examples"
 
-[[footer.links.items]]
-label = "example"
-href = "https://example.com/"
+# [[footer.links.items]]
+# label = "example"
+# href = "https://example.com/"
