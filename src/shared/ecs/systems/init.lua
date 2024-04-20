@@ -1,3 +1,10 @@
+--[=[
+    @prop System System
+    @within ECS
+
+    A class for ECS systems.
+]=]
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 

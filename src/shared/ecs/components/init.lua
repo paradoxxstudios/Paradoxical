@@ -4,6 +4,12 @@ local Packages = ReplicatedStorage.Packages
 local Component = require(Packages.matter).component
 local COMPONENTS = require(script.types)
 
+--[=[
+    @prop Components Components
+    @within ECS
+
+    A class for ECS components.
+]=]
 local components = nil
 
 for _, name in ipairs(COMPONENTS.components) do

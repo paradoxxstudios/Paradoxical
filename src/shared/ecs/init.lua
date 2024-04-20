@@ -10,12 +10,13 @@ local Host = require(script.hosts)
 local State = require(script.state)
 local Model = require(script.components).Model
 local System = require(script.systems)
+local Tags = require(script.tags)
+local boundTags = require(script.boundTags)
 
-local MAX_DISPLAY_ORDER = 2147483647
 local GROUP_ID = 32887154
 local DEBUG_RANK = 251
 
-local connections: {string: RBXScriptConnection} = nil
+local connections: {string: RBXScriptConnection} | nil = nil
 
 --[=[
     @class ECS
@@ -73,8 +74,35 @@ function ECS:Start(host: Host.Host)
     })
 
     if host == Host.All or host == Host.Server then
-        
+        Tags:Start(world, boundTags)
     end
+
+    if host == Host.All or host == Host.Client then
+        UserInputService.InputBegan:Connect(function(input, _)
+            if input.KeyCode == Enum.KeyCode.F4 and ECS.Authorize(Players.LocalPlayer) then
+                debug:toggle()
+                state.debugEnabled = debug.enabled
+            end
+        end)
+    end
+
+    return world, state
+end
+
+--[=[
+    @method Stop
+    @within ECS
+
+    Stops the ECS.
+]=]
+function ECS:Stop()
+    if connections == nil then return end
+    for _, connection in connections do
+        connection:Disconnect()
+    end
+    connections = nil
+    Tags:Stop()
+    System:Stop()
 end
 
 return ECS
