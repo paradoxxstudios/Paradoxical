@@ -38,7 +38,7 @@ local System = {}
 
     @error "[container] container not found" -- This is thrown when a container necessary for the provided host doesn't exist.
 ]=]
-function System:Start(container: number, loop: typeof(Matter.Loop), debug: typeof(Matter.Debugger))
+function System:Start(container: Host.Host, loop: typeof(Matter.Loop), debug: typeof(Matter.Debugger))
     if firstRunSystems == nil then return end
 
     local containers: {Instance} = {}

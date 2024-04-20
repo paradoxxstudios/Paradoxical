@@ -20,4 +20,8 @@ State.__index = State
 
 State.debugEnabled = false
 
+function State.new()
+    return setmetatable({}, State)
+end
+
 return State

@@ -1,6 +1,11 @@
+type None = number
+type Client = number
+type Server = number
+type All = number
+
 --[=[
     @interface Host
-    @within System
+    @within ECS
     .None 1 -- Represents properties of no particular host.
     .Client 2 -- Represents properties of the client.
     .Server 3 -- Represents properties of the server.
@@ -8,12 +13,7 @@
 
     An enum that represents a particular host configuration.
 ]=]
-export type Host = {
-    None: number,
-    Client: number,
-    Server: number,
-    All: number
-}
+export type Host = None | Client | Server | All
 
 --[[
     Represents a particular host configuration.
@@ -38,4 +38,4 @@ return {
         Represents properties of all hosts.
     ]]
     All = 4
-} :: Host
+}
