@@ -18,6 +18,32 @@ local firstRunSystems: {} | nil = {}
 local hotReloader: typeof(HotReloader)
 
 --[=[
+    @class SystemClient
+
+    A class for documenting client systems.
+]=]
+
+--[=[
+    @prop ClientSystems SystemClient
+    @within System
+
+    The doc for all client systems.
+]=]
+
+--[=[
+    @class SystemServer
+
+    A class for documenting server systems.
+]=]
+
+--[=[
+    @prop ServerSystems SystemServer
+    @within System
+
+    The doc for all server systems.
+]=]
+
+--[=[
     @class System
 
     A class for documenting systems.
