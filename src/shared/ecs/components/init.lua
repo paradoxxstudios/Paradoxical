@@ -10,7 +10,7 @@ local COMPONENTS = require(script.types)
 
     A class for ECS components.
 ]=]
-local components = nil
+local components = {}
 
 for _, name in ipairs(COMPONENTS.components) do
     components[name] = Component(name, COMPONENTS.defaults[name])

@@ -35,7 +35,7 @@ local ECS = {}
     Authorizes a player to view debugger if higher than the DEBUG_RANK
 ]=]
 function ECS.Authorize(player: Player): boolean
-    return RunService.IsStudio() or player:GetRankInGroup(GROUP_ID) >= DEBUG_RANK
+    return RunService:IsStudio() or player:GetRankInGroup(GROUP_ID) >= DEBUG_RANK
 end
 
 --[=[

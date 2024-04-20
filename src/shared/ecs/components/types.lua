@@ -101,7 +101,8 @@ local Defaults = {
 ]=]
 local Components = {
     "Model",
-    "Transform"
+    "Transform",
+    "Health"
 }
 
 --[=[

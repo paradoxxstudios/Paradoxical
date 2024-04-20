@@ -3,7 +3,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local components = require(ReplicatedStorage.paradoxical.ecs.components)
 local routes = require(ReplicatedStorage.paradoxical.ecs.routes)
-local useEvent = require(ReplicatedStorage.Packages.Matter).useEvent
+local useEvent = require(ReplicatedStorage.Packages.matter).useEvent
 
 local REPLICATED_COMPONENTS = {
 	"Model",

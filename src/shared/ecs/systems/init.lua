@@ -17,9 +17,12 @@ local ERROR_CONTAINER = "%s container not found"
 
 local shared = script:FindFirstChild("shared")
 local client = script:FindFirstChild("client")
-local server = ServerScriptService:FindFirstChild("paradoxical")
-        :FindFirstChild("ecs")
-        :FindFirstChild("systems")
+
+local paradoxical = ServerScriptService:FindFirstChild("paradoxical")
+local ecs = nil
+local server = nil
+if paradoxical then ecs = paradoxical:FindFirstChild("ecs") end
+if ecs then server = ecs:FindFirstChild("systems") end
 
 local firstRunSystems: {} | nil = {}
 local hotReloader: typeof(HotReloader)
@@ -88,7 +91,7 @@ function System:Start(container: Host.Host, loop: typeof(Matter.Loop), debug: ty
         table.insert(containers, server)
     end
 
-    local systemsByModule: {ModuleScript: {}} = nil
+    local systemsByModule: {[ModuleScript]: {}} = {}
 
     local function load(module: ModuleScript, context)
         local original = context.originalModule
@@ -114,7 +117,7 @@ function System:Start(container: Host.Host, loop: typeof(Matter.Loop), debug: ty
         systemsByModule[original] = system
     end
 
-    local function unload(_: ModuleScript, context) 
+    local function unload(_: ModuleScript, context)
         if context.isReloading then return end
         
         local original = context.originalModule
@@ -126,7 +129,7 @@ function System:Start(container: Host.Host, loop: typeof(Matter.Loop), debug: ty
     end
 
     hotReloader = HotReloader.new()
-    for c in containers do
+    for _, c in containers do
         hotReloader:scan(c, load, unload)
     end
 
