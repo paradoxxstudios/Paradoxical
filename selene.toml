@@ -1,4 +1,1 @@
-std = "roblox+testez"
-
-[lints]
-multiple_statements = "allow"
+std = "roblox"

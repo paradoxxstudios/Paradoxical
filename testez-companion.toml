@@ -1,5 +1,5 @@
 # These are the locations of your .spec files (descendants are searched too)
-roots = ["ReplicatedStorage/Paradoxical/tests"]
+roots = ["ServerScriptService/paradoxical", "ReplicatedStorage/paradoxical", "StarterPlayer/StarterPlayerScripts/paradoxical"]
 
 [extraOptions]
 # Optionally, an extraOptions table can be passed to TestBootstrap
