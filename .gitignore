@@ -1,4 +1,7 @@
-/Packages
-/DevPackages
-/ServerPackages
-/build
+/node_modules
+/out
+/include
+*.tsbuildinfo
+*.tgz
+*.rbxlx
+*.rbx

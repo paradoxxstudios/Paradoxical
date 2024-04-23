@@ -1,35 +1,61 @@
 {
-  "name": "Paradoxical",
-  "tree": {
-    "$className": "DataModel",
-
-    "ReplicatedStorage": {
-      "paradoxical": {
-        "$path": "src/shared"
-      },
-      "Packages": {
-        "$path": "Packages"
-      },
-      "DevPackages": {
-        "$path": "DevPackages"
-      }
-    },
-
-    "ServerScriptService": {
-      "ServerPackages": {
-        "$path": "ServerPackages"
-      },
-      "paradoxical": {
-        "$path": "src/server"
-      }
-    },
-
-    "StarterPlayer": {
-      "StarterPlayerScripts": {
-        "paradoxical": {
-          "$path": "src/client"
-        }
-      }
-    }
-  }
+	"name": "paradoxical",
+	"globIgnorePaths": [
+		"**/package.json",
+		"**/tsconfig.json"
+	],
+	"tree": {
+		"$className": "DataModel",
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"paradoxical": {
+				"$path": "out/server"
+			}
+		},
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"rbxts_include": {
+				"$path": "include",
+				"node_modules": {
+					"$className": "Folder",
+					"@rbxts": {
+						"$path": "node_modules/@rbxts"
+					}
+				}
+			},
+			"paradoxical": {
+				"$path": "out/shared"
+			},
+			"assets": {
+				"$path": "assets"
+			}
+		},
+		"StarterPlayer": {
+			"$className": "StarterPlayer",
+			"StarterPlayerScripts": {
+				"$className": "StarterPlayerScripts",
+				"paradoxical": {
+					"$path": "out/client"
+				}
+			}
+		},
+		"Workspace": {
+			"$className": "Workspace",
+			"$properties": {
+				"FilteringEnabled": true
+			}
+		},
+		"HttpService": {
+			"$className": "HttpService",
+			"$properties": {
+				"HttpEnabled": true
+			}
+		},
+		"SoundService": {
+			"$className": "SoundService",
+			"$properties": {
+				"RespectFilteringEnabled": true
+			}
+		}
+	}
 }
