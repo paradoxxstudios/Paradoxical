@@ -2,7 +2,9 @@
 	"name": "paradoxical",
 	"globIgnorePaths": [
 		"**/package.json",
-		"**/tsconfig.json"
+		"**/tsconfig.json",
+		"**/*.spec.lua",
+		"**/*.dev.lua"
 	],
 	"tree": {
 		"$className": "DataModel",

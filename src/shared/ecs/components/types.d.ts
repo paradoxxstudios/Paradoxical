@@ -18,3 +18,16 @@ export interface Transform {
 	cframe: CFrame;
 	_doNotReconcile?: true;
 }
+
+/**
+ * The Health component.
+ *
+ * Provides health data, like current health, regenRate of the attached entity.
+ */
+export interface Health {
+	health: number;
+	maxHealth: number;
+	regenAmount: number;
+	regenRate: number;
+	regenCD: number;
+}

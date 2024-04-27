@@ -1,4 +1,5 @@
 /// <reference types="@rbxts/testez/globals" />
+
 import { Host } from "./hosts";
 
 export = (): void => {
