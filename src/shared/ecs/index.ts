@@ -5,9 +5,10 @@ import { Players, ReplicatedStorage, RunService, UserInputService } from "@rbxts
 import { Host } from "shared/hosts";
 import { tags } from "./boundTags";
 import { Model } from "./components";
-import { State } from "./state";
+import { RootProducer, state } from "../state";
 import { start as startSystems, stop as stopSystems } from "./systems";
 import { start as startTags, stop as stopTags } from "./tags";
+import { debugEnabled } from "../state/debugEnabled";
 
 const MAX_DISPLAY_ORDER = 2147483647;
 const GROUP_ID = 33149057;
@@ -19,8 +20,8 @@ function authorize(player: Player): boolean {
 
 let connections:
 	| {
-			[index: string]: RBXScriptConnection;
-	  }
+		[index: string]: RBXScriptConnection;
+	}
 	| undefined;
 
 /**
@@ -32,11 +33,9 @@ let connections:
  * @throws "ECS already running."
  * This is thrown when the ECS has already been started.
  */
-export function start(host: Host): [World, State] {
+export function start(host: Host): [World, RootProducer] {
 	if (connections) throw "ECS already running.";
 
-	const state: State = new State();
-	// state.store = store ? new StoreProvider(store) : undefined;
 	const world = new World();
 	const debug = new Debugger(Plasma);
 	debug.authorize = authorize;
@@ -53,7 +52,7 @@ export function start(host: Host): [World, State] {
 
 	connections = loop.begin({
 		default: RunService.Heartbeat,
-		Stepped: RunService.Stepped,
+		stepped: RunService.Stepped,
 	});
 
 	if (host === Host.All || host === Host.Server) {
@@ -74,7 +73,7 @@ export function start(host: Host): [World, State] {
 		UserInputService.InputBegan.Connect((input) => {
 			if (input.KeyCode === Enum.KeyCode.F4 && authorize(Players.LocalPlayer)) {
 				debug.toggle();
-				state.debugEnabled = debug.enabled;
+				debugEnabled.toggle();
 			}
 		});
 	}

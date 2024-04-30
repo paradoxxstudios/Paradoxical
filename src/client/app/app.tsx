@@ -6,9 +6,9 @@ import { Layer } from "../components/layer";
 export function App() {
 	return (
 		<>
-			<Layer>
+			{/* <Layer>
 				<Counter key="counter" />
-			</Layer>
+			</Layer> */}
 		</>
 	);
 }

@@ -1,5 +1,6 @@
 import { useEvent, World } from "@rbxts/matter";
 import { Model } from "shared/ecs/components";
+import { RootProducer } from "shared/state";
 
 /**
  * A system that removes missing {@link Model | Models}.
@@ -10,7 +11,7 @@ import { Model } from "shared/ecs/components";
  * If a model is removed from the world, this system will remove the
  * corresponding model from the game.
  */
-function removeMissingModels(world: World): void {
+function removeMissingModels(world: World, state: RootProducer): void {
 	for (const [id, model] of world.query(Model)) {
 		if (!model.model) continue;
 		for (const _ of useEvent(model.model, "AncestryChanged")) {

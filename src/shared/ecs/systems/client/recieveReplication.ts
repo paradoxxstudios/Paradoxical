@@ -1,7 +1,8 @@
 import { AnyEntity, World } from "@rbxts/matter";
 import { matterReplication } from "shared/routes";
 import * as Components from "../../components";
-import { State } from "../../state";
+import { RootProducer, RootState } from "../../../state";
+import { AnimationPose } from "shared/state/animationState";
 
 type ComponentNames = keyof typeof Components;
 type ComponentConstructors = (typeof Components)[ComponentNames];
@@ -16,10 +17,9 @@ const DEBUG_MODIFY = "Modify %ds%d adding %s, removing %s";
  * @param world - The world to replicate components in
  * @param state - The global state for the ECS
  */
-function recieveReplication(world: World, state: State): void {
+function recieveReplication(world: World, state: RootProducer): void {
 	function debugPrint(message: string, args: () => (string | number)[]): void {
-		// eslint-disable-next-line roblox-ts/lua-truthiness
-		if (state.debugEnabled) {
+		if (state.getState().debugEnabled.enabled) {
 			print("ECS Replication>", string.format(message, ...args()));
 		}
 	}
@@ -89,6 +89,12 @@ function recieveReplication(world: World, state: State): void {
 			}
 		}
 	}
+
+	const selectPose = (state: RootState) => state.animationPose.current;
+	state.subscribe(selectPose, (pose) => {
+		print(`Current pose: ${pose}`);
+	});
+	state.changePose(AnimationPose.Freefall);
 }
 
 export = {

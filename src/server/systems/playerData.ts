@@ -3,7 +3,7 @@ import { Players } from "@rbxts/services";
 import { DocumentType, beforeSave, collection, documents, loadData } from "server/datastore";
 import { Model, Transform } from "shared/ecs/components";
 
-function loadPlayerData(world: World) {
+function playerData(world: World) {
 	for (const player of Players.GetPlayers()) {
 		if (!world.contains(player.UserId)) {
 			const id = world.spawnAt(player.UserId, Transform());
@@ -38,8 +38,9 @@ function loadPlayerData(world: World) {
 		if (document !== undefined) {
 			documents.delete(player);
 			document.close().catch(warn);
+			world.despawn(player.UserId);
 		}
 	}
 }
 
-export = loadPlayerData;
+export = playerData;
