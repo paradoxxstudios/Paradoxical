@@ -1,14 +1,13 @@
 import { World } from "@rbxts/matter";
 import { Model } from "shared/ecs/components";
 import { getIdAttribute } from "shared/idAttribute";
-import { RootProducer } from "shared/state";
 
 /**
  * A system that updates the ID of {@link Model | Models}.
  *
  * @param world - The {@link World} the system operates on
  */
-function updateIdAttribute(world: World, state: RootProducer): void {
+function updateIdAttribute(world: World): void {
 	for (const [id, record] of world.queryChanged(Model)) {
 		record.new?.model?.SetAttribute(getIdAttribute(), id);
 	}

@@ -5,7 +5,7 @@ import { Health, Transform } from "./types";
  * component.
  */
 export const transform: Transform = {
-	cframe: CFrame.identity,
+	cframe: new CFrame(0, 5, 0),
 };
 
 export const health: Health = {

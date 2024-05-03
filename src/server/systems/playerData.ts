@@ -1,4 +1,4 @@
-import { AnyEntity, World, useEvent } from "@rbxts/matter";
+import { AnyComponent, AnyEntity, World, useEvent } from "@rbxts/matter";
 import { Players } from "@rbxts/services";
 import { DocumentType, beforeSave, collection, documents, loadData } from "server/datastore";
 import { Model, Transform } from "shared/ecs/components";
@@ -6,7 +6,7 @@ import { Model, Transform } from "shared/ecs/components";
 function playerData(world: World) {
 	for (const player of Players.GetPlayers()) {
 		if (!world.contains(player.UserId)) {
-			const id = world.spawnAt(player.UserId, Transform());
+			const id = world.spawnAt(player.UserId);
 			collection
 				.load(`Player${player.UserId}`, [player.UserId])
 				.andThen((document: DocumentType): void => {
@@ -28,6 +28,7 @@ function playerData(world: World) {
 			for (const [_, character] of useEvent(player, "CharacterAdded")) {
 				if (!world.contains(player.UserId)) continue;
 				world.insert(player.UserId, Model({ model: character }));
+				world.insert(player.UserId, Transform());
 			}
 		}
 	}

@@ -1,15 +1,30 @@
 import { InferState, combineProducers } from "@rbxts/reflex";
-import { currentPose } from "./animationState";
-import { debugEnabled } from "./debugEnabled";
+import { currentPose } from "./client/animationState";
+import { debugEnabled } from "./client/debugEnabled";
 
-export type RootProducer = typeof state;
+export type ServerRootProducer = typeof serverState;
+export type ServerRootState = InferState<ServerRootProducer>;
 
-export type RootState = InferState<RootProducer>;
+export type ClientRootProducer = typeof clientState;
+export type ClientRootState = InferState<ClientRootProducer>;
 
-/**
- * The global ECS state.
- */
-export const state = combineProducers({
+export type SharedRootProducer = typeof sharedState;
+export type SharedRootState = InferState<SharedRootProducer>;
+
+export interface State {
+	state: ServerRootProducer | ClientRootProducer;
+	shared?: SharedRootProducer;
+}
+
+export const serverState = combineProducers({
+	
+});
+
+export const clientState = combineProducers({
 	animationPose: currentPose,
 	debugEnabled: debugEnabled,
+});
+
+export const sharedState = combineProducers({
+	
 });
