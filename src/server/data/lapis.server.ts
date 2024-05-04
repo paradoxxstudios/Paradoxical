@@ -2,14 +2,14 @@ import { createCollection } from "@rbxts/lapis";
 import { Players } from "@rbxts/services";
 import { store } from "server/store";
 import { selectPlayerData } from "shared/state/shared/selectors";
-import { PlayerData, defaultPlayerData } from "shared/state/slices/players";
+import { PlayerData, defaultPlayerData } from "shared/state/shared/slices/players";
 import { validate } from "./validate";
 
 // Required to allow interfaces to be used as the collection type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PlayerDataSchema = PlayerData & Record<string, any>;
 
-const collection = createCollection<PlayerDataSchema>("PlayerData", {
+const collection = createCollection<PlayerDataSchema>("PlayerDataV2", {
 	defaultData: defaultPlayerData,
 	validate: validate,
 });

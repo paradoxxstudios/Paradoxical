@@ -1,6 +1,6 @@
 import { ReflexProvider } from "@rbxts/react-reflex";
 import Roact from "@rbxts/roact";
-import { store } from "shared/state/client/store";
+import { store } from "shared/state/client";
 
 import { RemProvider, RemProviderProps } from "./rem-provider";
 

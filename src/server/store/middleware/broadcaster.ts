@@ -1,6 +1,6 @@
 import { createBroadcaster } from "@rbxts/reflex";
 import { reflexReplication } from "shared/routes";
-import { slices } from "shared/state/slices";
+import { slices } from "shared/state/shared/slices";
 
 export function broadcasterMiddleware() {
 	const broadcaster = createBroadcaster({
