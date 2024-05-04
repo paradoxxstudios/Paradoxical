@@ -1,5 +1,5 @@
 import { t } from "@rbxts/t";
-import { PlayerData } from "shared/state/slices/players";
+import { PlayerData } from "shared/state/shared/slices/players";
 
 export const validate: t.check<PlayerData> = t.strictInterface({
 	health: t.strictInterface({

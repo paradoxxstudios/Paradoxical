@@ -1,12 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AnyEntity, Debugger, Loop, World } from "@rbxts/matter";
 import Plasma from "@rbxts/plasma";
-import { Players, ReplicatedStorage, RunService, StarterPlayer, UserInputService } from "@rbxts/services";
+import { Players, ReplicatedStorage, RunService, ServerScriptService, UserInputService } from "@rbxts/services";
 
 import { Host } from "shared/hosts";
 import { tags } from "./boundTags";
 import { Model } from "./components";
 import { start as startSystems, stop as stopSystems } from "./systems";
 import { start as startTags, stop as stopTags } from "./tags";
+import { CombineProducers, combineProducers } from "@rbxts/reflex";
+
+import { store as clientStore, RootProducer as ClientRootProducer } from "shared/state/client";
+const serverStoreModule = ServerScriptService.FindFirstChild("paradoxical")?.FindFirstChild("store") as ModuleScript;
 
 const MAX_DISPLAY_ORDER = 2147483647;
 const GROUP_ID = 33149057;
@@ -31,7 +36,7 @@ let connections:
  * @throws "ECS already running."
  * This is thrown when the ECS has already been started.
  */
-export function start(host: Host): [World, State] {
+export function start(host: Host): [World, CombineProducers<{}>] {
 	if (connections) throw "ECS already running.";
 
 	const world = new World();
@@ -44,6 +49,19 @@ export function start(host: Host): [World, State] {
 		return model?.model;
 	};
 
+	let state: CombineProducers<{}> | ClientRootProducer;
+	if (host === Host.Client) {
+		state = clientStore;
+	} else if (host === Host.Server) {
+		const serverStore = (
+			require(serverStoreModule) as {
+				store: CombineProducers<any>;
+			}
+		).store;
+		state = serverStore;
+	} else {
+		state = combineProducers({});
+	}
 	const loop = new Loop(world, state, debug.getWidgets());
 	startSystems(host, loop, debug);
 	debug.autoInitialize(loop);
@@ -68,10 +86,11 @@ export function start(host: Host): [World, State] {
 			clientDebugger.DisplayOrder = MAX_DISPLAY_ORDER;
 		}
 
+		const clientState: ClientRootProducer = state as ClientRootProducer;
 		UserInputService.InputBegan.Connect((input) => {
 			if (input.KeyCode === Enum.KeyCode.F4 && authorize(Players.LocalPlayer)) {
 				debug.toggle();
-				debugEnabled.toggle();
+				clientState.toggle();
 			}
 		});
 	}

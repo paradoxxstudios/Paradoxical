@@ -1,7 +1,7 @@
 import { AnyEntity, World } from "@rbxts/matter";
 import { matterReplication } from "shared/routes";
 import * as Components from "../../components";
-import { ClientRootProducer, State } from "shared/state";
+import { RootProducer } from "shared/state/client";
 
 type ComponentNames = keyof typeof Components;
 type ComponentConstructors = (typeof Components)[ComponentNames];
@@ -16,10 +16,9 @@ const DEBUG_MODIFY = "Modify %ds%d adding %s, removing %s";
  * @param world - The world to replicate components in
  * @param state - The global state for the ECS
  */
-function recieveReplication(world: World, state: State): void {
-	const clientState = state.state as ClientRootProducer;
+function recieveReplication(world: World, state: RootProducer): void {
 	function debugPrint(message: string, args: () => (string | number)[]): void {
-		if (clientState.getState().debugEnabled.enabled) {
+		if (state.getState().debugEnabled.enabled) {
 			print("ECS Replication>", string.format(message, ...args()));
 		}
 	}

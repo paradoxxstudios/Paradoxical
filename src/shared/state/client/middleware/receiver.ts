@@ -1,11 +1,10 @@
 import { createBroadcastReceiver } from "@rbxts/reflex";
-import Net from "@rbxts/yetanothernet";
 import { reflexReplication } from "shared/routes";
 
 export function receiverMiddleware() {
 	const receiver = createBroadcastReceiver({
 		start: async () => {
-			return reflexReplication.start.send().to(Net.server);
+			return reflexReplication.start.send();
 		},
 	});
 

@@ -1,6 +1,6 @@
 import { createSelector } from "@rbxts/reflex";
-import { SharedState } from "shared/state/slices";
-import { PlayerData } from "shared/state/slices/players";
+import { SharedState } from "shared/state/shared/slices";
+import { PlayerData } from "shared/state/shared/slices/players";
 
 export const selectPlayerHealth = (playerId: string) => {
 	return (state: SharedState) => {
