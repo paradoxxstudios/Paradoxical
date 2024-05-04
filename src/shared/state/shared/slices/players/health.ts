@@ -19,14 +19,25 @@ export const healthSlice = createProducer(initialState, {
 		[player]: undefined,
 	}),
 
-	changeCurrent: (state, player: string, amount: number) => {
+	changeHealthStat: (state, player: string, stat: keyof Health, amount: number) => {
 		const health = state[player];
 
 		return {
 			...state,
 			[player]: health && {
 				...health,
-				current: math.max(0, health.current + amount),
+				[stat]: health[stat] + amount,
+			},
+		};
+	},
+
+	changeHealth: (state, player: string, stat: Health) => {
+		const health = state[player];
+
+		return {
+			...state,
+			[player]: health && {
+				...stat,
 			},
 		};
 	},
