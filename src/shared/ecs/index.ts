@@ -1,14 +1,12 @@
 import { AnyEntity, Debugger, Loop, World } from "@rbxts/matter";
 import Plasma from "@rbxts/plasma";
-import { Players, ReplicatedStorage, RunService, UserInputService } from "@rbxts/services";
+import { Players, ReplicatedStorage, RunService, StarterPlayer, UserInputService } from "@rbxts/services";
 
 import { Host } from "shared/hosts";
 import { tags } from "./boundTags";
 import { Model } from "./components";
-import { State, clientState, serverState, sharedState } from "../state";
 import { start as startSystems, stop as stopSystems } from "./systems";
 import { start as startTags, stop as stopTags } from "./tags";
-import { debugEnabled } from "../../client/store/slices/debugEnabled";
 
 const MAX_DISPLAY_ORDER = 2147483647;
 const GROUP_ID = 33149057;
@@ -20,8 +18,8 @@ function authorize(player: Player): boolean {
 
 let connections:
 	| {
-		[index: string]: RBXScriptConnection;
-	}
+			[index: string]: RBXScriptConnection;
+	  }
 	| undefined;
 
 /**
@@ -46,14 +44,6 @@ export function start(host: Host): [World, State] {
 		return model?.model;
 	};
 
-	let state: State;
-	if (host === Host.Client) {
-		state = { state: clientState, shared: sharedState };
-	} else if (host === Host.Server) {
-		state = { state: serverState, shared: sharedState };
-	} else {
-		state = { state: sharedState };
-	}
 	const loop = new Loop(world, state, debug.getWidgets());
 	startSystems(host, loop, debug);
 	debug.autoInitialize(loop);

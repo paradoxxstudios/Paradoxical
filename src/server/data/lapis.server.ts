@@ -1,7 +1,7 @@
 import { createCollection } from "@rbxts/lapis";
 import { Players } from "@rbxts/services";
 import { store } from "server/store";
-import { selectPlayerData } from "shared/state/selectors";
+import { selectPlayerData } from "shared/state/shared/selectors";
 import { PlayerData, defaultPlayerData } from "shared/state/slices/players";
 import { validate } from "./validate";
 
