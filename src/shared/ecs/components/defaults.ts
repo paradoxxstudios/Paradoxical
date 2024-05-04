@@ -9,8 +9,8 @@ export const transform: Transform = {
 };
 
 export const health: Health = {
-	health: 100,
-	maxHealth: 100,
+	current: 100,
+	max: 100,
 	regenAmount: 2,
 	regenRate: 1,
 	regenCD: 5,

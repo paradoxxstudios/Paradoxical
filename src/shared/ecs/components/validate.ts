@@ -2,8 +2,8 @@ import { t } from "@rbxts/t";
 
 const Health = t.interface(
 	new Map<string, t.check<number>>([
-		["health", t.number],
-		["maxHealth", t.number],
+		["current", t.number],
+		["max", t.number],
 		["regenAmount", t.number],
 		["regenRate", t.number],
 		["regenCD", t.number],

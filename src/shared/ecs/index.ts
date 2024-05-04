@@ -8,7 +8,7 @@ import { Model } from "./components";
 import { State, clientState, serverState, sharedState } from "../state";
 import { start as startSystems, stop as stopSystems } from "./systems";
 import { start as startTags, stop as stopTags } from "./tags";
-import { debugEnabled } from "../state/client/debugEnabled";
+import { debugEnabled } from "../../client/store/slices/debugEnabled";
 
 const MAX_DISPLAY_ORDER = 2147483647;
 const GROUP_ID = 33149057;
@@ -20,8 +20,8 @@ function authorize(player: Player): boolean {
 
 let connections:
 	| {
-			[index: string]: RBXScriptConnection;
-	  }
+		[index: string]: RBXScriptConnection;
+	}
 	| undefined;
 
 /**

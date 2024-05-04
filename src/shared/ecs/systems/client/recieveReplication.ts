@@ -26,7 +26,7 @@ function recieveReplication(world: World, state: State): void {
 
 	const serverToClientEntity = new Map<string, AnyEntity>();
 
-	for (const [, , entities] of matterReplication.query()) {
+	for (const [_pos, _sender, entities] of matterReplication.query()) {
 		for (const [serverId, componentMap] of entities as Map<
 			string,
 			Map<ComponentNames, { data?: Components.GameComponent }>
