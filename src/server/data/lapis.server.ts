@@ -9,7 +9,7 @@ import { validate } from "./validate";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PlayerDataSchema = PlayerData & Record<string, any>;
 
-const collection = createCollection<PlayerDataSchema>("PlayerDataV2", {
+const collection = createCollection<PlayerDataSchema>("PlayerData", {
 	defaultData: defaultPlayerData,
 	validate: validate,
 });
@@ -49,7 +49,7 @@ async function loadPlayerData(player: Player) {
 		store.loadPlayerData(player.Name, document.read());
 	} catch (err) {
 		warn(`Failed to load data for ${player.Name}: ${err}`);
-		loadDefaultData(player);
+		player.Kick("Failed to load data. If issues persists report to developers.");
 	}
 }
 

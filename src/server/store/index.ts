@@ -1,11 +1,14 @@
 import { CombineStates, InferState, ProducerMiddleware, combineProducers } from "@rbxts/reflex";
-import { slices } from "shared/state/shared/slices";
+import { slices as sharedSlices } from "shared/state/shared/slices";
+import { slices as serverSlices } from "./slices";
 import { broadcasterMiddleware } from "./middleware/broadcaster";
 
-export type RootState = InferState<typeof store>;
+export type RootProducer = typeof store;
+export type RootState = InferState<RootProducer>;
 
 export const store = combineProducers({
-	...slices,
+	...sharedSlices,
+	...serverSlices,
 });
 
 store.applyMiddleware(broadcasterMiddleware() as ProducerMiddleware<CombineStates<{}>, unknown>);
