@@ -1,18 +1,24 @@
 import { createBroadcaster } from "@rbxts/reflex";
-import { reflexReplication } from "shared/routes";
+import { server } from "shared/state/remotes";
 import { slices } from "shared/state/shared/slices";
 
 export function broadcasterMiddleware() {
 	const broadcaster = createBroadcaster({
 		producers: slices,
 		dispatch: async (player, actions) => {
-			reflexReplication.broadcast.send(actions).to(player);
+			server.Get("broadcast").SendToPlayer(player, actions);
+		},
+		beforeDispatch: (player, action) => {
+			if (action.arguments[0] !== player.Name) {
+				return;
+			}
+			return action;
 		},
 	});
 
-	for (const [_pos, player] of reflexReplication.start.query()) {
-		return broadcaster.start(player as Player);
-	}
+	server.OnEvent("start", (player) => {
+		return broadcaster.start(player);
+	});
 
 	return broadcaster.middleware;
 }

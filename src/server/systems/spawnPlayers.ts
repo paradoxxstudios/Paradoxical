@@ -5,7 +5,11 @@ import { Model, Transform } from "shared/ecs/components";
 function spawnPlayers(world: World) {
 	for (const player of Players.GetPlayers()) {
 		for (const [_id, character] of useEvent(player, "CharacterAdded")) {
-			world.spawnAt(player.UserId, Model({ model: character }), Transform());
+			if (world.contains(player.UserId)) {
+				world.insert(player.UserId, Model({ model: character }), Transform());
+			} else {
+				world.spawnAt(player.UserId, Model({ model: character }), Transform());
+			}
 		}
 	}
 }

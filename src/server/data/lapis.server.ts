@@ -4,6 +4,7 @@ import { store } from "server/store";
 import { selectPlayerData } from "shared/state/shared/selectors";
 import { PlayerData, defaultPlayerData } from "shared/state/shared/slices/players";
 import { validate } from "./validate";
+import { userIdToName } from "./userIdToName";
 
 // Required to allow interfaces to be used as the collection type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +55,7 @@ async function loadPlayerData(player: Player) {
 }
 
 Players.PlayerAdded.Connect((player) => {
+	userIdToName.set(player.UserId, player.Name);
 	loadPlayerData(player);
 });
 

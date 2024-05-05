@@ -1,16 +1,16 @@
 import { createBroadcastReceiver } from "@rbxts/reflex";
-import { reflexReplication } from "shared/routes";
+import { client } from "shared/state/remotes";
 
 export function receiverMiddleware() {
 	const receiver = createBroadcastReceiver({
 		start: async () => {
-			return reflexReplication.start.send();
+			return client.Get("start").SendToServer();
 		},
 	});
 
-	for (const [_pos, _sender, actions] of reflexReplication.broadcast.query()) {
+	client.OnEvent("broadcast", (actions) => {
 		receiver.dispatch(actions);
-	}
+	});
 
 	return receiver.middleware;
 }
