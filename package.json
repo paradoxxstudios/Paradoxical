@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@rbxts/chickynoid": "file:rbxts-chickynoid-1.0.5.tgz",
     "@rbxts/lapis": "0.3.0",
     "@rbxts/matter": "0.8.1",
     "@rbxts/matter-hooks": "0.1.2",

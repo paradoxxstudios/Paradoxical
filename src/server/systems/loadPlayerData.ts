@@ -18,13 +18,13 @@ function loadPlayerData(world: World, state: RootProducer) {
 	for (const player of Players.GetPlayers()) {
 		if (isInserted.includes(player.Name)) continue;
 		if ((data.get(Health) as State)[player.Name] === undefined) continue;
+		if (!world.contains(player.UserId)) continue;
 
 		for (const [component, state] of data) {
 			world.insert(player.UserId, component().patch(state[player.Name] as HealthType));
 		}
 
 		isInserted.push(player.Name);
-		print(world.get(player.UserId, Health));
 	}
 }
 
