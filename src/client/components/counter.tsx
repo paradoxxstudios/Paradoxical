@@ -1,7 +1,7 @@
 import Roact, { useState } from "@rbxts/roact";
-import { useRem } from "client/paradoxical/hooks/use-rem";
-import { fonts } from "client/paradoxical/utils/fonts";
-import { palette } from "client/paradoxical/utils/palette";
+import { useRem } from "client/hooks/use-rem";
+import { fonts } from "client/utils/fonts";
+import { palette } from "client/utils/palette";
 
 import { Button } from "./button";
 

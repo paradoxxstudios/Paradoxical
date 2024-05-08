@@ -14,12 +14,6 @@
 				"$path": "out/server"
 			}
 		},
-		"ReplicatedFirst": {
-			"$className": "ReplicatedFirst",
-			"chickynoid": {
-				"$path": "out/first"
-			}
-		},
 		"ReplicatedStorage": {
 			"$className": "ReplicatedStorage",
 			"rbxts_include": {
