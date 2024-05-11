@@ -1,4 +1,4 @@
-import { InferState, combineProducers, loggerMiddleware } from "@rbxts/reflex";
+import { InferState, combineProducers } from "@rbxts/reflex";
 import { slices as sharedSlices } from "shared/state/shared/slices";
 import { slices as clientSlices } from "./slices";
 import { receiverMiddleware } from "./middleware/receiver";
@@ -13,5 +13,5 @@ export const store = combineProducers({
 });
 
 if (!RunService.IsServer()) {
-	store.applyMiddleware(receiverMiddleware(), loggerMiddleware);
+	store.applyMiddleware(receiverMiddleware());
 }
