@@ -36,8 +36,15 @@
 			"$className": "StarterPlayer",
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
-				"paradoxical": {
-					"$path": "out/client"
+				"$path": "out/client"
+			},
+			"StarterCharacterScripts": {
+				"$className": "StarterCharacterScripts",
+				"Health": {
+					"$className": "Script"
+				},
+				"Animate": {
+					"$className": "LocalScript"
 				}
 			}
 		},
@@ -45,6 +52,9 @@
 			"$className": "Workspace",
 			"$properties": {
 				"FilteringEnabled": true
+			},
+			"gameMap": {
+				"$path": "gameMap"
 			}
 		},
 		"HttpService": {

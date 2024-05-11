@@ -11,6 +11,6 @@ const initialState: debugEnabled = {
 export const debugEnabled = createProducer(initialState, {
 	toggle: (state) => ({
 		...state,
-		enabled: !initialState.enabled,
+		enabled: !state.enabled,
 	}),
 });
