@@ -1,6 +1,6 @@
 import { health } from "shared/ecs/components/defaults";
-import { PlayerData } from "./types";
+import { SaveablePlayerData } from "./types";
 
-export const defaultPlayerData: PlayerData = {
+export const defaultPlayerData: SaveablePlayerData = {
 	health: health,
 };

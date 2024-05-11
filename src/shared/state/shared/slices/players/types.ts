@@ -1,8 +1,19 @@
-import { Health } from "shared/ecs/components/types";
 import { HealthState } from "./health";
 
-export interface PlayerData {
-	readonly health: Health;
+export interface SaveablePlayerData {
+	readonly health: PlayerHealth;
 }
 
-export type State = HealthState;
+export interface PlayerData {
+	readonly health: PlayerHealth;
+}
+
+export type PlayerHealth = {
+	readonly current: number;
+	readonly max: number;
+	readonly regenAmount: number;
+	readonly regenRate: number;
+	readonly regenCD: number;
+};
+
+export type PlayerState = HealthState;

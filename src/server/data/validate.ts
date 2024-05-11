@@ -1,7 +1,7 @@
 import { t } from "@rbxts/t";
-import { PlayerData } from "shared/state/shared/slices/players";
+import { SaveablePlayerData } from "shared/state/shared/slices/players";
 
-export const validate: t.check<PlayerData> = t.strictInterface({
+export const validate: t.check<SaveablePlayerData> = t.strictInterface({
 	health: t.strictInterface({
 		current: t.number,
 		max: t.number,

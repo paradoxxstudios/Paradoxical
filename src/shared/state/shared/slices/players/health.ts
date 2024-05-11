@@ -1,15 +1,14 @@
 import { createProducer } from "@rbxts/reflex";
-import { PlayerData } from "./types";
-import { Health } from "shared/ecs/components/types";
+import { SaveablePlayerData, PlayerHealth } from "./types";
 
 export interface HealthState {
-	readonly [player: string]: Health | undefined;
+	readonly [player: string]: PlayerHealth | undefined;
 }
 
 const initialState: HealthState = {};
 
 export const healthSlice = createProducer(initialState, {
-	loadPlayerData: (state, player: string, data: PlayerData) => ({
+	loadPlayerData: (state, player: string, data: SaveablePlayerData) => ({
 		...state,
 		[player]: data.health,
 	}),
@@ -19,7 +18,7 @@ export const healthSlice = createProducer(initialState, {
 		[player]: undefined,
 	}),
 
-	changeHealthStat: (state, player: string, stat: keyof Health, amount: number) => {
+	changeHealthStat: (state, player: string, stat: keyof PlayerHealth, amount: number) => {
 		const health = state[player];
 
 		return {
@@ -31,7 +30,7 @@ export const healthSlice = createProducer(initialState, {
 		};
 	},
 
-	changeHealth: (state, player: string, stat: Health) => {
+	changeHealth: (state, player: string, stat: PlayerHealth) => {
 		const health = state[player];
 
 		return {

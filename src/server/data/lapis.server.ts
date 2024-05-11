@@ -2,13 +2,13 @@ import { createCollection } from "@rbxts/lapis";
 import { Players } from "@rbxts/services";
 import { store } from "server/store";
 import { selectPlayerData } from "shared/state/shared/selectors";
-import { PlayerData, defaultPlayerData } from "shared/state/shared/slices/players";
+import { SaveablePlayerData, defaultPlayerData } from "shared/state/shared/slices/players";
 import { validate } from "./validate";
 import { userIdToName } from "./userIdToName";
 
 // Required to allow interfaces to be used as the collection type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type PlayerDataSchema = PlayerData & Record<string, any>;
+type PlayerDataSchema = SaveablePlayerData & Record<string, any>;
 
 const collection = createCollection<PlayerDataSchema>("PlayerData", {
 	defaultData: defaultPlayerData,

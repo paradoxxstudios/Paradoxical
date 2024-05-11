@@ -6,6 +6,7 @@
  */
 export interface Model {
 	model?: PVInstance;
+	humanoid?: Humanoid;
 }
 
 /**
