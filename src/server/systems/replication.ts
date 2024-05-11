@@ -1,7 +1,7 @@
 import { useEvent, World } from "@rbxts/matter";
 import { Players } from "@rbxts/services";
+import { matterReplication } from "shared/net";
 import * as Components from "shared/ecs/components";
-import { matterReplication } from "shared/routes";
 
 type ComponentName = keyof typeof Components;
 type ComponentConstructor = (typeof Components)[ComponentName];
@@ -36,7 +36,18 @@ function replication(world: World): void {
 		}
 
 		print("Sending initial payload to", player);
-		matterReplication.send(payload).to(player);
+		matterReplication.replication.sendTo(
+			payload as Map<
+				string,
+				Map<
+					string,
+					{
+						data: Map<string, unknown> | undefined;
+					}
+				>
+			>,
+			player,
+		);
 	}
 
 	const changes: Map<string, Map<ComponentName, { data?: Components.GameComponent }>> = new Map();
@@ -59,7 +70,17 @@ function replication(world: World): void {
 	}
 
 	if (!changes.isEmpty()) {
-		matterReplication.send(changes);
+		matterReplication.replication.sendToAll(
+			changes as Map<
+				string,
+				Map<
+					string,
+					{
+						data: Map<string, unknown> | undefined;
+					}
+				>
+			>,
+		);
 	}
 }
 

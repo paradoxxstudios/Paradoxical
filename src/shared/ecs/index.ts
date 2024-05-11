@@ -10,7 +10,8 @@ import { start as startSystems, stop as stopSystems } from "./systems";
 import { start as startTags, stop as stopTags } from "./tags";
 import { CombineProducers, combineProducers } from "@rbxts/reflex";
 
-import { store as clientStore, RootProducer as ClientRootProducer } from "shared/state/client";
+import { store as clientStore, RootProducer as ClientRootProducer, RootProducer } from "shared/state/client";
+import recieveReplication from "./recieveReplication";
 const serverStoreModule = ServerScriptService.FindFirstChild("paradoxical")?.FindFirstChild("store") as ModuleScript;
 
 const MAX_DISPLAY_ORDER = 2147483647;
@@ -76,6 +77,8 @@ export function start(host: Host): [World, CombineProducers<{}>] {
 	}
 
 	if (host === Host.All || host === Host.Client) {
+		recieveReplication(world, state as RootProducer);
+
 		const serverDebugger = ReplicatedStorage.FindFirstChild("MatterDebugger");
 		if (serverDebugger && serverDebugger.IsA("ScreenGui")) {
 			serverDebugger.DisplayOrder = MAX_DISPLAY_ORDER;

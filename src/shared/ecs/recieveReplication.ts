@@ -1,7 +1,8 @@
 import { AnyEntity, World } from "@rbxts/matter";
-import { matterReplication } from "shared/routes";
-import * as Components from "../../components";
+import * as Components from "./components";
 import { RootProducer } from "shared/state/client";
+import { matterReplication } from "shared/net";
+import { Players } from "@rbxts/services";
 
 type ComponentNames = keyof typeof Components;
 type ComponentConstructors = (typeof Components)[ComponentNames];
@@ -25,11 +26,8 @@ function recieveReplication(world: World, state: RootProducer): void {
 
 	const serverToClientEntity = new Map<string, AnyEntity>();
 
-	for (const [_pos, _sender, entities] of matterReplication.query()) {
-		for (const [serverId, componentMap] of entities as Map<
-			string,
-			Map<ComponentNames, { data?: Components.GameComponent }>
-		>) {
+	matterReplication.replication.listen((entities) => {
+		for (const [serverId, componentMap] of entities) {
 			const clientId = serverToClientEntity.get(serverId);
 
 			if (clientId !== undefined && next(componentMap)[0] === undefined) {
@@ -44,8 +42,12 @@ function recieveReplication(world: World, state: RootProducer): void {
 			const insertNames: ComponentNames[] = [];
 			const removeNames: ComponentNames[] = [];
 
-			for (const [name, container] of componentMap) {
+			for (const [name, container] of componentMap as unknown as Map<
+				ComponentNames,
+				{ data: Components.GameComponent }
+			>) {
 				const component = Components[name];
+				// eslint-disable-next-line roblox-ts/lua-truthiness
 				if (container.data) {
 					componentsToInsert.push(
 						// The type of component above is an intersection of all possible
@@ -67,7 +69,7 @@ function recieveReplication(world: World, state: RootProducer): void {
 			}
 
 			if (clientId === undefined) {
-				const clientId = world.spawn(...componentsToInsert);
+				const clientId = world.spawnAt(Players.LocalPlayer.UserId, ...componentsToInsert);
 				serverToClientEntity.set(serverId, clientId);
 				debugPrint(DEBUG_SPAWN, () => [clientId, serverId, insertNames.join(",")]);
 			} else {
@@ -87,10 +89,7 @@ function recieveReplication(world: World, state: RootProducer): void {
 				]);
 			}
 		}
-	}
+	});
 }
 
-export = {
-	system: recieveReplication,
-	priority: 1,
-};
+export = recieveReplication;

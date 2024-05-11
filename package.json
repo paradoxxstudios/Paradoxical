@@ -27,7 +27,8 @@
     "@rbxts/spark": "file:rbxts-spark-1.0.0.tgz",
     "@rbxts/squash": "1.1.6-ts.2",
     "@rbxts/t": "3.1.1",
-    "@rbxts/yetanothernet": "0.8.0"
+    "@rbxts/yetanothernet": "0.8.0",
+    "@rbxts/bytenet": "0.4.3-tsprev4"
   },
   "devDependencies": {
     "@rbxts/compiler-types": "^2.2.0-types.0",
