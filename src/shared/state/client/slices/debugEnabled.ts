@@ -5,7 +5,7 @@ export interface debugEnabled {
 }
 
 const initialState: debugEnabled = {
-	enabled: false,
+	enabled: true,
 };
 
 export const debugEnabled = createProducer(initialState, {

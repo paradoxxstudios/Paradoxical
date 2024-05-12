@@ -6,11 +6,11 @@ import spawnPlayers from "./spawnPlayers";
 import { PlayerState } from "shared/state/shared/slices/players";
 import { ComponentCtor } from "@rbxts/matter/lib/component";
 
-const isInserted = new Array<string>();
+const isInserted = new Array<number>();
 
 function loadPlayerData(world: World, state: RootProducer) {
 	for (const player of Players.GetPlayers()) {
-		if (isInserted.includes(player.Name)) continue;
+		if (isInserted.includes(player.UserId)) continue;
 
 		// eslint-disable-next-line prettier/prettier
 		const data = new Map<ComponentCtor, PlayerState>([
@@ -19,7 +19,7 @@ function loadPlayerData(world: World, state: RootProducer) {
 
 		let shouldContinue = true;
 		for (const [_, state] of data) {
-			if (state[player.Name] === undefined) {
+			if (state[player.UserId] === undefined) {
 				shouldContinue = false;
 				break;
 			}
@@ -30,10 +30,10 @@ function loadPlayerData(world: World, state: RootProducer) {
 
 		for (const [component, state] of data) {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			world.insert(player.UserId, component().patch(state[player.Name] as any));
+			world.insert(player.UserId, component().patch(state[player.UserId] as any));
 		}
 
-		isInserted.push(player.Name);
+		isInserted.push(player.UserId);
 	}
 }
 

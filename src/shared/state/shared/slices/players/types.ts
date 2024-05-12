@@ -1,3 +1,4 @@
+import { AnimationState } from "./animation";
 import { HealthState } from "./health";
 
 export interface SaveablePlayerData {
@@ -6,6 +7,7 @@ export interface SaveablePlayerData {
 
 export interface PlayerData {
 	readonly health: PlayerHealth;
+	readonly animations: PlayerAnimations;
 }
 
 export type PlayerHealth = {
@@ -16,4 +18,18 @@ export type PlayerHealth = {
 	readonly regenCD: number;
 };
 
-export type PlayerState = HealthState;
+export type PlayerAnimations = {
+	readonly current?: AnimationTrack;
+	readonly idle?: AnimationTrack;
+	readonly walk?: AnimationTrack;
+	readonly run?: AnimationTrack;
+	readonly jump?: AnimationTrack;
+	readonly land?: AnimationTrack;
+	readonly loaded: boolean;
+	readonly jumpAnimTime: number;
+	readonly freefalling: boolean;
+};
+
+export type AnimationKeys = keyof PlayerAnimations;
+
+export type PlayerState = HealthState | AnimationState;

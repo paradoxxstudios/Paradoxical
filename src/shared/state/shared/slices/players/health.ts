@@ -8,12 +8,12 @@ export interface HealthState {
 const initialState: HealthState = {};
 
 export const healthSlice = createProducer(initialState, {
-	loadPlayerData: (state, player: string, data: SaveablePlayerData) => ({
+	loadPlayerHealth: (state, player: string, data: SaveablePlayerData) => ({
 		...state,
 		[player]: data.health,
 	}),
 
-	closePlayerData: (state, player: string) => ({
+	closePlayerHealth: (state, player: string) => ({
 		...state,
 		[player]: undefined,
 	}),
