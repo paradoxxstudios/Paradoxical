@@ -10,7 +10,7 @@ const initialState: AnimationState = {};
 export const animationSlice = createProducer(initialState, {
 	loadAnimationPlayer: (state, player: string) => ({
 		...state,
-		[player]: { jumpAnimTime: 0, freefalling: false, loaded: false },
+		[player]: { jumpAnimTime: 0, freefalling: false, playingAnimations: [] },
 	}),
 
 	closeAnimationPlayer: (state, player: string) => ({
@@ -32,16 +32,21 @@ export const animationSlice = createProducer(initialState, {
 
 	playAnimation: (state, player: string, animation: AnimationTrack) => {
 		const animations = state[player];
+		const playingAnimations = animations?.playingAnimations as AnimationTrack[];
 
-		if (animation === animations?.current) return { ...state };
-		animations?.current?.Stop(0.1);
+		if (animation === playingAnimations[0]) return { ...state };
+		for (let i = 0; i < playingAnimations.size(); i++) {
+			playingAnimations[i].Stop(0.1);
+		}
+		playingAnimations.clear();
+		playingAnimations[0] = animation;
 		animation.Play(0.1);
 
 		return {
 			...state,
 			[player]: animations && {
 				...animations,
-				current: animation,
+				playingAnimations: playingAnimations,
 			},
 		};
 	},
@@ -49,7 +54,7 @@ export const animationSlice = createProducer(initialState, {
 	clearAnimations: (state, player: string) => {
 		return {
 			...state,
-			[player]: { jumpAnimTime: 0, freefalling: false, loaded: false },
+			[player]: { jumpAnimTime: 0, freefalling: false, playingAnimations: [] },
 		};
 	},
 
@@ -73,18 +78,6 @@ export const animationSlice = createProducer(initialState, {
 			[player]: animations && {
 				...animations,
 				freefalling: !animations.freefalling,
-			},
-		};
-	},
-
-	LoadedAnimations: (state, player: string) => {
-		const animations = state[player];
-
-		return {
-			...state,
-			[player]: animations && {
-				...animations,
-				loaded: true,
 			},
 		};
 	},

@@ -19,21 +19,20 @@ const animations = new Map<AnimationKeys, Animation>([
 function loadAnimations(world: World, state: RootProducer) {
 	for (const [id, model] of world.query(Model)) {
 		const latestIdle = useMap<undefined | AnimationTrack>(id, undefined);
-		if (state.getState().players.animation[id + ""]?.current) continue;
+		if (state.getState().players.animation[id + ""]?.idle) continue;
 
 		for (const [name, animation] of animations) {
 			const track = model.animator?.LoadAnimation(animation) as AnimationTrack;
 			track.Priority = Enum.AnimationPriority.Core;
 			state.setAnimation(id + "", name, track);
 			if (name === "idle") {
-				state.setAnimation(id + "", "current", track);
 				if (latestIdle.value === undefined) {
 					latestIdle.value = track;
 				} else {
 					latestIdle.value.Stop();
 					latestIdle.value = track;
 				}
-				track.Play(0.1);
+				state.playAnimation(id + "", track);
 			}
 		}
 	}

@@ -19,13 +19,12 @@ export type PlayerHealth = {
 };
 
 export type PlayerAnimations = {
-	readonly current?: AnimationTrack;
+	readonly playingAnimations: AnimationTrack[];
 	readonly idle?: AnimationTrack;
 	readonly walk?: AnimationTrack;
 	readonly run?: AnimationTrack;
 	readonly jump?: AnimationTrack;
 	readonly land?: AnimationTrack;
-	readonly loaded: boolean;
 	readonly jumpAnimTime: number;
 	readonly freefalling: boolean;
 };
