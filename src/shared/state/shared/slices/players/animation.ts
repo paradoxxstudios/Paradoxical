@@ -10,7 +10,7 @@ const initialState: AnimationState = {};
 export const animationSlice = createProducer(initialState, {
 	loadAnimationPlayer: (state, player: string) => ({
 		...state,
-		[player]: { jumpAnimTime: 0, freefalling: false, playingAnimations: [] },
+		[player]: { jumpAnimTime: 0, freefalling: false, playingAnimations: [], animationIds: new Map([["idle", 1]]) },
 	}),
 
 	closeAnimationPlayer: (state, player: string) => ({

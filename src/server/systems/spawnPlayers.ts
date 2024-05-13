@@ -3,7 +3,7 @@ import { Players } from "@rbxts/services";
 import { RootProducer } from "server/store";
 import { Model, Transform } from "shared/ecs/components";
 
-function spawnPlayers(world: World, state: RootProducer) {
+function spawnPlayers(world: World) {
 	for (const player of Players.GetPlayers()) {
 		for (const [_id, character] of useEvent(player, "CharacterAdded")) {
 			if (world.contains(player.UserId)) {

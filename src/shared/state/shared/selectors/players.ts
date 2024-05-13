@@ -8,9 +8,13 @@ export const selectPlayerHealth = (playerId: string) => {
 	};
 };
 
-export const selectPlayerAnimation = (playerId: string) => {
+export const selectPlayerAnimation = (state: SharedState) => {
+	return state.players.animation;
+}
+
+export const selectPlayerAnimationIds = (playerId: string) => {
 	return (state: SharedState) => {
-		return state.players.animation[playerId];
+		return state.players.animation[playerId]?.animationIds;
 	};
 };
 

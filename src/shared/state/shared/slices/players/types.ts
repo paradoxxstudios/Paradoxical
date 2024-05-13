@@ -20,6 +20,7 @@ export type PlayerHealth = {
 
 export type PlayerAnimations = {
 	readonly playingAnimations: AnimationTrack[];
+	readonly animationIds?: Map<string, number>;
 	readonly idle?: AnimationTrack;
 	readonly walk?: AnimationTrack;
 	readonly run?: AnimationTrack;
@@ -29,6 +30,6 @@ export type PlayerAnimations = {
 	readonly freefalling: boolean;
 };
 
-export type AnimationKeys = keyof PlayerAnimations;
+export type AnimationKeys = "idle" | "walk" | "run" | "jump" | "land";
 
 export type PlayerState = HealthState | AnimationState;

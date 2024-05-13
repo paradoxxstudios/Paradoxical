@@ -69,7 +69,7 @@ function recieveReplication(world: World, state: RootProducer): void {
 			}
 
 			if (clientId === undefined) {
-				const clientId = world.spawnAt(Players.LocalPlayer.UserId, ...componentsToInsert);
+				const clientId = world.spawn(...componentsToInsert);
 				serverToClientEntity.set(serverId, clientId);
 				debugPrint(DEBUG_SPAWN, () => [clientId, serverId, insertNames.join(",")]);
 			} else {
