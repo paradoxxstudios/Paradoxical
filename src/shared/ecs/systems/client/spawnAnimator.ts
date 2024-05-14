@@ -1,5 +1,4 @@
 import { World } from "@rbxts/matter";
-import { playerId } from "shared/constants";
 import { Model } from "shared/ecs/components";
 import { RootProducer } from "shared/state/client";
 
@@ -8,7 +7,7 @@ function spawnAnimator(world: World, state: RootProducer) {
 		const animator = model.animator;
 		if (animator) continue;
 		world.insert(id, model.patch({ animator: model.humanoid?.FindFirstChildOfClass("Animator") }));
-		state.clearAnimations(playerId);
+		state.clearAnimations(tostring(id));
 	}
 }
 

@@ -13,9 +13,13 @@ export const selectPlayerAnimation = (state: SharedState) => {
 }
 
 export const selectPlayerAnimationIds = (playerId: string) => {
-	return (state: SharedState) => {
+	const selectAnimationIds = (state: SharedState) => {
 		return state.players.animation[playerId]?.animationIds;
 	};
+
+	return createSelector(selectAnimationIds, (animationIds) => {
+		return animationIds;
+	});
 };
 
 export const selectPlayerData = (playerId: string) => {

@@ -1,6 +1,8 @@
 import { createProducer } from "@rbxts/reflex";
 import { AnimationKeys, PlayerAnimations } from "./types";
 
+export const defualtAnimations = new Map<string, number>();
+
 export interface AnimationState {
 	readonly [player: string]: PlayerAnimations | undefined;
 }
@@ -10,7 +12,7 @@ const initialState: AnimationState = {};
 export const animationSlice = createProducer(initialState, {
 	loadAnimationPlayer: (state, player: string) => ({
 		...state,
-		[player]: { jumpAnimTime: 0, freefalling: false, playingAnimations: [], animationIds: new Map([["idle", 1]]) },
+		[player]: { jumpAnimTime: 0, freefalling: false, playingAnimations: [] },
 	}),
 
 	closeAnimationPlayer: (state, player: string) => ({
