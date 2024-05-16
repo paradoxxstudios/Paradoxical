@@ -36,16 +36,14 @@
 			"$className": "StarterPlayer",
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
-				"$path": "out/client"
+				"$path": "out/client/player"
 			},
 			"StarterCharacterScripts": {
 				"$className": "StarterCharacterScripts",
 				"Health": {
 					"$className": "Script"
 				},
-				"Animate": {
-					"$className": "LocalScript"
-				}
+				"$path": "out/client/character"
 			}
 		},
 		"Workspace": {

@@ -56,9 +56,11 @@ async function loadPlayerData(player: Player) {
 Players.PlayerAdded.Connect((player) => {
 	loadPlayerData(player);
 	store.loadAnimationPlayer(player.UserId + "");
+	store.loadAnimationIdPlayer(player.UserId + "");
 });
 
 for (const player of Players.GetPlayers()) {
 	loadPlayerData(player);
 	store.closeAnimationPlayer(player.UserId + "");
+	store.closeAnimationIdPlayer(player.UserId + "");
 }

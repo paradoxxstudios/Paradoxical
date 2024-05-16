@@ -8,6 +8,7 @@ export interface SaveablePlayerData {
 export interface PlayerData {
 	readonly health: PlayerHealth;
 	readonly animations: PlayerAnimations;
+	readonly animationIds: PlayerAnimationIds;
 }
 
 export type PlayerHealth = {
@@ -18,9 +19,10 @@ export type PlayerHealth = {
 	readonly regenCD: number;
 };
 
+export type AnimationKeys = keyof PlayerAnimationIds;
+
 export type PlayerAnimations = {
 	readonly playingAnimations: AnimationTrack[];
-	readonly animationIds?: Map<string, number>;
 	readonly idle?: AnimationTrack;
 	readonly walk?: AnimationTrack;
 	readonly run?: AnimationTrack;
@@ -30,6 +32,12 @@ export type PlayerAnimations = {
 	readonly freefalling: boolean;
 };
 
-export type AnimationKeys = "idle" | "walk" | "run" | "jump" | "land";
+export type PlayerAnimationIds = {
+	readonly idle: number;
+	readonly walk: number;
+	readonly run: number;
+	readonly jump: number;
+	readonly land: number;
+};
 
 export type PlayerState = HealthState | AnimationState;

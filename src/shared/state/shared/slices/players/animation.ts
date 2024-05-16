@@ -1,8 +1,6 @@
 import { createProducer } from "@rbxts/reflex";
 import { AnimationKeys, PlayerAnimations } from "./types";
 
-export const defualtAnimations = new Map<string, number>();
-
 export interface AnimationState {
 	readonly [player: string]: PlayerAnimations | undefined;
 }

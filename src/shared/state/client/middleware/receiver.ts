@@ -9,6 +9,7 @@ export function receiverMiddleware() {
 	});
 
 	client.OnEvent("broadcast", (actions) => {
+		print(actions);
 		receiver.dispatch(actions);
 	});
 

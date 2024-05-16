@@ -9,7 +9,7 @@ export function broadcasterMiddleware() {
 			server.Get("broadcast").SendToPlayer(player, actions);
 		},
 		beforeDispatch: (player, action) => {
-			if (action.arguments[0] !== player.UserId) {
+			if (action.arguments[0] !== tostring(player.UserId)) {
 				return;
 			}
 			return action;
