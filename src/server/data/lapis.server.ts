@@ -30,7 +30,7 @@ async function loadPlayerData(player: Player) {
 	}
 
 	try {
-		const document = await collection.load(`${player.UserId}`, { player.UserId }); // FOR GDPR compliance.
+		const document = await collection.load(`${player.UserId}`, [player.UserId]); // FOR GDPR compliance.
 
 		if (!player.IsDescendantOf(Players)) {
 			return;

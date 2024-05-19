@@ -9,6 +9,6 @@ function updateInput(_: World, state: StateType) {
 
 export = {
 	system: updateInput,
-	event: "renderStepped",
+	event: "renderedStepped",
 	priority: -math.huge,
 };
