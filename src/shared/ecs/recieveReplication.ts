@@ -3,6 +3,7 @@ import * as Components from "./components";
 import { RootProducer } from "shared/state/client";
 import { matterReplication } from "shared/net";
 import { Players } from "@rbxts/services";
+import { StateType } from "./types";
 
 type ComponentNames = keyof typeof Components;
 type ComponentConstructors = (typeof Components)[ComponentNames];
@@ -17,9 +18,9 @@ const DEBUG_MODIFY = "Modify %ds%d adding %s, removing %s";
  * @param world - The world to replicate components in
  * @param state - The global state for the ECS
  */
-function recieveReplication(world: World, state: RootProducer): void {
+function recieveReplication(world: World, state: StateType): void {
 	function debugPrint(message: string, args: () => (string | number)[]): void {
-		if (state.getState().debugEnabled.enabled) {
+		if ((state.reflex as RootProducer).getState().debugEnabled.enabled) {
 			print("ECS Replication>", string.format(message, ...args()));
 		}
 	}

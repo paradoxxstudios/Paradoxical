@@ -4,45 +4,48 @@ import { Model } from "shared/ecs/components";
 import { RootProducer } from "shared/state/client";
 import { PlayerAnimations } from "shared/state/shared/slices/players";
 import loadAnimations from "./loadAnimations";
+import { StateType } from "shared/ecs/types";
 
-function playAnimations(world: World, state: RootProducer) {
+function playAnimations(world: World, state: StateType) {
 	if (!world.contains(tonumber(playerId) as number)) return;
+
+	const relfexState = state.reflex as RootProducer;
 
 	const model = world.get(tonumber(playerId) as number, Model);
 	const humanoid = model?.humanoid as Humanoid;
 
-	const animationState = state.getState().players.animation[playerId] as PlayerAnimations;
+	const animationState = relfexState.getState().players.animation[playerId] as PlayerAnimations;
 	if (animationState.idle === undefined) return;
 
-	state.changeJumpAnimTime(playerId, animationState.jumpAnimTime - useDeltaTime());
+	relfexState.changeJumpAnimTime(playerId, animationState.jumpAnimTime - useDeltaTime());
 
 	for (const [_, __, newState] of useEvent(humanoid, "StateChanged")) {
 		switch (newState) {
 			case Enum.HumanoidStateType.Jumping: {
-				state.playAnimation(playerId, animationState.jump as AnimationTrack);
-				state.changeJumpAnimTime(playerId, 0.35);
+				relfexState.playAnimation(playerId, animationState.jump as AnimationTrack);
+				relfexState.changeJumpAnimTime(playerId, 0.35);
 				break;
 			}
 			case Enum.HumanoidStateType.Freefall: {
-				state.toggleFreefall(playerId);
+				relfexState.toggleFreefall(playerId);
 				break;
 			}
 		}
 	}
 
 	if (
-		state.getState().players.animation[playerId]?.freefalling &&
-		state.getState().players.animation[playerId]?.jumpAnimTime === 0
+		relfexState.getState().players.animation[playerId]?.freefalling &&
+		relfexState.getState().players.animation[playerId]?.jumpAnimTime === 0
 	) {
-		state.toggleFreefall(playerId);
-		state.playAnimation(playerId, animationState.land as AnimationTrack);
+		relfexState.toggleFreefall(playerId);
+		relfexState.playAnimation(playerId, animationState.land as AnimationTrack);
 	}
 
 	if (animationState.jump?.IsPlaying || animationState.land?.IsPlaying) return;
 	if (humanoid.MoveDirection.Magnitude !== 0) {
-		state.playAnimation(playerId, animationState.walk as AnimationTrack);
+		relfexState.playAnimation(playerId, animationState.walk as AnimationTrack);
 	} else {
-		state.playAnimation(playerId, animationState.idle as AnimationTrack);
+		relfexState.playAnimation(playerId, animationState.idle as AnimationTrack);
 	}
 }
 

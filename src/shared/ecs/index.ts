@@ -12,6 +12,8 @@ import { CombineProducers, combineProducers } from "@rbxts/reflex";
 
 import { store as clientStore, RootProducer as ClientRootProducer, RootProducer } from "shared/state/client";
 import recieveReplication from "./recieveReplication";
+import { SparkState, sparkState } from "shared/spark";
+import { StateType } from "./types";
 const serverStoreModule = ServerScriptService.FindFirstChild("paradoxical")?.FindFirstChild("store") as ModuleScript;
 
 const MAX_DISPLAY_ORDER = 2147483647;
@@ -37,7 +39,7 @@ let connections:
  * @throws "ECS already running."
  * This is thrown when the ECS has already been started.
  */
-export function start(host: Host): [World, CombineProducers<{}>] {
+export function start(host: Host): [World, StateType] {
 	if (connections) throw "ECS already running.";
 
 	const world = new World();
@@ -50,34 +52,37 @@ export function start(host: Host): [World, CombineProducers<{}>] {
 		return model?.model;
 	};
 
-	let state: CombineProducers<{}> | ClientRootProducer;
+	const state: { reflex?: CombineProducers<{}> | ClientRootProducer; spark?: SparkState } = {};
+	state.spark = sparkState;
 	if (host === Host.Client) {
-		state = clientStore;
+		state.reflex = clientStore;
 	} else if (host === Host.Server) {
 		const serverStore = (
 			require(serverStoreModule) as {
 				store: CombineProducers<any>;
 			}
 		).store;
-		state = serverStore;
+		state.reflex = serverStore;
 	} else {
-		state = combineProducers({});
+		state.reflex = combineProducers({});
 	}
 	const loop = new Loop(world, state, debug.getWidgets());
 	startSystems(host, loop, debug);
 	debug.autoInitialize(loop);
 
-	connections = loop.begin({
+	const runServices: { [index: string]: RBXScriptSignal<(deltaTime: number) => void> } = {
 		default: RunService.Heartbeat,
 		stepped: RunService.Stepped,
-	});
+	};
 
 	if (host === Host.All || host === Host.Server) {
+		connections = loop.begin(runServices);
 		startTags(world, tags);
 	}
 
 	if (host === Host.All || host === Host.Client) {
-		recieveReplication(world, state as RootProducer);
+		connections = loop.begin({ ...runServices, renderedStepped: RunService.RenderStepped });
+		recieveReplication(world, state as StateType);
 
 		const serverDebugger = ReplicatedStorage.FindFirstChild("MatterDebugger");
 		if (serverDebugger && serverDebugger.IsA("ScreenGui")) {
@@ -89,7 +94,7 @@ export function start(host: Host): [World, CombineProducers<{}>] {
 			clientDebugger.DisplayOrder = MAX_DISPLAY_ORDER;
 		}
 
-		const clientState: ClientRootProducer = state as ClientRootProducer;
+		const clientState: ClientRootProducer = state.reflex as ClientRootProducer;
 		UserInputService.InputBegan.Connect((input) => {
 			if (input.KeyCode === Enum.KeyCode.F4 && authorize(Players.LocalPlayer)) {
 				debug.toggle();
@@ -98,7 +103,7 @@ export function start(host: Host): [World, CombineProducers<{}>] {
 		});
 	}
 
-	return [world, state];
+	return [world, state as StateType];
 }
 
 /**
