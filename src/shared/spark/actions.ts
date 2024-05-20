@@ -1,2 +1,2 @@
-export type ActionKeys = "move" | "jump";
-export const actions = ["move", "jump"];
+export type ActionKeys = "move" | "jump" | "crouch";
+export const actions = ["move", "jump", "crouch"];

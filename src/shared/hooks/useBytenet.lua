@@ -1,14 +1,15 @@
 local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
 local Matter = TS.import(script, game:GetService("ReplicatedStorage"), "rbxts_include", "node_modules", "@rbxts", "matter", "lib")
 
-local function useReflex(id, producer, selector) 
+local function useBytenet(id, packet) 
     local storage = Matter.useHookState(id)
 
-    if storage.event == nil then
+    if storage.id == nil then
         storage.queue = {}
-
-        storage.event = producer:subscribe(selector, function(current, previous)
-            table.insert(storage.queue, table.pack(current, previous))
+        storage.id = id
+        
+        packet.listen(function(data, player)
+            table.insert(storage.queue, table.pack(data, player))
         end)
     end
 
@@ -25,4 +26,4 @@ local function useReflex(id, producer, selector)
     end
 end
 
-return useReflex
+return useBytenet
