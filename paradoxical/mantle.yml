@@ -15,6 +15,8 @@ target:
     icon: marketing/game-icon.png
     thumbnails: 
       - marketing/game-icon.png
+      - marketing/thumbnail-1.png
+      - marketing/thumbnail-2.png
     configuration:
       genre: fighting
       playableDevices: [computer, phone, tablet]
