@@ -334,18 +334,18 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>138.428604</X>
-					<Y>153.180634</Y>
-					<Z>113.881104</Z>
-					<R00>0.419889212</R00>
-					<R01>-0.696271479</R01>
-					<R02>0.5821504</R02>
-					<R10>1.49011612e-08</R10>
-					<R11>0.641434789</R11>
-					<R12>0.767177582</R12>
-					<R20>-0.907575369</R20>
-					<R21>-0.322129577</R21>
-					<R22>0.269331545</R22>
+					<X>138.100479</X>
+					<Y>153.29454</Y>
+					<Z>114.106712</Z>
+					<R00>0.67465657</R00>
+					<R01>-0.608311892</R01>
+					<R02>0.418085188</R02>
+					<R10>-2.98023224e-08</R10>
+					<R11>0.566409945</R11>
+					<R12>0.82412374</R12>
+					<R20>-0.738131762</R20>
+					<R21>-0.556000471</R21>
+					<R22>0.382132143</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
@@ -444,6 +444,18 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">5fa9a08a53fcc5ad0640983900000318</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="TimerService" referent="RBX82B5AE495A4C45C495D690B4063E4F54">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">TimerService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<UniqueId name="UniqueId">63cc3685df3b4f00065eca100000032d</UniqueId>
 		</Properties>
 	</Item>
 	<Item class="Players" referent="RBXDF5AD98CB970407BB3D3A84424B728FF">
@@ -12889,18 +12901,6 @@ start(HOST)
 			<UniqueId name="UniqueId">63cc3685df3b4f00065eca100000032c</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="TimerService" referent="RBX82B5AE495A4C45C495D690B4063E4F54">
-		<Properties>
-			<BinaryString name="AttributesSerialize"></BinaryString>
-			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-			<bool name="DefinesCapabilities">false</bool>
-			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-			<string name="Name">TimerService</string>
-			<int64 name="SourceAssetId">-1</int64>
-			<BinaryString name="Tags"></BinaryString>
-			<UniqueId name="UniqueId">63cc3685df3b4f00065eca100000032d</UniqueId>
-		</Properties>
-	</Item>
 	<Item class="CookiesService" referent="RBX3FEAA9246D8B4566924064743F1185B2">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -13515,14 +13515,20 @@ return {
 						<string name="ScriptGuid">{10CD85BE-155D-4B48-8BA7-128AD17ACA99}</string>
 						<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
 local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
-local createCollection = TS.import(script, game:GetService("ReplicatedStorage"), "rbxts_include", "node_modules", "@rbxts", "lapis", "out").createCollection
+local _lapis = TS.import(script, game:GetService("ReplicatedStorage"), "rbxts_include", "node_modules", "@rbxts", "lapis", "out")
+local createCollection = _lapis.createCollection
+local setConfig = _lapis.setConfig
 local Players = TS.import(script, game:GetService("ReplicatedStorage"), "rbxts_include", "node_modules", "@rbxts", "services").Players
 local store = TS.import(script, game:GetService("ServerScriptService"), "paradoxical", "store").store
 local selectPlayerData = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "state", "shared", "selectors").selectPlayerData
 local defaultPlayerData = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "state", "shared", "slices", "players").defaultPlayerData
 local validate = TS.import(script, game:GetService("ServerScriptService"), "paradoxical", "data", "validate").validate
+local DataStoreWrapper = TS.import(script, game:GetService("ServerScriptService"), "paradoxical", "data", "dataStore")
 -- Required to allow interfaces to be used as the collection type
 -- eslint-disable-next-line @typescript-eslint/no-explicit-any
+setConfig({
+	dataStoreService = DataStoreWrapper,
+})
 local collection = createCollection("PlayerData", {
 	defaultData = defaultPlayerData,
 	validate = validate,
@@ -13586,6 +13592,621 @@ end
 						<BinaryString name="Tags"></BinaryString>
 						<UniqueId name="UniqueId">3a589e3654c30573064751ed00006389</UniqueId>
 					</Properties>
+				</Item>
+				<Item class="ModuleScript" referent="RBX239B97F9A10A4EED831F1B9F2BE27468">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+						<bool name="DefinesCapabilities">false</bool>
+						<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">dataStore</string>
+						<string name="ScriptGuid">{31DCBEE2-FD70-4081-88BB-F25F5CF2DEE2}</string>
+						<ProtectedString name="Source"><![CDATA[local MockDataStoreServiceModule = script.mockDataStore
+
+local shouldUseMock = false
+if game.GameId == 0 then -- Local place file
+	shouldUseMock = true
+elseif game:GetService("RunService"):IsStudio() then -- Published file in Studio
+	local status, message = pcall(function()
+		-- This will error if current instance has no Studio API access:
+		game:GetService("DataStoreService"):GetDataStore("__TEST"):SetAsync("__TEST", "__TEST_" .. os.time())
+	end)
+	if not status and message:find("403", 1, true) then -- HACK
+		-- Can connect to datastores, but no API access
+		shouldUseMock = true
+	end
+end
+
+-- Return the mock or actual service depending on environment:
+if shouldUseMock then
+	warn("INFO: Using MockDataStoreService instead of DataStoreService")
+	return require(MockDataStoreServiceModule).new()
+else
+	return game:GetService("DataStoreService")
+end
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063b6</UniqueId>
+					</Properties>
+					<Item class="ModuleScript" referent="RBXB8304DA011374C889C2230225599953F">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+							<bool name="DefinesCapabilities">false</bool>
+							<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">mockDataStore</string>
+							<string name="ScriptGuid">{951C2265-02CB-4845-BA54-FD552C5D2F14}</string>
+							<ProtectedString name="Source"><![CDATA[local RunService = game:GetService("RunService")
+
+local Budget = require(script.budget)
+local Constants = require(script.constants)
+local GlobalDataStore = require(script.globalDataStore)
+local SimulatedErrors = require(script.simulatedErrors)
+local SimulatedYield = require(script.simulatedYield)
+local validateString = require(script.validateString)
+
+local function assertServer()
+	if not RunService:IsServer() then
+		error("DataStore can't be accessed from the client")
+	end
+end
+
+local DataStoreServiceMock = {}
+DataStoreServiceMock.__index = DataStoreServiceMock
+
+function DataStoreServiceMock.new()
+	return setmetatable({
+		dataStores = {},
+		errors = SimulatedErrors.new(),
+		yield = SimulatedYield.new(),
+		budget = Budget.new(),
+	}, DataStoreServiceMock)
+end
+
+function DataStoreServiceMock.manual()
+	return setmetatable({
+		dataStores = {},
+		errors = SimulatedErrors.new(),
+		yield = SimulatedYield.new(),
+		budget = Budget.manual(),
+	}, DataStoreServiceMock)
+end
+
+function DataStoreServiceMock:GetDataStore(name, scope)
+	assertServer()
+
+	scope = scope or "global"
+
+	validateString("name", name, Constants.MAX_NAME_LENGTH)
+	validateString("scope", scope, Constants.MAX_SCOPE_LENGTH)
+
+	if self.dataStores[name] == nil then
+		self.dataStores[name] = {}
+	end
+
+	if self.dataStores[name][scope] == nil then
+		self.dataStores[name][scope] = GlobalDataStore.new(self.budget, self.errors, self.yield)
+	end
+
+	return self.dataStores[name][scope]
+end
+
+function DataStoreServiceMock:GetRequestBudgetForRequestType(requestType)
+	local budget = self.budget.budgets[requestType]
+
+	if budget == nil then
+		error("`requestType` must be an Enum.DataStoreRequestType")
+	end
+
+	return budget
+end
+
+return DataStoreServiceMock]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+							<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063b8</UniqueId>
+						</Properties>
+						<Item class="ModuleScript" referent="RBXC0B4679DEAE540E78B61042295618946">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+								<bool name="DefinesCapabilities">false</bool>
+								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+								<Content name="LinkedSource"><null></null></Content>
+								<string name="Name">budget</string>
+								<string name="ScriptGuid">{A52298E8-DB31-4402-8F79-72E7D176354B}</string>
+								<ProtectedString name="Source"><![CDATA[local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Constants = require(script.Parent.constants)
+
+local function defaultBudget()
+	local budgets = {}
+	local queues = {}
+
+	for requestType, options in Constants.REQUEST_BUDGETS do
+		budgets[requestType] = options.INITIAL_BUDGET
+		queues[requestType] = {}
+	end
+
+	budgets[Enum.DataStoreRequestType.UpdateAsync] =
+		math.min(budgets[Enum.DataStoreRequestType.GetAsync], budgets[Enum.DataStoreRequestType.SetIncrementAsync])
+
+	return {
+		accumulatedSeconds = 0,
+		budgets = budgets,
+		queues = queues,
+		maxThrottleQueueSize = Constants.MAX_THROTTLE_QUEUE_SIZE,
+	}
+end
+
+local Budget = {}
+Budget.__index = Budget
+
+function Budget.new()
+	local self = setmetatable(defaultBudget(), Budget)
+
+	self.manual = false
+
+	RunService.PostSimulation:Connect(function(deltaSeconds)
+		self:tick(deltaSeconds)
+	end)
+
+	return self
+end
+
+function Budget.manual()
+	local self = setmetatable(defaultBudget(), Budget)
+
+	self.manual = true
+
+	return self
+end
+
+function Budget:setMaxThrottleQueueSize(size)
+	self.maxThrottleQueueSize = size
+end
+
+function Budget:hasBudget(requestTypes)
+	for _, requestType in requestTypes do
+		if self.budgets[requestType] < 1 then
+			return false
+		end
+	end
+
+	return true
+end
+
+function Budget:consumeBudget(requestTypes)
+	for _, requestType in requestTypes do
+		self.budgets[requestType] = math.max(self.budgets[requestType] - 1, 0)
+	end
+
+	self.budgets[Enum.DataStoreRequestType.UpdateAsync] = math.min(
+		self.budgets[Enum.DataStoreRequestType.GetAsync],
+		self.budgets[Enum.DataStoreRequestType.SetIncrementAsync]
+	)
+end
+
+function Budget:updateBudgets()
+	local playerCount = #Players:GetPlayers()
+
+	for requestType, options in Constants.REQUEST_BUDGETS do
+		local rate = options.RATE + playerCount * options.RATE_PER_PLAYER
+
+		self.budgets[requestType] = math.min(
+			self.budgets[requestType] + rate * Constants.BUDGET_UPDATE_INTERVAL,
+			options.MAX_BUDGET_FACTOR * rate
+		)
+	end
+
+	self.budgets[Enum.DataStoreRequestType.UpdateAsync] = math.min(
+		self.budgets[Enum.DataStoreRequestType.GetAsync],
+		self.budgets[Enum.DataStoreRequestType.SetIncrementAsync]
+	)
+end
+
+function Budget:updateQueues()
+	for index, queue in self.queues do
+		local newQueue = {}
+
+		for _, request in queue do
+			if self:hasBudget(request.requestTypes) then
+				self:consumeBudget(request.requestTypes)
+				coroutine.resume(request.thread)
+			else
+				table.insert(newQueue, request)
+			end
+		end
+
+		self.queues[index] = newQueue
+	end
+end
+
+function Budget:update()
+	self:updateBudgets()
+	self:updateQueues()
+end
+
+function Budget:tick(deltaSeconds)
+	self.accumulatedSeconds += deltaSeconds
+
+	while self.accumulatedSeconds >= Constants.BUDGET_UPDATE_INTERVAL do
+		self:update()
+		self.accumulatedSeconds -= Constants.BUDGET_UPDATE_INTERVAL
+	end
+end
+
+function Budget:yieldForBudget(requestTypes)
+	local mainRequestType = requestTypes[1]
+
+	if self:hasBudget(requestTypes) then
+		self:consumeBudget(requestTypes)
+	elseif #self.queues[mainRequestType] >= self.maxThrottleQueueSize then
+		error("Request was throttled due to lack of budget but the throttle queue was full")
+	else
+		warn("Request was throttled due to lack of budget")
+
+		table.insert(self.queues[mainRequestType], {
+			thread = coroutine.running(),
+			requestTypes = requestTypes,
+		})
+
+		coroutine.yield()
+	end
+end
+
+return Budget
+]]></ProtectedString>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063ba</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="ModuleScript" referent="RBXD42028FCB4A54C849A08910587C24663">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+								<bool name="DefinesCapabilities">false</bool>
+								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+								<Content name="LinkedSource"><null></null></Content>
+								<string name="Name">constants</string>
+								<string name="ScriptGuid">{D66CEC63-4950-470E-AC56-97A22CB90462}</string>
+								<ProtectedString name="Source"><![CDATA[return {
+	MAX_NAME_LENGTH = 50,
+	MAX_SCOPE_LENGTH = 50,
+	MAX_KEY_LENGTH = 50,
+
+	MAX_THROTTLE_QUEUE_SIZE = 30, -- The amount of requests that can be throttled per request type at once before the request will error.
+
+	BUDGET_UPDATE_INTERVAL = 1,
+
+	GET_CACHE_DURATION = 5,
+
+	REQUEST_BUDGETS = {
+		[Enum.DataStoreRequestType.GetAsync] = {
+			INITIAL_BUDGET = 100,
+			RATE = 60,
+			RATE_PER_PLAYER = 10,
+			MAX_BUDGET_FACTOR = 3,
+		},
+
+		[Enum.DataStoreRequestType.SetIncrementAsync] = {
+			INITIAL_BUDGET = 100,
+			RATE = 60,
+			RATE_PER_PLAYER = 10,
+			MAX_BUDGET_FACTOR = 3,
+		},
+
+		[Enum.DataStoreRequestType.SetIncrementSortedAsync] = {
+			INITIAL_BUDGET = 50,
+			RATE = 30,
+			RATE_PER_PLAYER = 5,
+			MAX_BUDGET_FACTOR = 3,
+		},
+
+		[Enum.DataStoreRequestType.OnUpdate] = {
+			INITIAL_BUDGET = 30,
+			RATE = 30,
+			RATE_PER_PLAYER = 5,
+			MAX_BUDGET_FACTOR = 1,
+		},
+
+		[Enum.DataStoreRequestType.GetSortedAsync] = {
+			INITIAL_BUDGET = 10,
+			RATE = 5,
+			RATE_PER_PLAYER = 2,
+			MAX_BUDGET_FACTOR = 3,
+		},
+	},
+}
+]]></ProtectedString>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063bc</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="ModuleScript" referent="RBXE04D05606C3A4DCB801F3983D63BF98A">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+								<bool name="DefinesCapabilities">false</bool>
+								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+								<Content name="LinkedSource"><null></null></Content>
+								<string name="Name">dataStoreKeyInfo</string>
+								<string name="ScriptGuid">{1DAE8B55-DE68-4C37-929A-50A9ED215332}</string>
+								<ProtectedString name="Source"><![CDATA[local DataStoreKeyInfo = {}
+DataStoreKeyInfo.__index = DataStoreKeyInfo
+
+function DataStoreKeyInfo.new(createdTime, updatedTime, version, userIds, metadata)
+	local userIdsType = typeof(userIds)
+
+	if userIdsType ~= "nil" and userIdsType ~= "table" then
+		error(`expected userIds to be a table or nil, got {userIdsType}`)
+	end
+
+	if userIdsType == "table" then
+		local expectedKey = 1
+		for key, value in userIds do
+			assert(typeof(value) == "number", "userId must be a number")
+
+			if key ~= expectedKey then
+				error(`expected userIds to be an array, got invalid key: {key}`)
+			end
+
+			expectedKey += 1
+		end
+	end
+
+	return setmetatable({
+		CreatedTime = createdTime * 1000,
+		UpdatedTime = updatedTime * 1000,
+		Version = version,
+		userIds = if userIds ~= nil then table.clone(userIds) else {},
+		metadata = if metadata ~= nil then table.clone(metadata) else {},
+	}, DataStoreKeyInfo)
+end
+
+function DataStoreKeyInfo:GetUserIds()
+	return table.clone(self.userIds)
+end
+
+function DataStoreKeyInfo:GetMetadata()
+	return table.clone(self.metadata)
+end
+
+return DataStoreKeyInfo
+]]></ProtectedString>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063be</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="ModuleScript" referent="RBXEFA2824A9A8B4A0CB7A0C422F9793205">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+								<bool name="DefinesCapabilities">false</bool>
+								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+								<Content name="LinkedSource"><null></null></Content>
+								<string name="Name">globalDataStore</string>
+								<string name="ScriptGuid">{7A18F07E-3273-46FD-999B-5AF216A6C374}</string>
+								<ProtectedString name="Source"><![CDATA[local Constants = require(script.Parent.constants)
+local DataStoreKeyInfo = require(script.Parent.dataStoreKeyInfo)
+local validateString = require(script.Parent.validateString)
+
+local function copyDeep(value)
+	if typeof(value) ~= "table" then
+		return value
+	end
+
+	local copy = {}
+
+	for a, b in value do
+		copy[a] = copyDeep(b)
+	end
+
+	return copy
+end
+
+local GlobalDataStore = {}
+GlobalDataStore.__index = GlobalDataStore
+
+function GlobalDataStore.new(budget, errors, yield)
+	return setmetatable({
+		data = {},
+		keyInfos = {},
+		getCache = {},
+		budget = budget,
+		errors = errors,
+		yield = yield,
+	}, GlobalDataStore)
+end
+
+function GlobalDataStore:write(key, data, userIds, metadata)
+	local now = DateTime.now().UnixTimestampMillis
+
+	local keyInfo = self.keyInfos[key]
+
+	if keyInfo ~= nil then
+		local version = tostring(tonumber(keyInfo.Version) + 1)
+
+		self.keyInfos[key] = DataStoreKeyInfo.new(keyInfo.CreatedTime, now, version, userIds, metadata)
+	else
+		self.keyInfos[key] = DataStoreKeyInfo.new(now, now, "0", userIds, metadata)
+	end
+
+	-- Data is written after key info because DataStoreKeyInfo.new can throw an error.
+	self.data[key] = copyDeep(data)
+end
+
+function GlobalDataStore:UpdateAsync(key, transform)
+	validateString("key", key, Constants.MAX_KEY_LENGTH)
+
+	if typeof(transform) ~= "function" then
+		error("`transform` must be a function")
+	end
+
+	if self.errors ~= nil then
+		self.errors:simulateError("UpdateAsync")
+	end
+
+	local usingGetCache = self.getCache[key] ~= nil and os.clock() < self.getCache[key]
+
+	local requestsTypes = if usingGetCache
+		then { Enum.DataStoreRequestType.SetIncrementAsync }
+		else { Enum.DataStoreRequestType.GetAsync, Enum.DataStoreRequestType.SetIncrementAsync }
+
+	self.budget:yieldForBudget(requestsTypes)
+
+	local oldValue = self.data[key]
+
+	local ok, transformed, userIds, metadata = pcall(transform, copyDeep(oldValue), self.keyInfos[key])
+
+	if not ok then
+		task.spawn(error, transformed)
+		return nil
+	end
+
+	if transformed == nil then
+		return nil
+	end
+
+	-- TODO: Make sure transformed data is savable.
+
+	self.yield:yield()
+
+	self:write(key, transformed, userIds, metadata)
+
+	self.getCache[key] = os.clock() + Constants.GET_CACHE_DURATION
+
+	return copyDeep(transformed), self.keyInfos[key]
+end
+
+return GlobalDataStore
+]]></ProtectedString>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063c0</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="ModuleScript" referent="RBX71A7E20B01F841458077C9D554A594FC">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+								<bool name="DefinesCapabilities">false</bool>
+								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+								<Content name="LinkedSource"><null></null></Content>
+								<string name="Name">simulatedErrors</string>
+								<string name="ScriptGuid">{C2F1F880-87D5-4FC0-A704-3574102F9B78}</string>
+								<ProtectedString name="Source"><![CDATA[local SimulatedErrors = {}
+SimulatedErrors.__index = SimulatedErrors
+
+function SimulatedErrors.new()
+	return setmetatable({
+		errorsToSimulate = 0,
+	}, SimulatedErrors)
+end
+
+function SimulatedErrors:addSimulatedErrors(amount)
+	assert(typeof(amount) == "number", "`amount` must be a number")
+
+	self.errorsToSimulate += amount
+end
+
+function SimulatedErrors:simulateError(method)
+	if self.errorsToSimulate > 0 then
+		self.errorsToSimulate -= 1
+
+		error(string.format("`%s` rejected with error (simulated error)", method))
+	end
+end
+
+return SimulatedErrors
+]]></ProtectedString>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063c2</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="ModuleScript" referent="RBXDB72837A701E4B0BACA2BCBD7C7C075C">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+								<bool name="DefinesCapabilities">false</bool>
+								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+								<Content name="LinkedSource"><null></null></Content>
+								<string name="Name">simulatedYield</string>
+								<string name="ScriptGuid">{B71C36AA-D644-43E5-8DD9-FB226DC7B460}</string>
+								<ProtectedString name="Source"><![CDATA[local SimulatedYield = {}
+SimulatedYield.__index = SimulatedYield
+
+function SimulatedYield.new()
+	return setmetatable({
+		yielding = false,
+		threads = {},
+	}, SimulatedYield)
+end
+
+function SimulatedYield:yield()
+	if not self.yielding then
+		return
+	end
+
+	table.insert(self.threads, coroutine.running())
+
+	coroutine.yield()
+end
+
+function SimulatedYield:startYield()
+	self.yielding = true
+end
+
+function SimulatedYield:stopYield()
+	self.yielding = false
+
+	for _, thread in self.threads do
+		task.spawn(thread)
+	end
+
+	table.clear(self.threads)
+end
+
+return SimulatedYield
+]]></ProtectedString>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063c6</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="ModuleScript" referent="RBX6BC20D634A9740E4BAB3818CE485F8F7">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+								<bool name="DefinesCapabilities">false</bool>
+								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+								<Content name="LinkedSource"><null></null></Content>
+								<string name="Name">validateString</string>
+								<string name="ScriptGuid">{17E9A3D6-48B1-4A19-94FE-2803635424B6}</string>
+								<ProtectedString name="Source"><![CDATA[local function validateString(name, value, maxLength)
+	if #value == 0 then
+		error(string.format("`%s` can't be empty string", name))
+	elseif #value > maxLength then
+		error(string.format("`%s` is too long (exceeds %d characters)", name, maxLength))
+	end
+end
+
+return validateString
+]]></ProtectedString>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">7adaba999e94e082065fffa3000063c8</UniqueId>
+							</Properties>
+						</Item>
+					</Item>
 				</Item>
 			</Item>
 			<Item class="ModuleScript" referent="RBXFF1557BB4DBC4ADE923AB3BF1A1F199B">
@@ -105044,6 +105665,465 @@ return nil
 							</Item>
 						</Item>
 					</Item>
+					<Item class="Folder" referent="RBX198B088B7B4C4E2CBAED26BD54A4F24D">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+							<bool name="DefinesCapabilities">false</bool>
+							<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+							<string name="Name">mock-memory-store-service</string>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+							<UniqueId name="UniqueId">7adaba999e94e082065fffa30000607d</UniqueId>
+						</Properties>
+						<Item class="ModuleScript" referent="RBX5448D33FEC1648A2B6E0A7B107EB6ECC">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+								<bool name="DefinesCapabilities">false</bool>
+								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+								<Content name="LinkedSource"><null></null></Content>
+								<string name="Name">lib</string>
+								<string name="ScriptGuid">{7B1F8551-B072-4D07-98C8-7122E64DB07B}</string>
+								<ProtectedString name="Source"><![CDATA[local MockMemoryStoreServiceModule = script.MockMemoryStoreService
+
+local shouldUseMock = false
+if game.GameId == 0 then
+    shouldUseMock = true
+elseif game:GetService("RunService"):IsStudio() then
+	local status, message = pcall(function()
+		-- This will error if current instance has no Studio API access:
+		game:GetService("MemoryStoreService"):GetSortedMap("__TEST")
+	end)
+	if not status and message:find("403", 1, true) then -- HACK
+		-- Can connect to datastores, but no API access
+		shouldUseMock = true
+	end
+end
+
+-- Return the mock or actual service depending on environment:
+if shouldUseMock then
+	warn("INFO: Using MockMemoryStoreService instead of MemoryStoreService")
+	return require(MockMemoryStoreServiceModule) :: MemoryStoreService
+else
+	return game:GetService("MemoryStoreService") :: MemoryStoreService
+end]]></ProtectedString>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">7adaba999e94e082065fffa30000607e</UniqueId>
+							</Properties>
+							<Item class="ModuleScript" referent="RBX5C5A653F1B3D44EA86118E74CB9246E1">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+									<bool name="DefinesCapabilities">false</bool>
+									<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+									<Content name="LinkedSource"><null></null></Content>
+									<string name="Name">MockMemoryStoreService</string>
+									<string name="ScriptGuid">{1FBEA0CE-BF04-438F-B2A8-9068E5FF1485}</string>
+									<ProtectedString name="Source"><![CDATA[local MockMemoryStoreSortedMap = require(script.MockMemoryStoreSortedMap)
+local MockMemoryStoreQueue = require(script.MockMemoryStoreQueue)
+local MockMemoryStoreQuota = require(script.MockMemoryStoreQuota)
+local MockMemoryStoreUtils = require(script.MockMemoryStoreUtils)
+
+local RunService = game:GetService("RunService")
+
+local MockMemoryStoreService = {
+    queues = {},
+    sortedMaps = {}
+}
+MockMemoryStoreService.__index = MockMemoryStoreService
+
+--[[
+    Will retrieve a MockMemoryStoreSortedMap object under the specified name
+]]
+function MockMemoryStoreService:GetSortedMap(name: string)
+    local sortedMap = self.sortedMaps[name];
+    if sortedMap == nil then
+        sortedMap = MockMemoryStoreSortedMap.new(name)
+        self.sortedMaps[name] = sortedMap
+    end
+
+    return sortedMap
+end
+
+--[[
+    Will retrieve a MockMemoryStoreQueue object under the specified name
+]]
+function MockMemoryStoreService:GetQueue(name: string, timeout: number?)
+    MockMemoryStoreUtils.WarnOnce("MockMemoryStoreService queue is still in development, and may not work accurately just yet.")
+
+    local queue = self.queues[name]
+    if queue == nil then
+        queue = MockMemoryStoreQueue.new(name, timeout)
+        self.queues[name] = queue
+    end
+
+    return queue
+end
+
+-- Lifetime handling
+local function onHeartbeat(deltaTime)
+    MockMemoryStoreQuota:UpdateQuota()
+
+    -- Need to handle expiration for each map value
+    for _, map in pairs(MockMemoryStoreService.sortedMaps) do
+        -- Iterate through each value to check if they're expired
+        -- Then expire them
+        for key, value in pairs(map.mapValues) do
+            if value.expiration <= tick() then
+                map:RemoveExpiringKey(key)
+            end
+        end
+    end
+
+    for _, queue in pairs(MockMemoryStoreService.queues) do
+        queue:HandleTimeouts()
+    end
+end
+RunService.Heartbeat:Connect(onHeartbeat)
+
+return MockMemoryStoreService]]></ProtectedString>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<UniqueId name="UniqueId">7adaba999e94e082065fffa30000607f</UniqueId>
+								</Properties>
+								<Item class="ModuleScript" referent="RBX9A2C5DBCBBD34A60BFFBA0B09B888018">
+									<Properties>
+										<BinaryString name="AttributesSerialize"></BinaryString>
+										<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+										<bool name="DefinesCapabilities">false</bool>
+										<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+										<Content name="LinkedSource"><null></null></Content>
+										<string name="Name">ArrayUtil</string>
+										<string name="ScriptGuid">{1B223B70-5A07-444E-8493-71909173F5AD}</string>
+										<ProtectedString name="Source"><![CDATA[local function map(arr, mapFn)
+    local alloc = table.create(#arr)
+    for index, value in ipairs(arr) do
+        table.insert(alloc, mapFn(value, index))
+    end
+    return alloc
+end
+
+return {
+    Map = map
+}]]></ProtectedString>
+										<int64 name="SourceAssetId">-1</int64>
+										<BinaryString name="Tags"></BinaryString>
+										<UniqueId name="UniqueId">7adaba999e94e082065fffa300006080</UniqueId>
+									</Properties>
+								</Item>
+								<Item class="ModuleScript" referent="RBX48CD196372F84D4D8F94B1C88A02244A">
+									<Properties>
+										<BinaryString name="AttributesSerialize"></BinaryString>
+										<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+										<bool name="DefinesCapabilities">false</bool>
+										<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+										<Content name="LinkedSource"><null></null></Content>
+										<string name="Name">MockMemoryStoreQueue</string>
+										<string name="ScriptGuid">{D460DB85-C167-492F-8AC7-515E4B2F6A0A}</string>
+										<ProtectedString name="Source"><![CDATA[local MockMemoryStoreQuota = require(script.Parent.MockMemoryStoreQuota)
+local ArrayUtil = require(script.Parent.ArrayUtil)
+
+local httpService = game:GetService("HttpService")
+
+local MockMemoryStoreQueue = {}
+MockMemoryStoreQueue.__index = MockMemoryStoreQueue;
+
+type Value = {
+    value: any,
+    priority: number,
+    expiration: number,
+}
+
+function MockMemoryStoreQueue.new(name: string, timeout: number)
+    return setmetatable({
+        queue = {},
+        refs = {},
+        invisibilityTimeout = timeout or 30
+    }, MockMemoryStoreQueue)
+end
+
+function MockMemoryStoreQueue:GetRef(id)
+    return self.refs[id]
+end
+
+function MockMemoryStoreQueue:ReadAsync(count: number, allOrNothing: boolean?, waitTimeout: number?)
+    assert(typeof(count) == "number", "Expected count (number)")
+    assert(count < 100 and count >= 0, "Expected count of 0 - 100")
+    allOrNothing = if allOrNothing then allOrNothing else false
+    waitTimeout = if waitTimeout then waitTimeout else -1
+
+    assert(type(allOrNothing) == "boolean")
+    assert(type(waitTimeout) == "number")
+
+    MockMemoryStoreQuota:ProcessReadRequest()
+
+    local time = 0
+    repeat
+        print("yield", time);
+        time += task.wait()
+    until (waitTimeout ~= -1 and time >= waitTimeout) or (not allOrNothing or #self.queue >= count)
+
+    local queueCount = #self.queue
+
+    local results = table.move(self.queue, queueCount + 1 - count, queueCount, 1, {})
+    local refId = httpService:GenerateGUID(false)
+
+    self.queue = table.move(self.queue, 1, #self.queue - count, 1, {})
+    self.refs[refId] = {
+        results = results,
+        timeout = tick() + self.invisibilityTimeout
+    }
+
+    local mapped = ArrayUtil.Map(results, function(v)
+        return v.value
+    end)
+
+    return mapped, refId, { time = time, queue = self.queue, refs = self.refs }
+end
+
+function MockMemoryStoreQueue:HandleTimeouts()
+    -- Remove expired values in queue
+    for index, value in ipairs(self.queue) do
+        if value.expiration < tick() then
+            table.remove(self.queue, index)
+        end
+    end
+
+    -- Push any timed out values back into queue if not used
+    for index, value in pairs(self.refs) do
+        if value.timeout < tick() then
+            self.refs[index] = nil
+            for _, result in pairs(value.results) do
+                self:AddAsyncInternal(result)
+            end
+        end
+    end
+end
+
+function MockMemoryStoreQueue:RemoveAsync(ref: string)
+    MockMemoryStoreQuota:ProcessWriteRequest()
+
+    local valueRef = self.refs[ref]
+    if valueRef then
+        self.refs[ref] = nil
+    end
+end
+
+function MockMemoryStoreQueue:AddAsyncInternal(value: Value)
+    -- First index, since FIFO
+    table.insert(self.queue, 1, value)
+
+    table.sort(self.queue, function(a: Value, b: Value)
+        return a.priority > b.priority
+    end)
+end
+
+function MockMemoryStoreQueue:AddAsync(value: any, expirationSeconds: number, priority: number?)
+    assert(typeof(expirationSeconds) == "number", "Expected 'expirationSeconds' (number) at argument #2")
+
+    MockMemoryStoreQuota:ProcessWriteRequest()
+    self:AddAsyncInternal({
+        value = value,
+        expiration = tick() + expirationSeconds,
+        priority = priority or 3
+    })
+end
+
+return MockMemoryStoreQueue]]></ProtectedString>
+										<int64 name="SourceAssetId">-1</int64>
+										<BinaryString name="Tags"></BinaryString>
+										<UniqueId name="UniqueId">7adaba999e94e082065fffa300006081</UniqueId>
+									</Properties>
+								</Item>
+								<Item class="ModuleScript" referent="RBX0FADC69E676C4DA3B77141C756C03B54">
+									<Properties>
+										<BinaryString name="AttributesSerialize"></BinaryString>
+										<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+										<bool name="DefinesCapabilities">false</bool>
+										<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+										<Content name="LinkedSource"><null></null></Content>
+										<string name="Name">MockMemoryStoreQuota</string>
+										<string name="ScriptGuid">{FDEF6356-3D0F-4FDC-8C4D-1A6037D41E5A}</string>
+										<ProtectedString name="Source"><![CDATA[local MockMemoryStoreQuota = {
+    quota = 1000,
+    lastQuotaCheckTime = 0
+}
+
+function MockMemoryStoreQuota:GetRequestBaseQuota()
+    return 1000
+end
+
+function MockMemoryStoreQuota:GetRequestPlayerQuota(numPlayers)
+    return 100 * (if numPlayers ~= nil then numPlayers else #game:GetService("Players"):GetPlayers())
+end
+
+function MockMemoryStoreQuota:Get()
+    return self.quota
+end
+
+function MockMemoryStoreQuota:ProcessWriteRequest()
+    if self.quota <= 0 then
+        error("Exceeded MemoryStore quota (on write)", 2)
+    end
+
+    self.quota -= 1
+end
+
+function MockMemoryStoreQuota:ProcessReadRequest()
+    if self.quota <= 0 then
+        error("Exceeded MemoryStore quota (on read)", 2)
+    end
+
+    self.quota -= 1
+end
+
+function MockMemoryStoreQuota:UpdateQuota()
+    -- Every 60 seconds, we're resetting teh quota.
+    if self.lastQuotaCheckTime < tick() + 60 then
+        self.quota = self:GetRequestBaseQuota() + self:GetRequestPlayerQuota()
+        self.lastQuotaCheckTime = tick()
+    end
+end
+
+return MockMemoryStoreQuota]]></ProtectedString>
+										<int64 name="SourceAssetId">-1</int64>
+										<BinaryString name="Tags"></BinaryString>
+										<UniqueId name="UniqueId">7adaba999e94e082065fffa300006082</UniqueId>
+									</Properties>
+								</Item>
+								<Item class="ModuleScript" referent="RBX2AF5F724C66443D7B0DB0796F088208B">
+									<Properties>
+										<BinaryString name="AttributesSerialize"></BinaryString>
+										<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+										<bool name="DefinesCapabilities">false</bool>
+										<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+										<Content name="LinkedSource"><null></null></Content>
+										<string name="Name">MockMemoryStoreSortedMap</string>
+										<string name="ScriptGuid">{EDACDA61-603B-4227-8682-24FE1B9C3F36}</string>
+										<ProtectedString name="Source"><![CDATA[local MockMemoryStoreQuota = require(script.Parent.MockMemoryStoreQuota)
+local MockMemoryStoreUtils = require(script.Parent.MockMemoryStoreUtils)
+
+local MockMemoryStoreSortedMap = {}
+MockMemoryStoreSortedMap.__index = MockMemoryStoreSortedMap;
+
+function MockMemoryStoreSortedMap.new(name)
+    return setmetatable({
+        mapValues = {},
+    }, MockMemoryStoreSortedMap)
+end
+
+function MockMemoryStoreSortedMap:GetAsync(key)
+    MockMemoryStoreUtils.AssertKeyIsValid(key)
+    MockMemoryStoreQuota:ProcessReadRequest()
+
+    local value = self.mapValues[key]
+    if value then
+        return value.innerValue
+    else
+        return nil
+    end
+end
+
+function MockMemoryStoreSortedMap:SetAsync(key, value, expiration)
+    MockMemoryStoreUtils.AssertKeyIsValid(key)
+    assert(expiration, "Expiration required")
+
+    assert(expiration <= MockMemoryStoreUtils.MAX_EXPIRATION_SECONDS, "Exceeds max expiration time")
+
+    local mapValue = {
+        innerValue = value,
+        expiration = tick() + expiration
+    }
+
+    MockMemoryStoreQuota:ProcessWriteRequest()
+    local isExistingItem = self.mapValues[key] ~= nil
+    self.mapValues[key] = mapValue
+
+    return isExistingItem
+end
+
+function MockMemoryStoreSortedMap:UpdateAsync(key, transformFunction, expiration)
+    assert(typeof(key) == "string", "Expects key (argument #1)")
+    assert(typeof(transformFunction) == "function", "Expects transformFunction (argument #2)")
+    assert(typeof(expiration) == "number", "Expects expiration (argument #3)")
+
+    local oldValue = self:GetAsync(key)
+
+    local newValue = transformFunction(oldValue)
+    if newValue ~= nil then
+        self:SetAsync(key, newValue, expiration)
+        return newValue
+    else
+        return nil
+    end
+end
+
+function MockMemoryStoreSortedMap:RemoveAsync(key)
+    MockMemoryStoreQuota:ProcessWriteRequest()
+
+    self.mapValues[key] = nil
+end
+
+function MockMemoryStoreSortedMap:RemoveExpiringKey(key)
+    self.mapValues[key] = nil
+end
+
+function MockMemoryStoreSortedMap:GetRangeAsync(direction, count, exclusiveLowerBound, exclusiveUpperBound)
+    error("Not yet implemented", 2)
+end
+
+return MockMemoryStoreSortedMap]]></ProtectedString>
+										<int64 name="SourceAssetId">-1</int64>
+										<BinaryString name="Tags"></BinaryString>
+										<UniqueId name="UniqueId">7adaba999e94e082065fffa300006083</UniqueId>
+									</Properties>
+								</Item>
+								<Item class="ModuleScript" referent="RBX5DDCBD9E6546495A999B6402A2EC2F5B">
+									<Properties>
+										<BinaryString name="AttributesSerialize"></BinaryString>
+										<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+										<bool name="DefinesCapabilities">false</bool>
+										<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+										<Content name="LinkedSource"><null></null></Content>
+										<string name="Name">MockMemoryStoreUtils</string>
+										<string name="ScriptGuid">{6D287BD2-5916-4761-AB9B-B3385FFEFB19}</string>
+										<ProtectedString name="Source"><![CDATA[local MockMemoryStoreUtils = {}
+
+local MAX_KEY_LENGTH = 128
+
+function MockMemoryStoreUtils.AssertKeyIsValid(key: string)
+    assert(type(key) == "string", "Expects string got " .. typeof(key))
+
+    if #key >= MAX_KEY_LENGTH then
+        error("Key '" .. tostring(key) .. "' exceeds maximum length of " .. MAX_KEY_LENGTH, 3)
+    end
+end
+
+local onceUsedLocations = {}
+function MockMemoryStoreUtils.WarnOnce(message: string)
+    local trace = debug.traceback()
+
+    if onceUsedLocations[trace] then
+        return
+    end
+
+    onceUsedLocations[trace] = true;
+    warn(message)
+end
+
+MockMemoryStoreUtils.MAX_EXPIRATION_SECONDS = 2_592_000
+
+return MockMemoryStoreUtils]]></ProtectedString>
+										<int64 name="SourceAssetId">-1</int64>
+										<BinaryString name="Tags"></BinaryString>
+										<UniqueId name="UniqueId">7adaba999e94e082065fffa300006084</UniqueId>
+									</Properties>
+								</Item>
+							</Item>
+						</Item>
+					</Item>
 				</Item>
 			</Item>
 		</Item>
@@ -105070,18 +106150,6 @@ return nil
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">63cc3685df3b4f00065eca100000034a</UniqueId>
-		</Properties>
-	</Item>
-	<Item class="GuidRegistryService" referent="RBX7AC155509C2B4E9FB331FB37F94ED065">
-		<Properties>
-			<BinaryString name="AttributesSerialize"></BinaryString>
-			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-			<bool name="DefinesCapabilities">false</bool>
-			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-			<string name="Name">GuidRegistryService</string>
-			<int64 name="SourceAssetId">-1</int64>
-			<BinaryString name="Tags"></BinaryString>
-			<UniqueId name="UniqueId">63cc3685df3b4f00065eca100000036c</UniqueId>
 		</Properties>
 	</Item>
 	<Item class="Lighting" referent="RBXC7E40214C7D94A35B327A31FBCF4106E">
@@ -105253,6 +106321,20 @@ return nil
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">63cc3685df3b4f00065eca1000004265</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="DataStoreService" referent="RBXB16F53C856A540AFBC61E3C2950F7708">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="AutomaticRetry">true</bool>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<bool name="LegacyNamingScheme">false</bool>
+			<string name="Name">DataStoreService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<UniqueId name="UniqueId">7adaba999e94e082065fffa300004236</UniqueId>
 		</Properties>
 	</Item>
 	<SharedStrings>

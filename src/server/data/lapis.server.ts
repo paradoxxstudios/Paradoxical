@@ -1,13 +1,18 @@
-import { createCollection } from "@rbxts/lapis";
+import { createCollection, setConfig } from "@rbxts/lapis";
 import { Players } from "@rbxts/services";
 import { store } from "server/store";
 import { selectPlayerData } from "shared/state/shared/selectors";
 import { SaveablePlayerData, defaultPlayerData } from "shared/state/shared/slices/players";
 import { validate } from "./validate";
+import DataStoreWrapper from "./dataStore";
 
 // Required to allow interfaces to be used as the collection type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PlayerDataSchema = SaveablePlayerData & Record<string, any>;
+
+setConfig({
+	dataStoreService: DataStoreWrapper,
+});
 
 const collection = createCollection<PlayerDataSchema>("PlayerData", {
 	defaultData: defaultPlayerData,
