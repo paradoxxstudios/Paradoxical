@@ -20,6 +20,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 --------------------------------------------------------------------------------------------------------
 
-Hey, this includes these guy's code. Here's the project and the license for that code.
+Hey, this includes these guys' code. Here's the project and the license for that code.
 https://github.com/LastTalon/sentinel
 https://github.com/littensy/rbxts-react-example
