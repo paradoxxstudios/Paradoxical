@@ -55,8 +55,7 @@ function loadAnimations(world: World, state: StateType) {
 
 	for (const [_, current, previous] of useReflex(playerId, reflexState, selectPlayerIdleId(playerId))) {
 		if (current === undefined || current === previous) continue;
-		const track = loadAnimation("idle", current, animator, reflexState);
-		reflexState.playAnimation(playerId, track);
+		loadAnimation("idle", current, animator, reflexState);
 	}
 
 	for (const [_, current, previous] of useReflex(playerId, reflexState, selectPlayerWalkId(playerId))) {

@@ -334,18 +334,18 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>138.100479</X>
-					<Y>153.29454</Y>
-					<Z>114.106712</Z>
-					<R00>0.67465657</R00>
-					<R01>-0.608311892</R01>
-					<R02>0.418085188</R02>
-					<R10>-2.98023224e-08</R10>
-					<R11>0.566409945</R11>
-					<R12>0.82412374</R12>
-					<R20>-0.738131762</R20>
-					<R21>-0.556000471</R21>
-					<R22>0.382132143</R22>
+					<X>39.8681641</X>
+					<Y>68.9910507</Y>
+					<Z>31.2753029</Z>
+					<R00>0.821299672</R00>
+					<R01>-0.489531219</R01>
+					<R02>0.29296118</R02>
+					<R10>1.4901163e-08</R10>
+					<R11>0.513519168</R11>
+					<R12>0.858078182</R12>
+					<R20>-0.570497215</R20>
+					<R21>-0.704739332</R21>
+					<R22>0.421753019</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
@@ -354,9 +354,9 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>137.264297</X>
-					<Y>151.646271</Y>
-					<Z>113.342438</Z>
+					<X>39.2822418</X>
+					<Y>67.2748947</Y>
+					<Z>30.431797</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -12764,7 +12764,7 @@ start(HOST)
 					<token name="RunContext">0</token>
 					<string name="ScriptGuid">{837A3C22-8F1E-4AD7-B21B-95C5460C05F3}</string>
 					<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
-print("afnkahfbahbfa")]]></ProtectedString>
+]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">69a2d8b8201fa007065431420000718f</UniqueId>
@@ -13445,13 +13445,8 @@ return {
 						<string name="Name">simulateCommands</string>
 						<string name="ScriptGuid">{1C814D79-4462-44BA-B4C3-738478F9F2D1}</string>
 						<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
-local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
-local useBytenet = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "hooks", "useBytenet")
-local commands = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "net").commands
-local function simulateCommands(world)
-	for _, data, player in useBytenet("10", commands.handleCommands) do
-		print(data, player)
-	end
+local function simulateCommands(_)
+	--
 end
 return simulateCommands
 ]]></ProtectedString>
@@ -14314,6 +14309,47 @@ return {
 						<UniqueId name="UniqueId">3a589e3654c30573064751ed00006349</UniqueId>
 					</Properties>
 				</Item>
+			</Item>
+			<Item class="Script" referent="RBX4E4A988D79124B5AB048CB4C32F6B685">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+					<bool name="DefinesCapabilities">false</bool>
+					<bool name="Disabled">false</bool>
+					<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">simulateCommands</string>
+					<token name="RunContext">0</token>
+					<string name="ScriptGuid">{FC916698-B2C2-4F60-B03A-4851327C4739}</string>
+					<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
+local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
+local t = TS.import(script, game:GetService("ReplicatedStorage"), "rbxts_include", "node_modules", "@rbxts", "t", "lib", "ts").t
+local commands = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "net").commands
+local store = TS.import(script, game:GetService("ServerScriptService"), "paradoxical", "store").store
+commands.handleCommands.listen(function(data, player)
+	local _arg0 = t.number(data)
+	assert(_arg0, "Data is not a number")
+	if player == nil then
+		return nil
+	end
+	local userId = tostring(player.UserId)
+	local _result = store:getState().players.animationId[userId]
+	if _result ~= nil then
+		_result = _result.idle
+	end
+	if _result == 14385447903 then
+		store.changeAnimationId(userId, "walk", 15239128607)
+		store.changeAnimationId(userId, "idle", 15239153655)
+	else
+		store.changeAnimationId(userId, "walk", 14385484112)
+		store.changeAnimationId(userId, "idle", 14385447903)
+	end
+end)
+]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">53ac1ad24175fdfc066024ef0000462e</UniqueId>
+				</Properties>
 			</Item>
 		</Item>
 	</Item>
@@ -15409,8 +15445,7 @@ local function loadAnimations(world, state)
 		if current == nil or current == previous then
 			continue
 		end
-		local track = loadAnimation("idle", current, animator, reflexState)
-		reflexState.playAnimation(playerId, track)
+		loadAnimation("idle", current, animator, reflexState)
 	end
 	for _, current, previous in useReflex(playerId, reflexState, selectPlayerWalkId(playerId)) do
 		if current == nil or current == previous then
@@ -15582,6 +15617,9 @@ local function useCommands(world, state)
 	local sparkState = state.spark
 	local actions = sparkState.actions
 	if actions:justPressed("crouch") then
+		commands.handleCommands.send(2)
+	end
+	if actions:justReleased("crouch") then
 		commands.handleCommands.send(2)
 	end
 end
@@ -16284,31 +16322,37 @@ local animationSlice = createProducer(initialState, {
 			_result = _result.playingAnimations
 		end
 		local playingAnimations = _result
-		if animation == playingAnimations[1] then
-			local _object = {}
-			for _k, _v in state do
-				_object[_k] = _v
-			end
-			return _object
-		end
-		do
-			local i = 0
-			local _shouldIncrement = false
-			while true do
-				if _shouldIncrement then
-					i += 1
-				else
-					_shouldIncrement = true
+		if playingAnimations[1] and not playingAnimations[1].IsPlaying then
+			table.clear(playingAnimations)
+			playingAnimations[1] = animation
+			animation:Play(0.1)
+		else
+			if animation == playingAnimations[1] then
+				local _object = {}
+				for _k, _v in state do
+					_object[_k] = _v
 				end
-				if not (i < #playingAnimations) then
-					break
-				end
-				playingAnimations[i + 1]:Stop(0.1)
+				return _object
 			end
+			do
+				local i = 0
+				local _shouldIncrement = false
+				while true do
+					if _shouldIncrement then
+						i += 1
+					else
+						_shouldIncrement = true
+					end
+					if not (i < #playingAnimations) then
+						break
+					end
+					playingAnimations[i + 1]:Stop(0.1)
+				end
+			end
+			table.clear(playingAnimations)
+			playingAnimations[1] = animation
+			animation:Play(0.1)
 		end
-		table.clear(playingAnimations)
-		playingAnimations[1] = animation
-		animation:Play(0.1)
 		local _object = {}
 		for _k, _v in state do
 			_object[_k] = _v
@@ -16336,6 +16380,25 @@ local animationSlice = createProducer(initialState, {
 			freefalling = false,
 			playingAnimations = {},
 		}
+		return _object
+	end,
+	clearPlayingAnimations = function(state, player)
+		local animations = state[player]
+		local _object = {}
+		for _k, _v in state do
+			_object[_k] = _v
+		end
+		local _left = player
+		local _condition = animations
+		if _condition then
+			local _object_1 = {}
+			for _k, _v in animations do
+				_object_1[_k] = _v
+			end
+			_object_1.playingAnimations = {}
+			_condition = _object_1
+		end
+		_object[_left] = _condition
 		return _object
 	end,
 	changeJumpAnimTime = function(state, player, amount)
@@ -16522,7 +16585,6 @@ local function receiverMiddleware()
 		end),
 	})
 	client:OnEvent("broadcast", function(actions)
-		print(actions)
 		receiver:dispatch(actions)
 	end)
 	return receiver.middleware

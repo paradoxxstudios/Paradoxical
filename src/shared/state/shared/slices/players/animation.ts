@@ -34,13 +34,19 @@ export const animationSlice = createProducer(initialState, {
 		const animations = state[player];
 		const playingAnimations = animations?.playingAnimations as AnimationTrack[];
 
-		if (animation === playingAnimations[0]) return { ...state };
-		for (let i = 0; i < playingAnimations.size(); i++) {
-			playingAnimations[i].Stop(0.1);
+		if (playingAnimations[0] && !playingAnimations[0].IsPlaying) {
+			playingAnimations.clear();
+			playingAnimations[0] = animation;
+			animation.Play(0.1);
+		} else {
+			if (animation === playingAnimations[0]) return { ...state };
+			for (let i = 0; i < playingAnimations.size(); i++) {
+				playingAnimations[i].Stop(0.1);
+			}
+			playingAnimations.clear();
+			playingAnimations[0] = animation;
+			animation.Play(0.1);
 		}
-		playingAnimations.clear();
-		playingAnimations[0] = animation;
-		animation.Play(0.1);
 
 		return {
 			...state,
@@ -55,6 +61,18 @@ export const animationSlice = createProducer(initialState, {
 		return {
 			...state,
 			[player]: { jumpAnimTime: 0, freefalling: false, playingAnimations: [] },
+		};
+	},
+
+	clearPlayingAnimations: (state, player: string) => {
+		const animations = state[player];
+
+		return {
+			...state,
+			[player]: animations && {
+				...animations,
+				playingAnimations: [],
+			},
 		};
 	},
 

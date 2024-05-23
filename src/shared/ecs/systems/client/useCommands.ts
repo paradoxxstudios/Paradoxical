@@ -1,4 +1,4 @@
-import { World } from "@rbxts/matter";
+import { World, useThrottle } from "@rbxts/matter";
 import { StateType } from "shared/ecs/types";
 import { commands } from "shared/net";
 
@@ -7,6 +7,10 @@ function useCommands(world: World, state: StateType) {
 	const actions = sparkState.actions;
 
 	if (actions.justPressed("crouch")) {
+		commands.handleCommands.send(2);
+	}
+
+	if (actions.justReleased("crouch")) {
 		commands.handleCommands.send(2);
 	}
 }
