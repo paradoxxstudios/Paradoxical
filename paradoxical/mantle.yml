@@ -6,6 +6,10 @@ environments:
     branches: [dev]
     targetNamePrefix: environmentLabel
     targetAccess: private
+    targetOverrides:
+      places:
+        start:
+          file: places/dev-start.rbxlx
   - label: prod
     branches: [main]
     targetAccess: public
@@ -25,7 +29,7 @@ target:
       avatarAnimationType: standard
     places:
       start:
-        file: start.rbxlx
+        file: places/start.rbxlx
         configuration:
           name: Paradoxical
           maxPlayerCount: 25
