@@ -105050,7 +105050,7 @@ function bufferWriter.writeReference(value: any)
 
 	buffer.writeu8(buff, cursor, index)
 	cursor += 1
-	print(references)
+	--print(references)
 end
 
 function bufferWriter.writeu16(value: number)
