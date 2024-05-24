@@ -1,7 +1,6 @@
 import { World, useEvent } from "@rbxts/matter";
 import { Players } from "@rbxts/services";
-import { RootProducer } from "server/store";
-import { Model, Transform } from "shared/ecs/components";
+import { Model, Player, Transform } from "shared/ecs/components";
 
 function spawnPlayers(world: World) {
 	for (const player of Players.GetPlayers()) {
@@ -20,6 +19,7 @@ function spawnPlayers(world: World) {
 					player.UserId,
 					Model({ model: character, humanoid: character.FindFirstChildOfClass("Humanoid") }),
 					Transform(),
+					Player({ player: player }),
 				);
 			}
 		}

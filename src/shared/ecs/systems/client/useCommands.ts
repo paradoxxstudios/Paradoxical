@@ -1,4 +1,4 @@
-import { World, useThrottle } from "@rbxts/matter";
+import { World } from "@rbxts/matter";
 import { StateType } from "shared/ecs/types";
 import { commands } from "shared/net";
 

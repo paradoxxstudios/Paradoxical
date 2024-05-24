@@ -13379,6 +13379,7 @@ local useEvent = TS.import(script, game:GetService("ReplicatedStorage"), "rbxts_
 local Players = TS.import(script, game:GetService("ReplicatedStorage"), "rbxts_include", "node_modules", "@rbxts", "services").Players
 local _components = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "ecs", "components")
 local Model = _components.Model
+local Player = _components.Player
 local Transform = _components.Transform
 local function spawnPlayers(world)
 	for _, player in Players:GetPlayers() do
@@ -13392,7 +13393,9 @@ local function spawnPlayers(world)
 				world:spawnAt(player.UserId, Model({
 					model = character,
 					humanoid = character:FindFirstChildOfClass("Humanoid"),
-				}), Transform())
+				}), Transform(), Player({
+					player = player,
+				}))
 			end
 		end
 	end
@@ -15033,16 +15036,12 @@ return {
 						<string name="Name">boundTags</string>
 						<string name="ScriptGuid">{1D2F4F11-BC93-47DF-9D9F-B9A0C4E05E07}</string>
 						<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
-local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
-local Test = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "ecs", "components").Test
 --[[
 	*
 	 * A map of tags to their bound components.
 	 
 ]]
-local tags = {
-	Test = Test,
-}
+local tags = {}
 return {
 	tags = tags,
 }
@@ -15072,6 +15071,12 @@ local health = _defaults.health
 -- eslint-disable-next-line prettier/prettier
 --[[
 	*
+	 * The {@link PlayerComponent | Player} component constructor.
+	 
+]]
+local Player = component("Player")
+--[[
+	*
 	 * The {@link ModelComponent | Model} component constructor.
 	 
 ]]
@@ -15088,19 +15093,11 @@ local Transform = component("Transform", transform)
 	 
 ]]
 local Health = component("Health", health)
---[[
-	*
-	 * This is a test component constructor.
-	 *
-	 * It shouldn't be used and should be removed at some point.
-	 
-]]
-local Test = component("Test")
 return {
+	Player = Player,
 	Model = Model,
 	Transform = Transform,
 	Health = Health,
-	Test = Test,
 }
 ]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>

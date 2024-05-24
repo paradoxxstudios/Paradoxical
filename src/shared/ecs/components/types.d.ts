@@ -1,4 +1,14 @@
 /**
+ * The Player component.
+ *
+ * Provides a reference to the {@link Player} that represents the attached
+ * entity.
+ */
+export interface Players {
+	player?: Player;
+}
+
+/**
  * The Model component.
  *
  * Provides a reference to the {@link PVInstance} that represents the attached
