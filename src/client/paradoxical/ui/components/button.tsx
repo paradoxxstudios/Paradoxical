@@ -1,10 +1,10 @@
 import Roact, { useEffect, useState } from "@rbxts/roact";
-import { useMotion } from "client/player/paradoxical/hooks/use-motion";
-import { useRem } from "client/player/paradoxical/hooks/use-rem";
-import { brighten } from "client/player/paradoxical/utils/colors";
-import { fonts } from "client/player/paradoxical/utils/fonts";
-import { palette } from "client/player/paradoxical/utils/palette";
-import { springs } from "client/player/paradoxical/utils/springs";
+import { useMotion } from "client/paradoxical/ui/hooks/use-motion";
+import { useRem } from "client/paradoxical/ui/hooks/use-rem";
+import { brighten } from "client/paradoxical/ui/utils/colors";
+import { fonts } from "client/paradoxical/ui/utils/fonts";
+import { palette } from "client/paradoxical/ui/utils/palette";
+import { springs } from "client/paradoxical/ui/utils/springs";
 
 interface ButtonProps {
 	onClick?: () => void;

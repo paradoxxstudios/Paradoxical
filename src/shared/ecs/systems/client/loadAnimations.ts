@@ -45,12 +45,9 @@ function loadAnimations(world: World, state: StateType) {
 
 	if (reflexState.getState().players.animationId[playerId] === undefined) return;
 	if (reflexState.getState().players.animation[playerId]?.idle === undefined) {
-		let idle;
 		for (const [name, id] of pairs(reflexState.getState().players.animationId[playerId] as PlayerAnimationIds)) {
-			const track = loadAnimation(name, id, animator, reflexState);
-			if (name === "idle") idle = track;
+			loadAnimation(name, id, animator, reflexState);
 		}
-		reflexState.playAnimation(playerId, idle as AnimationTrack);
 	}
 
 	for (const [_, current, previous] of useReflex(playerId, reflexState, selectPlayerIdleId(playerId))) {

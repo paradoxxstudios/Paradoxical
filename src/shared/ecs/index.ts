@@ -14,7 +14,7 @@ import { store as clientStore, RootProducer as ClientRootProducer, RootProducer 
 import recieveReplication from "./recieveReplication";
 import { SparkState, sparkState } from "shared/spark";
 import { StateType } from "./types";
-const serverStoreModule = ServerScriptService.FindFirstChild("paradoxical")?.FindFirstChild("store") as ModuleScript;
+const serverStoreModule = ServerScriptService.FindFirstChild("store") as ModuleScript;
 
 const MAX_DISPLAY_ORDER = 2147483647;
 const GROUP_ID = 33149057;

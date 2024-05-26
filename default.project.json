@@ -10,9 +10,7 @@
 		"$className": "DataModel",
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
-			"paradoxical": {
-				"$path": "out/server"
-			}
+			"$path": "out/server"
 		},
 		"ReplicatedStorage": {
 			"$className": "ReplicatedStorage",
@@ -36,14 +34,16 @@
 			"$className": "StarterPlayer",
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
-				"$path": "out/client/player"
+				"$path": "out/client"
 			},
 			"StarterCharacterScripts": {
 				"$className": "StarterCharacterScripts",
 				"Health": {
 					"$className": "Script"
 				},
-				"$path": "out/client/character"
+				"Animate": {
+					"$className": "LocalScript"
+				}
 			}
 		},
 		"Workspace": {

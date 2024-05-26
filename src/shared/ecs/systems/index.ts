@@ -7,7 +7,7 @@ const ERROR_CONTAINER = "%s container not found";
 
 const shared = script.FindFirstChild("shared");
 const client = script.FindFirstChild("client");
-const server = ServerScriptService.FindFirstChild("paradoxical")?.FindFirstChild("systems");
+const server = ServerScriptService.FindFirstChild("systems");
 
 let firstRunSystems: AnySystem[] | undefined = [];
 let hotReloader: HotReloader | undefined;
