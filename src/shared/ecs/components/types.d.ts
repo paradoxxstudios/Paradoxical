@@ -43,3 +43,5 @@ export interface Health {
 	regenRate: number;
 	regenCD: number;
 }
+
+export interface Crouching {}
