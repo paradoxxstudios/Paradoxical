@@ -13449,7 +13449,6 @@ return {
 						<string name="ScriptGuid">{1C814D79-4462-44BA-B4C3-738478F9F2D1}</string>
 						<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
 local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
-local walkAnimationIds = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "assets", "animation").walkAnimationIds
 local Crouching = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "ecs", "components").Crouching
 local useBytenet = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "hooks", "useBytenet")
 local commands = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "net").commands
@@ -13481,10 +13480,8 @@ local function processCommands(world, state)
 			if data == (Commands.Crouch) then
 				local crouching = world:get(player.UserId, Crouching)
 				if crouching == nil then
-					reflexState.changeAnimationId(tostring(player.UserId), "walk", walkAnimationIds.crouch)
 					world:insert(player.UserId, Crouching())
 				else
-					reflexState.changeAnimationId(tostring(player.UserId), "walk", walkAnimationIds.walk)
 					world:remove(player.UserId, Crouching)
 				end
 				break
@@ -13497,6 +13494,51 @@ return processCommands
 						<int64 name="SourceAssetId">-1</int64>
 						<BinaryString name="Tags"></BinaryString>
 						<UniqueId name="UniqueId">4d819ccbdf0742ee065c08b5000061fe</UniqueId>
+					</Properties>
+				</Item>
+				<Item class="ModuleScript" referent="RBXE675EC72C83849899FB35DC40C438936">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+						<bool name="DefinesCapabilities">false</bool>
+						<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">crouching</string>
+						<string name="ScriptGuid">{B6C3D3D4-296D-41A7-95D0-057DC8C3BF09}</string>
+						<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
+local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
+local _animation = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "assets", "animation")
+local idleAnimationIds = _animation.idleAnimationIds
+local walkAnimationIds = _animation.walkAnimationIds
+local _components = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "ecs", "components")
+local Crouching = _components.Crouching
+local Model = _components.Model
+local function crouching(world, state)
+	local reflexState = state.reflex
+	for id, record in world:queryChanged(Crouching) do
+		local _result = world:get(id, Model)
+		if _result ~= nil then
+			_result = _result.humanoid
+		end
+		local humanoid = _result
+		if record.old == nil then
+			reflexState.changeAnimationId(tostring(id), "walk", walkAnimationIds.crouch)
+			reflexState.changeAnimationId(tostring(id), "idle", idleAnimationIds.crouch)
+			humanoid.WalkSpeed = 4
+			humanoid.JumpPower = 0
+		elseif record.new == nil then
+			reflexState.changeAnimationId(tostring(id), "walk", walkAnimationIds.walk)
+			reflexState.changeAnimationId(tostring(id), "idle", idleAnimationIds.idle)
+			humanoid.WalkSpeed = 16
+			humanoid.JumpPower = 50
+		end
+	end
+end
+return crouching
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">3e74e6ba573b9e400664f16c00004644</UniqueId>
 					</Properties>
 				</Item>
 			</Item>
@@ -14834,6 +14876,18 @@ return {
 					<UniqueId name="UniqueId">2241e77addca441406501bbe00005fd2</UniqueId>
 				</Properties>
 			</Item>
+			<Item class="Folder" referent="RBXECFA80BF2EE44C0CBC7C40A6504D1440">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+					<bool name="DefinesCapabilities">false</bool>
+					<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+					<string name="Name">images</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">3e74e6ba573b9e400664f16c00004641</UniqueId>
+				</Properties>
+			</Item>
 		</Item>
 		<Item class="Folder" referent="RBX69323AF0776F4BD89323FC00F96027C2">
 			<Properties>
@@ -15612,15 +15666,18 @@ return {
 								<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
 local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
 local commands = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "net").commands
-local function useCommands(world, state)
+local function startAction(actions, action, id)
+	if actions:justPressed(action) then
+		commands.handleCommands.send(id)
+	end
+	if actions:justReleased(action) then
+		commands.handleCommands.send(id)
+	end
+end
+local function useCommands(_, state)
 	local sparkState = state.spark
 	local actions = sparkState.actions
-	if actions:justPressed("crouch") then
-		commands.handleCommands.send(2)
-	end
-	if actions:justReleased("crouch") then
-		commands.handleCommands.send(2)
-	end
+	startAction(actions, "crouch", 2)
 end
 return useCommands
 ]]></ProtectedString>
@@ -16945,6 +17002,9 @@ local exports = {}
 for _k, _v in TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "assets", "animation", "walk") or {} do
 	exports[_k] = _v
 end
+for _k, _v in TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "assets", "animation", "idle") or {} do
+	exports[_k] = _v
+end
 return exports
 ]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
@@ -16974,6 +17034,46 @@ return {
 							<UniqueId name="UniqueId">47e4dbb30c35ba5a06642fa200004581</UniqueId>
 						</Properties>
 					</Item>
+					<Item class="ModuleScript" referent="RBX826BAC65903E4154891EF5BAA81969F3">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+							<bool name="DefinesCapabilities">false</bool>
+							<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">idle</string>
+							<string name="ScriptGuid">{41736CEF-0163-4092-8DDB-19404739C94A}</string>
+							<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
+local idleAnimationIds = {
+	idle = 14385447903,
+	crouch = 15239153655,
+}
+return {
+	idleAnimationIds = idleAnimationIds,
+}
+]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+							<UniqueId name="UniqueId">3e74e6ba573b9e400664f16c0000471b</UniqueId>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBX33B6776935164D55BE0E381889DEE93E">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+						<bool name="DefinesCapabilities">false</bool>
+						<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">assets</string>
+						<string name="ScriptGuid">{70CE0370-C7C3-45A7-82D5-922CDE283AB2}</string>
+						<ProtectedString name="Source"><![CDATA[return {
+
+}]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">3e74e6ba573b9e400664f16c00004642</UniqueId>
+					</Properties>
 				</Item>
 			</Item>
 		</Item>

@@ -24,10 +24,8 @@ function processCommands(world: World, state: StateType) {
 			case Commands.Crouch: {
 				const crouching = world.get(player.UserId, Crouching);
 				if (crouching === undefined) {
-					reflexState.changeAnimationId(tostring(player.UserId), "walk", walkAnimationIds.crouch);
 					world.insert(player.UserId, Crouching());
 				} else {
-					reflexState.changeAnimationId(tostring(player.UserId), "walk", walkAnimationIds.walk);
 					world.remove(player.UserId, Crouching);
 				}
 				break;
