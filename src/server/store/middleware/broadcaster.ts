@@ -8,11 +8,17 @@ export function broadcasterMiddleware() {
 		dispatch: async (player, actions) => {
 			server.Get("broadcast").SendToPlayer(player, actions);
 		},
-		beforeDispatch: (player, action) => {
-			if (action.arguments[0] !== tostring(player.UserId)) {
-				return;
+		beforeHydrate: (player, state) => {
+			const userId = tostring(player.UserId);
+			const players: { [index: string]: { [index: string]: unknown } } = {};
+			for (const [name, playerState] of pairs(state.players)) {
+				if (players[name] === undefined) players[name] = {};
+				players[name][userId] = playerState[userId];
 			}
-			return action;
+			return {
+				...state,
+				players: players as typeof state.players,
+			};
 		},
 	});
 

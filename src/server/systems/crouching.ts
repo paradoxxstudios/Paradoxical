@@ -1,4 +1,4 @@
-import { Component, World } from "@rbxts/matter";
+import { World } from "@rbxts/matter";
 import { RootProducer } from "server/store";
 import { idleAnimationIds, walkAnimationIds } from "shared/assets/animation";
 import { Crouching, Model } from "shared/ecs/components";
