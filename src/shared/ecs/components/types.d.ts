@@ -6,6 +6,7 @@
  */
 export interface Players {
 	player?: Player;
+	camera?: Camera;
 }
 
 /**

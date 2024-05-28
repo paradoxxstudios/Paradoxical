@@ -69,9 +69,23 @@ function replication(world: World): void {
 		}
 	}
 
-	if (!changes.isEmpty()) {
-		matterReplication.replication.sendToAll(
-			changes as Map<
+	if (changes.size() === 0) return;
+	const players = Players.GetPlayers();
+	for (const player of players) {
+		const filterdChanges = table.clone(changes);
+		for (const [entity, _] of changes) {
+			if (tostring(player.UserId) === entity) continue;
+
+			const entityPlayer = Players.GetPlayerByUserId(tonumber(entity) as number);
+			if (entityPlayer === undefined) continue;
+
+			if (players.includes(entityPlayer)) {
+				filterdChanges.delete(entity);
+			}
+		}
+
+		matterReplication.replication.sendTo(
+			filterdChanges as Map<
 				string,
 				Map<
 					string,
@@ -80,6 +94,7 @@ function replication(world: World): void {
 					}
 				>
 			>,
+			player,
 		);
 	}
 }

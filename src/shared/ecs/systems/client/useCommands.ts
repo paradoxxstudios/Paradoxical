@@ -16,7 +16,7 @@ function startAction(actions: Actions<string[]>, action: ActionKeys, id: number,
 	}
 }
 
-function useCommands(world: World, state: StateType) {
+function useCommands(_: World, state: StateType) {
 	const sparkState = state.spark;
 	const actions = sparkState.actions;
 

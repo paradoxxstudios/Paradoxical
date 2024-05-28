@@ -334,18 +334,18 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>52.179245</X>
-					<Y>51.7263069</Y>
-					<Z>46.3742142</Z>
-					<R00>0.374862492</R00>
-					<R01>-0.826057136</R01>
-					<R02>0.420841813</R02>
-					<R10>-0</R10>
-					<R11>0.453943193</R11>
-					<R12>0.89103061</R12>
-					<R20>-0.927080512</R20>
-					<R21>-0.334013969</R21>
-					<R22>0.170166254</R22>
+					<X>11.4595594</X>
+					<Y>32.1552963</Y>
+					<Z>-12.4760323</Z>
+					<R00>0.869628608</R00>
+					<R01>-0.155040771</R01>
+					<R02>0.468730718</R02>
+					<R10>-1.4901163e-08</R10>
+					<R11>0.949411631</R11>
+					<R12>0.314034313</R12>
+					<R20>-0.493706524</R20>
+					<R21>-0.273093224</R21>
+					<R22>0.825635493</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
@@ -354,9 +354,9 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>51.3375626</X>
-					<Y>49.9442482</Y>
-					<Z>46.0338821</Z>
+					<X>10.5220976</X>
+					<Y>31.5272274</Y>
+					<Z>-14.1273041</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -14138,8 +14138,31 @@ local function replication(world)
 			end
 		end
 	end
-	if not (next(changes) == nil) then
-		matterReplication.replication.sendToAll(changes)
+	-- ▼ ReadonlyMap.size ▼
+	local _size = 0
+	for _ in changes do
+		_size += 1
+	end
+	-- ▲ ReadonlyMap.size ▲
+	if _size == 0 then
+		return nil
+	end
+	local players = Players:GetPlayers()
+	for _, player in players do
+		local filterdChanges = table.clone(changes)
+		for entity, _ in changes do
+			if tostring(player.UserId) == entity then
+				continue
+			end
+			local entityPlayer = Players:GetPlayerByUserId(tonumber(entity))
+			if entityPlayer == nil then
+				continue
+			end
+			if table.find(players, entityPlayer) ~= nil then
+				filterdChanges[entity] = nil
+			end
+		end
+		matterReplication.replication.sendTo(filterdChanges, player)
 	end
 end
 --[[
@@ -14190,7 +14213,6 @@ do
 	_inverse[3] = "__LENGTH"
 end
 local function processCommands(world, state)
-	local reflexState = state.reflex
 	for _, data, player in useBytenet("id", commands.handleCommands) do
 		if player == nil then
 			continue
@@ -15540,65 +15562,68 @@ local Model = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxic
 local loadAnimations = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "ecs", "systems", "client", "loadAnimations")
 local function playAnimations(world, state)
 	local relfexState = state.reflex
-	for _, model in world:query(Model) do
-		local humanoid = model.humanoid
-		if not humanoid then
-			continue
-		end
-		local animationState = relfexState:getState().players.animation[playerId]
-		if animationState.idle == nil then
-			return nil
-		end
-		relfexState.changeJumpAnimTime(playerId, animationState.jumpAnimTime - useDeltaTime())
-		for _, __, newState in useEvent(humanoid, "StateChanged") do
-			repeat
-				if newState == (Enum.HumanoidStateType.Jumping) then
-					relfexState.playAnimation(playerId, animationState.jump)
-					relfexState.changeJumpAnimTime(playerId, 0.35)
-					break
-				end
-				if newState == (Enum.HumanoidStateType.Freefall) then
-					relfexState.toggleFreefall(playerId)
-					break
-				end
-			until true
-		end
-		local _result = relfexState:getState().players.animation[playerId]
-		if _result ~= nil then
-			_result = _result.freefalling
-		end
-		local _condition = _result
-		if _condition then
-			local _result_1 = relfexState:getState().players.animation[playerId]
-			if _result_1 ~= nil then
-				_result_1 = _result_1.jumpAnimTime
+	if not world:contains(tonumber(playerId)) then
+		return nil
+	end
+	local model = world:get(tonumber(playerId), Model)
+	local _result = model
+	if _result ~= nil then
+		_result = _result.humanoid
+	end
+	local humanoid = _result
+	local animationState = relfexState:getState().players.animation[playerId]
+	if animationState.idle == nil then
+		return nil
+	end
+	relfexState.changeJumpAnimTime(playerId, animationState.jumpAnimTime - useDeltaTime())
+	for _, __, newState in useEvent(humanoid, "StateChanged") do
+		repeat
+			if newState == (Enum.HumanoidStateType.Jumping) then
+				relfexState.playAnimation(playerId, animationState.jump)
+				relfexState.changeJumpAnimTime(playerId, 0.35)
+				break
 			end
-			_condition = _result_1 == 0
-		end
-		if _condition then
-			relfexState.toggleFreefall(playerId)
-			relfexState.playAnimation(playerId, animationState.land)
-		end
-		local _result_1 = animationState.jump
-		if _result_1 ~= nil then
-			_result_1 = _result_1.IsPlaying
-		end
-		local _condition_1 = _result_1
-		if not _condition_1 then
-			local _result_2 = animationState.land
-			if _result_2 ~= nil then
-				_result_2 = _result_2.IsPlaying
+			if newState == (Enum.HumanoidStateType.Freefall) then
+				relfexState.toggleFreefall(playerId)
+				break
 			end
-			_condition_1 = _result_2
+		until true
+	end
+	local _result_1 = relfexState:getState().players.animation[playerId]
+	if _result_1 ~= nil then
+		_result_1 = _result_1.freefalling
+	end
+	local _condition = _result_1
+	if _condition then
+		local _result_2 = relfexState:getState().players.animation[playerId]
+		if _result_2 ~= nil then
+			_result_2 = _result_2.jumpAnimTime
 		end
-		if _condition_1 then
-			return nil
+		_condition = _result_2 == 0
+	end
+	if _condition then
+		relfexState.toggleFreefall(playerId)
+		relfexState.playAnimation(playerId, animationState.land)
+	end
+	local _result_2 = animationState.jump
+	if _result_2 ~= nil then
+		_result_2 = _result_2.IsPlaying
+	end
+	local _condition_1 = _result_2
+	if not _condition_1 then
+		local _result_3 = animationState.land
+		if _result_3 ~= nil then
+			_result_3 = _result_3.IsPlaying
 		end
-		if humanoid.MoveDirection.Magnitude ~= 0 then
-			relfexState.playAnimation(playerId, animationState.walk)
-		else
-			relfexState.playAnimation(playerId, animationState.idle)
-		end
+		_condition_1 = _result_3
+	end
+	if _condition_1 then
+		return nil
+	end
+	if humanoid.MoveDirection.Magnitude ~= 0 then
+		relfexState.playAnimation(playerId, animationState.walk)
+	else
+		relfexState.playAnimation(playerId, animationState.idle)
 	end
 end
 return {
@@ -15660,7 +15685,7 @@ local function startAction(actions, action, id, callback)
 		commands.handleCommands.send(id)
 	end
 end
-local function useCommands(world, state)
+local function useCommands(_, state)
 	local sparkState = state.spark
 	local actions = sparkState.actions
 	startAction(actions, "crouch", 2)
@@ -17162,21 +17187,11 @@ return exports
 								<string name="ScriptGuid">{0B4563B8-4267-4E7E-A4F9-C31E03CFF6C1}</string>
 								<ProtectedString name="Source"><![CDATA[-- Compiled with roblox-ts v2.2.0
 local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
-local TweenService = TS.import(script, game:GetService("ReplicatedStorage"), "rbxts_include", "node_modules", "@rbxts", "services").TweenService
+local tween = TS.import(script, game:GetService("ReplicatedStorage"), "paradoxical", "utils", "tween", "tween").tween
 local function tweenFOV(camera, endValue, time, easingStyle, easingDirection, repeatCount, reverse, delayTime)
-	time = if time == nil then 1 else time
-	easingStyle = if easingStyle == nil then Enum.EasingStyle.Quad else easingStyle
-	easingDirection = if easingDirection == nil then Enum.EasingDirection.Out else easingDirection
-	repeatCount = if repeatCount == nil then 0 else repeatCount
-	reverse = if reverse == nil then false else reverse
-	delayTime = if delayTime == nil then 0 else delayTime
-	local property = {
+	return tween(camera, {
 		FieldOfView = endValue,
-	}
-	local info = TweenInfo.new(time, easingStyle, easingDirection, repeatCount, reverse, delayTime)
-	local tween = TweenService:Create(camera, info, property)
-	tween:Play()
-	return tween
+	}, time, easingStyle, easingDirection, repeatCount, reverse, delayTime)
 end
 return {
 	tweenFOV = tweenFOV,

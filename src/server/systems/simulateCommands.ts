@@ -14,8 +14,6 @@ enum Commands {
 }
 
 function processCommands(world: World, state: StateType) {
-	const reflexState = state.reflex as RootProducer;
-
 	for (const [_, data, player] of useBytenet("id", commands.handleCommands)) {
 		if (player === undefined) continue;
 		if (typeOf(data) !== "number" || data < 0 || data >= Commands.__LENGTH) continue;
