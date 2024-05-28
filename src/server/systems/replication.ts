@@ -15,8 +15,37 @@ const replicatedComponents: ReadonlySet<ComponentConstructor> = REPLICATED_COMPO
 	new Set(),
 );
 
+type Data = Map<string, Map<ComponentName, { data?: Components.GameComponent }>>;
+
+function filterPlayer(player: Player, data: Data) {
+	const filterdChanges = table.clone(data);
+	for (const [entity, _] of data) {
+		if (tostring(player.UserId) === entity) continue;
+
+		const entityPlayer = Players.GetPlayerByUserId(tonumber(entity) as number);
+		if (entityPlayer === undefined) continue;
+
+		if (Players.GetPlayers().includes(entityPlayer)) {
+			filterdChanges.delete(entity);
+		}
+	}
+
+	matterReplication.replication.sendTo(
+		filterdChanges as Map<
+			string,
+			Map<
+				string,
+				{
+					data: Map<string, unknown> | undefined;
+				}
+			>
+		>,
+		player,
+	);
+}
+
 function replication(world: World): void {
-	let payload: Map<string, Map<ComponentName, { data?: Components.GameComponent }>> | undefined;
+	let payload: Data | undefined;
 	for (const [_, player] of useEvent(Players, "PlayerAdded")) {
 		if (!payload) {
 			payload = new Map();
@@ -36,21 +65,10 @@ function replication(world: World): void {
 		}
 
 		print("Sending initial payload to", player);
-		matterReplication.replication.sendTo(
-			payload as Map<
-				string,
-				Map<
-					string,
-					{
-						data: Map<string, unknown> | undefined;
-					}
-				>
-			>,
-			player,
-		);
+		filterPlayer(player, payload);
 	}
 
-	const changes: Map<string, Map<ComponentName, { data?: Components.GameComponent }>> = new Map();
+	const changes: Data = new Map();
 	for (const component of replicatedComponents) {
 		// Here we are certain that the component has the name of one of our
 		// components since it came from our set.
@@ -70,32 +88,8 @@ function replication(world: World): void {
 	}
 
 	if (changes.size() === 0) return;
-	const players = Players.GetPlayers();
-	for (const player of players) {
-		const filterdChanges = table.clone(changes);
-		for (const [entity, _] of changes) {
-			if (tostring(player.UserId) === entity) continue;
-
-			const entityPlayer = Players.GetPlayerByUserId(tonumber(entity) as number);
-			if (entityPlayer === undefined) continue;
-
-			if (players.includes(entityPlayer)) {
-				filterdChanges.delete(entity);
-			}
-		}
-
-		matterReplication.replication.sendTo(
-			filterdChanges as Map<
-				string,
-				Map<
-					string,
-					{
-						data: Map<string, unknown> | undefined;
-					}
-				>
-			>,
-			player,
-		);
+	for (const player of Players.GetPlayers()) {
+		filterPlayer(player, changes);
 	}
 }
 
