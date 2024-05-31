@@ -1,4 +1,14 @@
-import { defineNamespace, definePacket, map, optional, struct, unknown, string as str, uint8 } from "@rbxts/bytenet";
+import {
+	defineNamespace,
+	definePacket,
+	map,
+	optional,
+	struct,
+	unknown,
+	string as str,
+	uint8,
+	bool,
+} from "@rbxts/bytenet";
 
 export const matterReplication = defineNamespace("matterReplication", () => {
 	return {
@@ -12,7 +22,10 @@ export const matterReplication = defineNamespace("matterReplication", () => {
 export const commands = defineNamespace("commands", () => {
 	return {
 		handleCommands: definePacket({
-			value: uint8,
+			value: struct({
+				id: uint8,
+				input: bool,
+			}),
 			reliabilityType: "reliable",
 		}),
 	};

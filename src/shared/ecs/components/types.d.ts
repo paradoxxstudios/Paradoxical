@@ -46,3 +46,4 @@ export interface Health {
 }
 
 export interface Crouching {}
+export interface Running {}

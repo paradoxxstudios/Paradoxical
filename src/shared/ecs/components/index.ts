@@ -11,6 +11,7 @@ import type {
 	Transform as TransformComponent,
 	Health as HealthComponent,
 	Crouching as CrouchingComponent,
+	Running as RunningComponent,
 } from "./types";
 
 // eslint-disable-next-line prettier/prettier
@@ -19,7 +20,8 @@ export type ComponentType =
 	| ModelComponent
 	| TransformComponent
 	| HealthComponent
-	| CrouchingComponent;
+	| CrouchingComponent
+	| RunningComponent;
 export type GameComponent = Component<ComponentType>;
 
 /**
@@ -43,3 +45,4 @@ export const Transform = component<TransformComponent>("Transform", transform);
 export const Health = component<HealthComponent>("Health", health);
 
 export const Crouching = component<CrouchingComponent>("Crouching");
+export const Running = component<RunningComponent>("Running");

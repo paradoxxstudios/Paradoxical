@@ -42,7 +42,11 @@ function playAnimations(world: World, state: StateType) {
 
 	if (animationState.jump?.IsPlaying || animationState.land?.IsPlaying) return;
 	if (humanoid.MoveDirection.Magnitude !== 0) {
-		relfexState.playAnimation(playerId, animationState.walk as AnimationTrack);
+		if (humanoid.WalkSpeed <= 16) {
+			relfexState.playAnimation(playerId, animationState.walk as AnimationTrack);
+		} else {
+			relfexState.playAnimation(playerId, animationState.run as AnimationTrack);
+		}
 	} else {
 		relfexState.playAnimation(playerId, animationState.idle as AnimationTrack);
 	}

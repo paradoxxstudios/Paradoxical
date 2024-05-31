@@ -8,11 +8,17 @@ function startAction(actions: Actions<string[]>, action: ActionKeys, id: number,
 	if (callback && callback()) return;
 
 	if (actions.justPressed(action)) {
-		commands.handleCommands.send(id);
+		commands.handleCommands.send({
+			id: id,
+			input: true,
+		});
 	}
 
 	if (actions.justReleased(action)) {
-		commands.handleCommands.send(id);
+		commands.handleCommands.send({
+			id: id,
+			input: false,
+		});
 	}
 }
 
@@ -21,6 +27,7 @@ function useCommands(_: World, state: StateType) {
 	const actions = sparkState.actions;
 
 	startAction(actions, "crouch", 2);
+	startAction(actions, "run", 3);
 }
 
 export = useCommands;
