@@ -1,4 +1,2 @@
-declare const assets: {
-
-}
-export = assets
+declare const assets: {};
+export = assets;

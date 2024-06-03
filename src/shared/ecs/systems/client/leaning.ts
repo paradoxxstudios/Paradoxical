@@ -8,6 +8,7 @@ const SPEED = 16;
 
 function leaning(world: World) {
 	if (!world.contains(tonumber(playerId) as number)) return;
+
 	const model = world.get(tonumber(playerId) as number, Model);
 	const humanoid = model?.humanoid as Humanoid;
 	const humanoidRootPart = model?.humanoidRootPart as BasePart;

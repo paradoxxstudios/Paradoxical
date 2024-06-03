@@ -6,7 +6,7 @@ import * as Components from "shared/ecs/components";
 type ComponentName = keyof typeof Components;
 type ComponentConstructor = (typeof Components)[ComponentName];
 
-const REPLICATED_COMPONENT_NAMES: readonly ComponentName[] = ["Model", "Crouching", "Running"];
+const REPLICATED_COMPONENT_NAMES: readonly ComponentName[] = ["Model", "Crouching", "Running", "Player"];
 
 const replicatedComponents: ReadonlySet<ComponentConstructor> = REPLICATED_COMPONENT_NAMES.reduce(
 	(set: Set<ComponentConstructor>, name: ComponentName) => {

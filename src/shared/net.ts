@@ -8,6 +8,9 @@ import {
 	string as str,
 	uint8,
 	bool,
+	int8,
+	cframe,
+	nothing,
 } from "@rbxts/bytenet";
 
 export const matterReplication = defineNamespace("matterReplication", () => {
@@ -26,6 +29,30 @@ export const commands = defineNamespace("commands", () => {
 				id: uint8,
 				input: bool,
 			}),
+			reliabilityType: "reliable",
+		}),
+		movement: definePacket({
+			value: struct({
+				x: int8,
+				y: int8,
+			}),
+			reliabilityType: "reliable",
+		}),
+	};
+});
+
+export const ledgeMovement = defineNamespace("ledgeMove", () => {
+	return {
+		jump: definePacket({
+			value: nothing,
+			reliabilityType: "reliable",
+		}),
+		move: definePacket({
+			value: bool,
+			reliabilityType: "reliable",
+		}),
+		grab: definePacket({
+			value: nothing,
 			reliabilityType: "reliable",
 		}),
 	};

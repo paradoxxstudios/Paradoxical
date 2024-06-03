@@ -1,4 +1,4 @@
-import { Health, Transform } from "./types";
+import { Health, LedgeInfo, Transform } from "./types";
 
 /**
  * The default value created when no data is provided to a {@link Transform}
@@ -14,4 +14,10 @@ export const health: Health = {
 	regenAmount: 2,
 	regenRate: 1,
 	regenCD: 5,
+};
+
+export const ledgeInfo: LedgeInfo = {
+	jumped: false,
+	canVault: true,
+	ledgeMoveAmount: 15,
 };

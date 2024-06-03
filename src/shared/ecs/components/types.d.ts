@@ -20,6 +20,7 @@ export interface Model {
 	humanoid?: Humanoid;
 	animator?: Animator;
 	humanoidRootPart?: BasePart;
+	bodyParts?: { head?: BasePart };
 }
 
 /**
@@ -48,3 +49,14 @@ export interface Health {
 
 export interface Crouching {}
 export interface Running {}
+
+export interface LedgeInfo {
+	jumped: boolean;
+	moveDirection?: number;
+	canVault: boolean;
+	ledgeMoveAmount: number;
+	raycastParams?: RaycastParams;
+}
+export interface LedgeHold {
+	part?: BasePart;
+}
