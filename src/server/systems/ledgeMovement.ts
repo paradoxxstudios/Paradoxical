@@ -2,7 +2,7 @@ import { World, useThrottle } from "@rbxts/matter";
 import { Players, Workspace } from "@rbxts/services";
 import { RootProducer } from "server/store";
 import { idleAnimationIds, movementAnimationIds, walkAnimationIds } from "shared/assets/animation";
-import { LedgeHold, LedgeInfo, Model, Player } from "shared/ecs/components";
+import { LedgeHold, LedgeInfo, Model, Player, Running } from "shared/ecs/components";
 import { StateType } from "shared/ecs/types";
 import { ledgeMovement as ledgeMovementNet } from "shared/net";
 import { tween } from "shared/utils/tween/tween";
@@ -106,8 +106,9 @@ function ledgeMovement(world: World, state: StateType) {
 				const magnitude = ledgePos.sub(head.Position).Magnitude;
 				if (magnitude >= 4 || !partCheck(ledgeOffset, record.new.raycastParams as RaycastParams)) continue;
 				if (!useThrottle(0.5)) continue;
-				world.insert(id, record.new.patch({ canVault: false }));
 
+				world.remove(id, Running);
+				world.insert(id, record.new.patch({ canVault: false }));
 
 				const ledgePart = new Instance("Part");
 				ledgePart.Parent = Workspace;
