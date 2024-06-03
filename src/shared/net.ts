@@ -47,10 +47,6 @@ export const ledgeMovement = defineNamespace("ledgeMove", () => {
 			value: nothing,
 			reliabilityType: "reliable",
 		}),
-		move: definePacket({
-			value: bool,
-			reliabilityType: "reliable",
-		}),
 		grab: definePacket({
 			value: nothing,
 			reliabilityType: "reliable",

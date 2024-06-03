@@ -36,7 +36,6 @@ function ledgeMoveCheck(
 			const goal = { CFrame: ledgeOffset.add(new Vector3(0, -2, 0)).add(ledgeOffset.LookVector.mul(-1)) };
 			tween(ledgePart, goal, 0.15, Enum.EasingStyle.Sine, Enum.EasingDirection.Out);
 
-			//ledgeMovementNet.move.sendTo(direction, player);
 			if (direction === "right") {
 				reflexState.changeAnimationId(player, "walk", walkAnimationIds.ledge.right);
 			} else if (direction === "left") {
@@ -120,7 +119,6 @@ function ledgeMovement(world: World, state: StateType) {
 				ledgePart.CanTouch = false;
 				ledgePart.Transparency = 1;
 
-				//ledgeMovementNet.grab.sendTo(undefined, Players.GetPlayerByUserId(id) as Player);
 				reflexState.changeAnimationId(tostring(id), "land", idleAnimationIds.ledge);
 				reflexState.changeAnimationId(tostring(id), "walk", idleAnimationIds.ledge);
 				reflexState.changeAnimationId(tostring(id), "idle", idleAnimationIds.ledge);
