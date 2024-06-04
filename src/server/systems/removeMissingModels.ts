@@ -1,5 +1,7 @@
 import { useEvent, World } from "@rbxts/matter";
+import { Players } from "@rbxts/services";
 import { Model } from "shared/ecs/components";
+import { coreCallback } from "shared/net";
 
 /**
  * A system that removes missing {@link Model | Models}.
@@ -16,6 +18,7 @@ function removeMissingModels(world: World): void {
 		for (const _ of useEvent(model.model, "AncestryChanged")) {
 			if (!model.model.IsDescendantOf(game)) {
 				world.remove(id, Model);
+				coreCallback.resetCallback.sendTo(undefined, Players.GetPlayerByUserId(id) as Player);
 				break;
 			}
 		}

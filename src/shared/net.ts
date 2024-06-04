@@ -53,3 +53,12 @@ export const ledgeMovement = defineNamespace("ledgeMove", () => {
 		}),
 	};
 });
+
+export const coreCallback = defineNamespace("coreCallback", () => {
+	return {
+		resetCallback: definePacket({
+			value: nothing,
+			reliabilityType: "reliable",
+		}),
+	};
+});
