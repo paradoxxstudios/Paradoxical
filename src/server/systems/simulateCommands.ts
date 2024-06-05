@@ -22,14 +22,12 @@ function processCommands(world: World, state: StateType) {
 
 		const crouching = world.get(player.UserId, Crouching);
 		const running = world.get(player.UserId, Running);
-		const ledgeInfo = world.get(player.UserId, LedgeInfo);
 		const ledgeHold = world.get(player.UserId, LedgeHold);
 
 		switch (data.id) {
 			case Commands.Jump: {
-				if (ledgeInfo === undefined) continue;
 				if (data.input) {
-					world.insert(player.UserId, ledgeInfo.patch({ jumped: !ledgeInfo.jumped }));
+					reflexState.toggleJumped(player.UserId + "");
 				}
 				break;
 			}
@@ -59,9 +57,7 @@ function processCommands(world: World, state: StateType) {
 		if (data.x > 1 || data.x < -1) continue;
 		if (data.y > 1 || data.y < -1) continue;
 
-		const ledgeInfo = world.get(player.UserId, LedgeInfo);
-		if (!ledgeInfo) continue;
-		world.insert(player.UserId, ledgeInfo.patch({ moveDirection: data.x }));
+		reflexState.changeMoveDirection(player.UserId + "", data.x);
 	}
 }
 

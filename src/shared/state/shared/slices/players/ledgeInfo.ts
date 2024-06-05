@@ -24,14 +24,14 @@ export const ledgeInfoSlice = createProducer(initialState, {
 		[player]: undefined,
 	}),
 
-	changeJumped: (state, player: string, value: boolean) => {
+	toggleJumped: (state, player: string) => {
 		const ledgeInfo = state[player];
 
 		return {
 			...state,
 			[player]: ledgeInfo && {
 				...ledgeInfo,
-				jumped: value,
+				jumped: !ledgeInfo.jumped,
 			},
 		};
 	},
@@ -44,6 +44,30 @@ export const ledgeInfoSlice = createProducer(initialState, {
 			[player]: ledgeInfo && {
 				...ledgeInfo,
 				canVault: value,
+			},
+		};
+	},
+
+	changeMoveDirection: (state, player: string, value: number) => {
+		const ledgeInfo = state[player];
+
+		return {
+			...state,
+			[player]: ledgeInfo && {
+				...ledgeInfo,
+				moveDirection: value,
+			},
+		};
+	},
+
+	changeRaycastParams: (state, player: string, raycastParams: RaycastParams) => {
+		const ledgeInfo = state[player];
+
+		return {
+			...state,
+			[player]: ledgeInfo && {
+				...ledgeInfo,
+				raycastParams: raycastParams,
 			},
 		};
 	},

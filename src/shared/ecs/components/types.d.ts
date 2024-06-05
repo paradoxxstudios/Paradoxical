@@ -7,6 +7,8 @@
 export interface Players {
 	player?: Player;
 	camera?: Camera;
+	stringId?: string;
+	numId?: number;
 }
 
 /**
