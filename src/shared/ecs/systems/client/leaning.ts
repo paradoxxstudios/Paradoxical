@@ -13,6 +13,8 @@ function leaning(world: World) {
 	const humanoid = model?.humanoid as Humanoid;
 	const humanoidRootPart = model?.humanoidRootPart as BasePart;
 
+	if (humanoid.MoveDirection.Magnitude === 0) return;
+
 	const rootJoint = humanoidRootPart.FindFirstChild("RootJoint") as Motor6D;
 	if (rootJoint === undefined) return;
 	const originalC0 = useMap("c0", rootJoint.C0);
