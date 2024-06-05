@@ -1,5 +1,7 @@
 import { AnimationState } from "./animation";
+import { AnimationIdState } from "./animationIds";
 import { HealthState } from "./health";
+import { LedgeInfoState } from "./ledgeInfo";
 
 export interface SaveablePlayerData {
 	readonly health: PlayerHealth;
@@ -9,6 +11,7 @@ export interface PlayerData {
 	readonly health: PlayerHealth;
 	readonly animations: PlayerAnimations;
 	readonly animationIds: PlayerAnimationIds;
+	readonly ledgeInfo: PlayerLedgeInfo;
 }
 
 export type PlayerHealth = {
@@ -40,4 +43,12 @@ export type PlayerAnimationIds = {
 	readonly land: number;
 };
 
-export type PlayerState = HealthState | AnimationState;
+export type PlayerLedgeInfo = {
+	readonly jumped: boolean;
+	readonly moveDirection?: number;
+	readonly canVault: boolean;
+	readonly ledgeMoveAmount: number;
+	readonly raycastParams?: RaycastParams;
+};
+
+export type PlayerState = HealthState | AnimationState | AnimationIdState | LedgeInfoState;

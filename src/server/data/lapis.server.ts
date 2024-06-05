@@ -19,11 +19,38 @@ const collection = createCollection<PlayerDataSchema>("PlayerData", {
 	validate: validate,
 });
 
+function handlePlayerDatas(player: Player, option: string) {
+	for (const data of pairs(store)) {
+		const key = data[0];
+		if (key.size() >= option.size() + 6 && key.sub(0, 4) === option && key.sub(key.size() - 5) === "Player") {
+			(data[1] as (player: string) => void)(player.UserId + "");
+		}
+	}
+}
+
+function loadSaveablePlayerDatas(player: Player, data: SaveablePlayerData) {
+	for (const result of pairs(store)) {
+		const key = result[0];
+		if (key.size() >= 10 && key.sub(0, 10) === "loadPlayer") {
+			(result[1] as (player: string, data: SaveablePlayerData) => void)(player.UserId + "", data);
+		}
+	}
+}
+
+function closeSaveablePlayerDatas(player: Player) {
+	for (const result of pairs(store)) {
+		const key = result[0];
+		if (key.size() >= 11 && key.sub(0, 10) === "closePlayer") {
+			(result[1] as (player: string) => void)(player.UserId + "");
+		}
+	}
+}
+
 async function loadDefaultData(player: Player) {
-	store.loadPlayerHealth(player.UserId + "", defaultPlayerData);
+	loadSaveablePlayerDatas(player, defaultPlayerData);
 
 	Promise.fromEvent(Players.PlayerRemoving, (p) => p === player).then(() => {
-		store.closePlayerHealth(player.UserId + "");
+		closeSaveablePlayerDatas(player);
 	});
 }
 
@@ -48,10 +75,11 @@ async function loadPlayerData(player: Player) {
 		Promise.fromEvent(Players.PlayerRemoving, (p) => p === player).then(() => {
 			document.close();
 			unsubscribe();
-			store.closePlayerHealth(player.UserId + "");
+			closeSaveablePlayerDatas(player);
+			handlePlayerDatas(player, "close");
 		});
 
-		store.loadPlayerHealth(player.UserId + "", document.read());
+		loadSaveablePlayerDatas(player, document.read());
 	} catch (err) {
 		warn(`Failed to load data for ${player.Name}: ${err}`);
 		player.Kick("Failed to load data. If issues persists report to developers.");
@@ -60,12 +88,10 @@ async function loadPlayerData(player: Player) {
 
 Players.PlayerAdded.Connect((player) => {
 	loadPlayerData(player);
-	store.loadAnimationPlayer(player.UserId + "");
-	store.loadAnimationIdPlayer(player.UserId + "");
+	handlePlayerDatas(player, "load");
 });
 
 for (const player of Players.GetPlayers()) {
 	loadPlayerData(player);
-	store.closeAnimationPlayer(player.UserId + "");
-	store.closeAnimationIdPlayer(player.UserId + "");
+	handlePlayerDatas(player, "load");
 }

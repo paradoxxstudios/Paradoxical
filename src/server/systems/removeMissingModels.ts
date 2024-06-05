@@ -18,7 +18,9 @@ function removeMissingModels(world: World): void {
 		for (const _ of useEvent(model.model, "AncestryChanged")) {
 			if (!model.model.IsDescendantOf(game)) {
 				world.remove(id, Model);
-				coreCallback.resetCallback.sendTo(undefined, Players.GetPlayerByUserId(id) as Player);
+				const player = Players.GetPlayerByUserId(id);
+				if (player === undefined) continue;
+				coreCallback.resetCallback.sendTo(undefined, player);
 				break;
 			}
 		}

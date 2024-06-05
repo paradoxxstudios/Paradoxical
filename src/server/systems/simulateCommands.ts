@@ -1,5 +1,6 @@
 import { World } from "@rbxts/matter";
-import { Crouching, LedgeHold, LedgeInfo, Running } from "shared/ecs/components";
+import { RootProducer } from "server/store";
+import { Crouching, LedgeHold, Running } from "shared/ecs/components";
 import { StateType } from "shared/ecs/types";
 import useBytenet from "shared/hooks/useBytenet";
 import { commands } from "shared/net";
@@ -13,6 +14,8 @@ enum Commands {
 }
 
 function processCommands(world: World, state: StateType) {
+	const reflexState = state.reflex as RootProducer;
+
 	for (const [_, data, player] of useBytenet("id", commands.handleCommands)) {
 		if (player === undefined) continue;
 		if (typeOf(data.id) !== "number" || data.id < 0 || data.id >= Commands.__LENGTH) continue;
