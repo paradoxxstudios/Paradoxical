@@ -161,7 +161,9 @@ function ledgeMovement(world: World, state: StateType) {
 			CFrame.lookAt(ledgePart.Position, ledgePart.CFrame.mul(new CFrame(0, 0, -1)).Position),
 			0.25,
 		);
-		ledgeMovementNet.grab.sendTo(undefined, Players.GetPlayerByUserId(id) as Player);
+		const player = Players.GetPlayerByUserId(id);
+		if (player === undefined) continue;
+		ledgeMovementNet.grab.sendTo(undefined, player);
 
 		if (ledgeInfo.moveDirection === undefined) continue;
 		if (ledgeInfo.canVault || !useThrottle(0.35)) continue;
