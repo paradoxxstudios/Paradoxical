@@ -14,6 +14,7 @@ import type {
 	Running as RunningComponent,
 	LedgeHold as LedgeHoldComponent,
 } from "./types";
+import { ComponentCtor } from "@rbxts/matter/lib/component";
 
 // eslint-disable-next-line prettier/prettier
 export type ComponentType =

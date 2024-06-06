@@ -1,11 +1,17 @@
 import { World } from "@rbxts/matter";
+import { ComponentCtor } from "@rbxts/matter/lib/component";
 import { RootProducer } from "server/store";
 import { Crouching, LedgeHold, Running } from "shared/ecs/components";
+import { statusComponents } from "shared/ecs/components/statusComponents";
 import { StateType } from "shared/ecs/types";
 import useBytenet from "shared/hooks/useBytenet";
 import { commands } from "shared/net";
 
-function canProceed(): boolean {
+function canProceed(id: number, world: World, exluded?: Array<ComponentCtor>): boolean {
+	const arr = statusComponents.filter((value) => !exluded?.includes(value));
+	for (const component of arr) {
+		if (world.get(id, component) !== undefined) return false;
+	}
 	return true;
 }
 
@@ -25,10 +31,6 @@ function processCommands(world: World, state: StateType) {
 		if (player === undefined) continue;
 		if (typeOf(data.id) !== "number" || data.id < 0 || data.id >= Commands.__LENGTH) continue;
 
-		const crouching = world.get(player.UserId, Crouching);
-		const running = world.get(player.UserId, Running);
-		const ledgeHold = world.get(player.UserId, LedgeHold);
-
 		switch (data.id) {
 			case Commands.Jump: {
 				if (data.input) {
@@ -37,8 +39,8 @@ function processCommands(world: World, state: StateType) {
 				break;
 			}
 			case Commands.Crouch: {
-				if (running !== undefined || ledgeHold !== undefined) break;
-				if (crouching === undefined && data.input) {
+				if (!canProceed(player.UserId, world, [Crouching])) break;
+				if (world.get(player.UserId, Crouching) === undefined && data.input) {
 					world.insert(player.UserId, Crouching());
 				} else {
 					world.remove(player.UserId, Crouching);
@@ -46,8 +48,8 @@ function processCommands(world: World, state: StateType) {
 				break;
 			}
 			case Commands.Run: {
-				if (crouching !== undefined || ledgeHold !== undefined) break;
-				if (running === undefined && data.input) {
+				if (!canProceed(player.UserId, world, [Running])) break;
+				if (world.get(player.UserId, Running) === undefined && data.input) {
 					world.insert(player.UserId, Running());
 				} else {
 					world.remove(player.UserId, Running);
