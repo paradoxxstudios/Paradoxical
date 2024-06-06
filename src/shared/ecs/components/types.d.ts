@@ -51,10 +51,7 @@ export interface Health {
 
 export interface Crouching {}
 export interface Running {}
+
 export interface LedgeHold {
 	part?: BasePart;
-}
-export interface Dashing {
-	moveDirection?: Vector2;
-	
 }

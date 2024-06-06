@@ -1,5 +1,5 @@
 import { ComponentCtor } from "@rbxts/matter/lib/component";
-import { Crouching, Running, LedgeHold, Dashing } from ".";
+import { Crouching, Running, LedgeHold } from ".";
 
 export const statusComponents = new Array<ComponentCtor>();
-statusComponents.push(Crouching, Running, LedgeHold, Dashing);
+statusComponents.push(Crouching, Running, LedgeHold);

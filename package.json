@@ -11,11 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@rbxts/bytenet": "0.4.3-tsprev4",
     "@rbxts/lapis": "0.3.0",
     "@rbxts/matter": "0.8.1",
     "@rbxts/matter-hooks": "0.1.2",
-    "@rbxts/mock-memory-store-service": "0.2.0-13",
     "@rbxts/net": "^3.0.9",
     "@rbxts/plasma": "0.4.5",
     "@rbxts/pretty-react-hooks": "^0.3.3",
@@ -26,11 +24,12 @@
     "@rbxts/ripple": "0.8.1",
     "@rbxts/roact": "npm:@rbxts/react-ts@^1.0.1",
     "@rbxts/services": "1.5.4",
-    "@rbxts/signal": "^1.1.1",
     "@rbxts/spark": "file:rbxts-spark-1.0.0.tgz",
     "@rbxts/squash": "1.1.6-ts.2",
     "@rbxts/t": "3.1.1",
-    "@rbxts/yetanothernet": "0.8.0"
+    "@rbxts/yetanothernet": "0.8.0",
+    "@rbxts/bytenet": "0.4.3-tsprev4",
+    "@rbxts/mock-memory-store-service": "0.2.0-13"
   },
   "devDependencies": {
     "@rbxts/compiler-types": "^2.2.0-types.0",
