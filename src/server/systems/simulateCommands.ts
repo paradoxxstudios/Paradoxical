@@ -5,11 +5,16 @@ import { StateType } from "shared/ecs/types";
 import useBytenet from "shared/hooks/useBytenet";
 import { commands } from "shared/net";
 
+function canProceed(): boolean {
+	return true;
+}
+
 enum Commands {
 	"Move",
 	"Jump",
 	"Crouch",
 	"Run",
+	"Dash",
 	"__LENGTH",
 }
 

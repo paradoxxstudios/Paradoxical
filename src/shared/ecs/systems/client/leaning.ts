@@ -13,11 +13,14 @@ function leaning(world: World) {
 	const humanoid = model?.humanoid as Humanoid;
 	const humanoidRootPart = model?.humanoidRootPart as BasePart;
 
-	if (humanoid.MoveDirection.Magnitude === 0) return;
-
 	const rootJoint = humanoidRootPart.FindFirstChild("RootJoint") as Motor6D;
 	if (rootJoint === undefined) return;
 	const originalC0 = useMap("c0", rootJoint.C0);
+
+	if (humanoid.MoveDirection.Magnitude === 0 && rootJoint.C0 !== originalC0.value) {
+		rootJoint.C0 = originalC0.value;
+		return;
+	} else if (humanoid.MoveDirection.Magnitude === 0) return;
 
 	const direction = humanoidRootPart.CFrame.VectorToObjectSpace(humanoid.MoveDirection);
 	let momentum = humanoidRootPart.CFrame.VectorToObjectSpace(humanoidRootPart.AssemblyLinearVelocity).mul(

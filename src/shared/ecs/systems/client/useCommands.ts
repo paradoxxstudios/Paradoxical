@@ -32,6 +32,7 @@ function useCommands(_: World, state: StateType) {
 	startAction(actions, "jump", 1);
 	startAction(actions, "crouch", 2);
 	startAction(actions, "run", 3);
+	startAction(actions, "dash", 4);
 }
 
 export = useCommands;
