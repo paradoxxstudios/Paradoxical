@@ -27,7 +27,7 @@ function useCommands(_: World, state: StateType) {
 	const actions = sparkState.actions;
 
 	const move = actions.clampedAxis2d("move");
-	commands.movement.send({ x: move.X, y: move.Y });
+	commands.movement.send(move);
 
 	startAction(actions, "jump", 1);
 	startAction(actions, "crouch", 2);

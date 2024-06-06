@@ -46,13 +46,17 @@
 				}
 			}
 		},
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"$path": "out/first"
+		},
 		"Workspace": {
 			"$className": "Workspace",
 			"$properties": {
 				"FilteringEnabled": true
 			},
-			"gameMap": {
-				"$path": "gameMap"
+			"gameArea": {
+				"$path": "gameArea"
 			}
 		},
 		"HttpService": {

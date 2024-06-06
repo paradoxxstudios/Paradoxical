@@ -9,8 +9,9 @@ import {
 	uint8,
 	bool,
 	int8,
-	cframe,
 	nothing,
+	float32,
+	vec2,
 } from "@rbxts/bytenet";
 
 export const matterReplication = defineNamespace("matterReplication", () => {
@@ -32,10 +33,7 @@ export const commands = defineNamespace("commands", () => {
 			reliabilityType: "reliable",
 		}),
 		movement: definePacket({
-			value: struct({
-				x: int8,
-				y: int8,
-			}),
+			value: vec2,
 			reliabilityType: "reliable",
 		}),
 	};

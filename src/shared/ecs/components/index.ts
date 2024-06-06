@@ -4,7 +4,6 @@ import {
 	transform,
 	health,
 } from "./defaults";
-// eslint-disable-next-line prettier/prettier
 import type {
 	Players as PlayerComponent,
 	Model as ModelComponent,
@@ -13,10 +12,9 @@ import type {
 	Crouching as CrouchingComponent,
 	Running as RunningComponent,
 	LedgeHold as LedgeHoldComponent,
+	Dashing as DashingComponent,
 } from "./types";
-import { ComponentCtor } from "@rbxts/matter/lib/component";
 
-// eslint-disable-next-line prettier/prettier
 export type ComponentType =
 	| PlayerComponent
 	| ModelComponent
@@ -24,7 +22,8 @@ export type ComponentType =
 	| HealthComponent
 	| CrouchingComponent
 	| RunningComponent
-	| LedgeHoldComponent;
+	| LedgeHoldComponent
+	| DashingComponent;
 export type GameComponent = Component<ComponentType>;
 
 /**
@@ -49,5 +48,5 @@ export const Health = component<HealthComponent>("Health", health);
 
 export const Crouching = component<CrouchingComponent>("Crouching");
 export const Running = component<RunningComponent>("Running");
-
 export const LedgeHold = component<LedgeHoldComponent>("LedgeHold");
+export const Dashing = component<DashingComponent>("Dashing");

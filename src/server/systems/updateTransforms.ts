@@ -1,7 +1,6 @@
 import { World } from "@rbxts/matter";
 import { Workspace } from "@rbxts/services";
 import { Model, Transform } from "shared/ecs/components";
-import removeMissingModels from "./removeMissingModels";
 
 function updateTransforms(world: World): void {
 	for (const [id, record] of world.queryChanged(Transform)) {
@@ -67,5 +66,4 @@ function updateTransforms(world: World): void {
  */
 export = {
 	system: updateTransforms,
-	after: [removeMissingModels],
 };
