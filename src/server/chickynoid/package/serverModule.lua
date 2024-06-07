@@ -342,8 +342,6 @@ function ServerModule:AddConnection(userId, player)
 
         chickynoid:SpawnChickynoid()
 
-		game.Players:GetPlayerByUserId(playerRecord.userId).Character:Destroy()
-
         ServerModule.OnPlayerSpawn:Fire(self, playerRecord)
 
         return self.chickynoid

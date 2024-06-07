@@ -44,6 +44,10 @@
 				"Animate": {
 					"$className": "LocalScript"
 				}
+			},
+			"$properties": {
+				"CameraMaxZoomDistance": 13,
+				"CameraMinZoomDistance": 13
 			}
 		},
 		"ReplicatedFirst": {
@@ -69,6 +73,12 @@
 			"$className": "SoundService",
 			"$properties": {
 				"RespectFilteringEnabled": true
+			}
+		},
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false
 			}
 		}
 	}
