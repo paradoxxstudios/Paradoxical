@@ -11,4 +11,6 @@ export type ChickynoidCommand = {
 	z: number;
 
 	flying?: number;
+
+	reset: number;
 };

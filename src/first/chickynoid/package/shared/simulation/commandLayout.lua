@@ -19,6 +19,7 @@ function module:GetCommandLayout()
 		self.commandLayout:Add("fa", CrunchTable.Enum.VECTOR3)
 		self.commandLayout:Add("f", CrunchTable.Enum.FLOAT)
 		self.commandLayout:Add("j", CrunchTable.Enum.FLOAT)
+		self.commandLayout:Add("reset", CrunchTable.Enum.UBYTE)
 	end
 	
 	return self.commandLayout	

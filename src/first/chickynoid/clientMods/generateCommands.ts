@@ -6,15 +6,15 @@ const MAX_RETRIES = 8;
 function coreCall(method: keyof StarterGui, ...args: unknown[]) {
 	const result = [];
 	for (let i = 0; i < MAX_RETRIES; i++) {
-		try {
-			result[0] = (game.GetService("StarterGui")[method] as (...args: unknown[]) => void)(...args);
-		} catch {
-			result[0] = false;
-		}
-		if (result[0] !== false) break;
+		const pcallResult = pcall(() => {
+			(game.GetService("StarterGui")[method] as (this: StarterGui, ...args: unknown[]) => void)(...args);
+		});
+		result[0] = pcallResult[0];
+		result[1] = pcallResult[1];
+		if (result[0] === true) break;
 		game.GetService("RunService").Stepped.Wait();
 	}
-	return result[0];
+	return result;
 }
 
 const UserInputService = game.GetService("UserInputService");
@@ -36,7 +36,7 @@ function GetControlModule() {
 	return ControlModule;
 }
 
-function Setup(this: ClientMod & { [index: string]: unknown }, _client: typeof ClientChickynoid) {
+function Setup(this: ClientMod, _client: typeof ClientChickynoid) {
 	this.client = _client;
 
 	UserInputService.GetPropertyChangedSignal("MouseBehavior").Connect(() => {
@@ -57,7 +57,12 @@ function Setup(this: ClientMod & { [index: string]: unknown }, _client: typeof C
 
 function Step(_: ClientMod, _client: typeof ClientChickynoid, _dt: number) {}
 
-function GenerateCommand(this: ClientMod, command: ChickynoidCommand, _serverTime: number, _dt: number) {
+function GenerateCommand(
+	this: ClientMod & { [index: string]: unknown },
+	command: ChickynoidCommand,
+	_serverTime: number,
+	_dt: number,
+) {
 	command.x = 0;
 	command.y = 0;
 	command.z = 0;
@@ -88,6 +93,11 @@ function GenerateCommand(this: ClientMod, command: ChickynoidCommand, _serverTim
 		} else if (crouch) {
 			command.y = -1;
 		}
+	}
+
+	if (this.resetRequested) {
+		this.resetRequested = false;
+		command.reset = 1;
 	}
 
 	const rawMoveVector = CalculateRawMoveVector(new Vector3(command.x, 0, command.z));

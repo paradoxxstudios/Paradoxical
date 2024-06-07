@@ -1,3 +1,5 @@
+import ClientChickynoid from "./clientChickynoid";
+
 export interface ClientMod {
 	GetPriority?(): number;
 
@@ -6,4 +8,8 @@ export interface ClientMod {
 	Setup(): void;
 
 	GenerateCommand(command: unknown, serverTime: number, deltaTime: number): unknown;
+
+	resetRequested?: boolean;
+	client?: typeof ClientChickynoid;
+	shiftlock?: 0 | 1;
 }

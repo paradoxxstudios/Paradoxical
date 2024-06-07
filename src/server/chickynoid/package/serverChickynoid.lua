@@ -242,7 +242,7 @@ function ServerChickynoid:HandleClientUnreliableEvent(server, event, fakeCommand
 end
 
 function ServerChickynoid:CheckForReset(server, command)
-	if (command.reset == true) then
+	if (command.reset == 1) then
 		self.playerRecord.reset = true
 	end
 end
