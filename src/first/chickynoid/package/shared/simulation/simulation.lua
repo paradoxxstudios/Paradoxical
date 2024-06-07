@@ -571,8 +571,9 @@ function Simulation:MovetypeWalking(cmd)
 
             --Enter idle
 			self.characterData:PlayAnimation("Idle", Enums.AnimChannel.Channel0, false)
-        -- else
+        else
             --moving through the air with no input
+            flatVel = MathUtils:VelocityFriction(flatVel, self.constants.brakeFriction, cmd.deltaTime)
         end
     end
 

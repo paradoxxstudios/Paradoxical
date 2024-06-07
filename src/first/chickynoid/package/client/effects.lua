@@ -119,7 +119,7 @@ function Preload()
 				table.insert(list, value.Texture)
 			end
 		end
-		print("Preloading ", #list, " assets")
+		--print("Preloading ", #list, " assets")
 		game.ContentProvider:PreloadAsync(list)
 	end)
 end

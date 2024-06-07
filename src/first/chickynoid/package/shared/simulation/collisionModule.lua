@@ -873,22 +873,22 @@ function module:MakeWorld(folder, playerSize)
                 local progress = counter/total;
                 module.loadProgress = progress;
                 module.OnLoadProgressChanged:Fire(progress)
-				print("Collision processing: " .. math.floor(progress * 100) .. "%")
+				--print("Collision processing: " .. math.floor(progress * 100) .. "%")
 			end
 	    end
         module.loadProgress = 1
         module.OnLoadProgressChanged:Fire(1)
-		print("Collision processing: 100%")
+		--print("Collision processing: 100%")
 		self.processing = false
 		
 		if (game["Run Service"]:IsServer()) then
-			print("Server Time Taken: ", math.floor(tick() - startTime), "seconds")
+			--print("Server Time Taken: ", math.floor(tick() - startTime), "seconds")
 			
 		else
-			print("Client Time Taken: ", math.floor(tick() - startTime), "seconds")
+			--print("Client Time Taken: ", math.floor(tick() - startTime), "seconds")
 		end
-		print("Mesh time: ", meshTime, "seconds")
-		print("Tracing time:", MinkowskiSumInstance.timeSpentTracing, "seconds")
+		--print("Mesh time: ", meshTime, "seconds")
+		--print("Tracing time:", MinkowskiSumInstance.timeSpentTracing, "seconds")
 		self:ClearCache()
  
 	end)()

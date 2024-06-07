@@ -118,7 +118,7 @@ function ClientModule:Setup()
     --EventType.ChickynoidAdded
     eventHandler[EventType.ChickynoidAdded] = function(event)
         local position = event.position
-        print("Chickynoid spawned at", position)
+        --print("Chickynoid spawned at", position)
 
         if self.localChickynoid == nil then
             self.localChickynoid = ClientChickynoid.new(position, event.characterMod)
@@ -129,7 +129,7 @@ function ClientModule:Setup()
     end
 
     eventHandler[EventType.ChickynoidRemoving] = function(_event)
-        print("Local chickynoid removing")
+        --print("Local chickynoid removing")
 
         if self.localChickynoid ~= nil then
             self.localChickynoid:Destroy()
@@ -174,7 +174,7 @@ function ClientModule:Setup()
 
     -- EventType.WorldState
     eventHandler[EventType.WorldState] = function(event)
-        print("Got worldstate")
+        --print("Got worldstate")
 		self.worldState = event.worldState
 		
 		Animations:SetAnimationsFromWorldState(event.worldState.animations)
@@ -376,7 +376,7 @@ function ClientModule:Setup()
     local mods = ClientMods:GetMods("clientmods")
     for _, mod in mods do
         mod:Setup(self)
-		print("Loaded", _)
+		--print("Loaded", _)
     end
 
     --WeaponModule
@@ -388,7 +388,7 @@ function ClientModule:Setup()
 		while(game:IsLoaded() == false) do
 			wait()
 		end
-		print("Sending loaded event")
+		--print("Sending loaded event")
 		self.gameRunning = true
 		
 		--Notify the server
@@ -552,7 +552,7 @@ function ClientModule:ProcessFrame(deltaTime)
 
         if self.characterModel == nil and self.localChickynoid ~= nil then
             --Spawn the character in
-			print("Creating local model for UserId", game.Players.LocalPlayer.UserId)
+			--("Creating local model for UserId", game.Players.LocalPlayer.UserId)
 			local mod = self:GetPlayerDataByUserId(game.Players.LocalPlayer.UserId)
 			self.characterModel = CharacterModel.new( game.Players.LocalPlayer.UserId, mod.characterMod)
             for _, characterModelCallback in ipairs(self.characterModelCallbacks) do
@@ -803,7 +803,7 @@ function ClientModule:DeserializeSnapshot(event)
 	end
 	if (previousSnapshot == nil and event.cf ~= nil) then
 		warn("Prev snapshot not found" , event.cf)
-		print("num snapshots", #self.snapshots)
+		--print("num snapshots", #self.snapshots)
 		return nil
 	end
 	self.mostRecentSnapshotComparedTo = previousSnapshot

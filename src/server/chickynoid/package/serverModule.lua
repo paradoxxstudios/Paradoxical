@@ -152,10 +152,6 @@ function ServerModule:Setup()
 end
 
 function ServerModule:PlayerConnected(player)
-	player.CharacterAdded:Connect(function(chracter)
-		chracter:Destroy()
-	end)
-
     local playerRecord = self:AddConnection(player.UserId, player)
 	
 	if (playerRecord) then
@@ -346,7 +342,10 @@ function ServerModule:AddConnection(userId, player)
 
         chickynoid:SpawnChickynoid()
 
+		game.Players:GetPlayerByUserId(playerRecord.userId).Character:Destroy()
+
         ServerModule.OnPlayerSpawn:Fire(self, playerRecord)
+
         return self.chickynoid
     end
 	
@@ -456,7 +455,7 @@ function ServerModule:DebugSlots()
             used += 1
         end
     end
-    print("Players:", used, " (Free:", free, ")")
+    --print("Players:", used, " (Free:", free, ")")
 end
 
 function ServerModule:GetPlayerByUserId(userId)
