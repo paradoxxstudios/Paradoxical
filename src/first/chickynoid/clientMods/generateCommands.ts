@@ -1,7 +1,21 @@
-import coreCall from "shared/utils/coreCall";
 import ClientChickynoid from "../package/client/clientChickynoid";
 import { ClientMod } from "../package/client/clientMod";
 import { ChickynoidCommand } from "../package/shared/simulation/command";
+
+const MAX_RETRIES = 8;
+function coreCall(method: keyof StarterGui, ...args: unknown[]) {
+	const result = [];
+	for (let i = 0; i < MAX_RETRIES; i++) {
+		try {
+			result[0] = (game.GetService("StarterGui")[method] as (...args: unknown[]) => void)(...args);
+		} catch {
+			result[0] = false;
+		}
+		if (result[0] !== false) break;
+		game.GetService("RunService").Stepped.Wait();
+	}
+	return result[0];
+}
 
 const UserInputService = game.GetService("UserInputService");
 let ControlModule: undefined | { [index: string]: unknown } = undefined;
@@ -64,9 +78,13 @@ function GenerateCommand(this: ClientMod, command: ChickynoidCommand, _serverTim
 	if (!UserInputService.GetFocusedTextBox()) {
 		const jump = UserInputService.IsKeyDown(Enum.KeyCode.Space);
 		const crouch = UserInputService.IsKeyDown(Enum.KeyCode.C);
-		command.y = 0;
+
 		if (jump) {
-			command.y = 1;
+			if (command.y === 1) {
+				command.y = 0;
+			} else {
+				command.y = 1;
+			}
 		} else if (crouch) {
 			command.y = -1;
 		}
