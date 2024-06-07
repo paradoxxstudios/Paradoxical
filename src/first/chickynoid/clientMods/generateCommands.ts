@@ -57,12 +57,7 @@ function Setup(this: ClientMod, _client: typeof ClientChickynoid) {
 
 function Step(_: ClientMod, _client: typeof ClientChickynoid, _dt: number) {}
 
-function GenerateCommand(
-	this: ClientMod & { [index: string]: unknown },
-	command: ChickynoidCommand,
-	_serverTime: number,
-	_dt: number,
-) {
+function GenerateCommand(this: ClientMod, command: ChickynoidCommand, _serverTime: number, _dt: number) {
 	command.x = 0;
 	command.y = 0;
 	command.z = 0;

@@ -802,7 +802,7 @@ function ClientModule:DeserializeSnapshot(event)
 		end
 	end
 	if (previousSnapshot == nil and event.cf ~= nil) then
-		warn("Prev snapshot not found" , event.cf)
+		--warn("Prev snapshot not found" , event.cf)
 		--print("num snapshots", #self.snapshots)
 		return nil
 	end
