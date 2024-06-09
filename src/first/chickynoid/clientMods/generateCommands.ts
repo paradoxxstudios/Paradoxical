@@ -78,15 +78,14 @@ function GenerateCommand(this: ClientMod, command: ChickynoidCommand, _serverTim
 	if (!UserInputService.GetFocusedTextBox()) {
 		const jump = UserInputService.IsKeyDown(Enum.KeyCode.Space);
 		const crouch = UserInputService.IsKeyDown(Enum.KeyCode.C);
+		const run = UserInputService.IsKeyDown(Enum.KeyCode.LeftShift);
 
 		if (jump) {
-			if (command.y === 1) {
-				command.y = 0;
-			} else {
-				command.y = 1;
-			}
+			command.y = 1;
 		} else if (crouch) {
 			command.y = -1;
+		} else if (run) {
+			command.running = 1;
 		}
 	}
 

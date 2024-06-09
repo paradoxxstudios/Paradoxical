@@ -1,8 +1,9 @@
 import CharacterData from "../characterData";
+import { ChickynoidCommand } from "../command";
 import { SimulationConstants } from "./simulation-constants";
 import { SimulationState } from "./simulation-state";
 
-type ThinkFunc = (simulation: typeof Simulation, command: unknown) => void;
+type ThinkFunc = (simulation: Simulation, command: ChickynoidCommand) => void;
 
 interface Simulation {
 	state: SimulationState;
@@ -14,12 +15,14 @@ interface Simulation {
 	RegisterMoveState(
 		name: string,
 		/** Runs while active */
-		activeThink: unknown,
+		activeThink: ThinkFunc,
 		/** Runs every frame. */
-		alwaysThink: unknown,
-		startState: unknown,
+		alwaysThink?: ThinkFunc,
+		startState?: ThinkFunc,
 		/** Cleanup */
-		lastThink: unknown | undefined,
+		lastThink?: ThinkFunc,
+		alwaysThinkLate?: ThinkFunc,
+		executionOrder?: number,
 	): void;
 
 	GetMoveState(): {

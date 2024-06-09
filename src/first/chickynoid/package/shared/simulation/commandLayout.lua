@@ -20,6 +20,7 @@ function module:GetCommandLayout()
 		self.commandLayout:Add("f", CrunchTable.Enum.FLOAT)
 		self.commandLayout:Add("j", CrunchTable.Enum.FLOAT)
 		self.commandLayout:Add("reset", CrunchTable.Enum.UBYTE)
+		self.commandLayout:Add("running", CrunchTable.Enum.UBYTE)
 	end
 	
 	return self.commandLayout	

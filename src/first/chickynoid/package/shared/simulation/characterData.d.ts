@@ -1,3 +1,5 @@
+import { ChickyEnumAnimationChannels } from "../enums";
+
 interface CharacterData {
 	serialized: {
 		pos: Vector3;
@@ -11,6 +13,12 @@ interface CharacterData {
 	SetAngle(angle: number): void;
 	GetAngle(): number;
 	SmoothPosition(deltaTime: number, smoothFactor: number): void;
+	PlayAnimation(
+		animName: string,
+		animChannel: ChickyEnumAnimationChannels,
+		forceRestart: boolean,
+		exclusiveTime?: number,
+	): void;
 }
 
 export = CharacterData;
