@@ -1,6 +1,6 @@
 import ClientChickynoid from "../package/client/clientChickynoid";
 import { ClientMod } from "../package/client/clientMod";
-import { ChickynoidCommand } from "../package/shared/simulation/command";
+import { Commands } from "../package/shared/vendor/crunchTable";
 
 const MAX_RETRIES = 8;
 function coreCall(method: keyof StarterGui, ...args: unknown[]) {
@@ -57,7 +57,7 @@ function Setup(this: ClientMod, _client: typeof ClientChickynoid) {
 
 function Step(_: ClientMod, _client: typeof ClientChickynoid, _dt: number) {}
 
-function GenerateCommand(this: ClientMod, command: ChickynoidCommand, _serverTime: number, _dt: number) {
+function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number, _dt: number) {
 	command.x = 0;
 	command.y = 0;
 	command.z = 0;

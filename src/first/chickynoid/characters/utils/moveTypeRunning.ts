@@ -1,15 +1,14 @@
 import Simulation from "first/chickynoid/package/shared/simulation/simulation";
 import type { MoveType } from "./moveType";
-import { ChickynoidCommand } from "first/chickynoid/package/shared/simulation/command";
-import { ChickyEnumAnimationChannels } from "first/chickynoid/package/shared/enums";
+import { Commands } from "first/chickynoid/package/shared/vendor/crunchTable";
 
 function ModifySimulation(this: MoveType, simulation: Simulation) {
 	simulation.RegisterMoveState("Running", this.ActiveThink, this.AlwaysThink);
 }
 
-function ActiveThink(simulation: Simulation, command: ChickynoidCommand) {}
+function ActiveThink(simulation: Simulation, command: Commands) {}
 
-function AlwaysThink(simulation: Simulation, command: ChickynoidCommand) {
+function AlwaysThink(simulation: Simulation, command: Commands) {
 	if (command.running === 1) {
 		simulation.constants.brakeFriction = 0.2;
 		simulation.constants.accel = 3;

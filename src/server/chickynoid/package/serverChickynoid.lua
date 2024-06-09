@@ -236,7 +236,7 @@ function ServerChickynoid:HandleClientUnreliableEvent(server, event, fakeCommand
 	end
 	
 	if (event[1] ~= nil) then
-		local command = CommandLayout:DecodeCommand(event[1])		
+		local command = CommandLayout:DecodeCommand(event[1])	
 		self:ProcessCommand(server, command, fakeCommand, false)
 	end
 end

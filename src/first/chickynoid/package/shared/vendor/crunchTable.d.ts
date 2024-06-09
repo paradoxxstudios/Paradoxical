@@ -1,45 +1,36 @@
-import { ChickynoidCommand } from "../simulation/command";
-
-export enum CrunchTableEnum {
-	FLOAT = 1,
-	VECTOR3,
-	INT32,
-	UBYTE,
-}
-
 export type Commands = {
-	localFrame: CrunchTableEnum.INT32;
-	serverTime: CrunchTableEnum.FLOAT;
-	deltaTime: CrunchTableEnum.FLOAT;
-	snapshotServerFrame: CrunchTableEnum.INT32;
-	playerStateFrame: CrunchTableEnum.INT32;
+	localFrame: number;
+	serverTime: number;
+	deltaTime: number;
+	snapshotServerFrame: number;
+	playerStateFrame: number;
 
-	shiftLock?: CrunchTableEnum.UBYTE;
-	x: CrunchTableEnum.FLOAT;
-	y: CrunchTableEnum.FLOAT;
-	z: CrunchTableEnum.FLOAT;
+	shiftLock?: number;
+	x: number;
+	y: number;
+	z: number;
 
-	fa?: CrunchTableEnum.VECTOR3;
-	reset?: CrunchTableEnum.UBYTE;
-	running?: CrunchTableEnum.UBYTE;
+	f?: number;
+	j?: number;
+	fa?: Vector3;
+	reset?: number;
+	running?: number;
 };
 
 export interface CommandLayout {
-	pairTable: { field: keyof Commands; enum: CrunchTableEnum };
+	pairTable: { field: keyof Commands; enum: CrunchTable.Enum };
 	totalBytes: number;
-	Add: (field: keyof Commands, crunchTableEnum: CrunchTableEnum) => void;
+	Add: (this: CommandLayout, field: keyof Commands, crunchTableEnum: CrunchTable.Enum) => void;
 }
 
 export namespace CrunchTable {
+	export enum Enum {
+		FLOAT = 1,
+		VECTOR3 = 2,
+		INT32 = 3,
+		UBYTE = 4,
+	}
 	export function CreateLayout(this: typeof CrunchTable): CommandLayout;
-	export function BinaryEncodeTable(
-		this: typeof CrunchTable,
-		srcData: ChickynoidCommand,
-		layout: CommandLayout,
-	): ChickynoidCommand;
-	export function BinaryDecodeTable(
-		this: typeof CrunchTable,
-		srcData: ChickynoidCommand,
-		layout: CommandLayout,
-	): ChickynoidCommand;
+	export function BinaryEncodeTable(this: typeof CrunchTable, srcData: Commands, layout: CommandLayout): Commands;
+	export function BinaryDecodeTable(this: typeof CrunchTable, srcData: Commands, layout: CommandLayout): Commands;
 }
