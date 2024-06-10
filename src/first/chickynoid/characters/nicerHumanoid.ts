@@ -3,6 +3,9 @@ import Simulation from "../package/shared/simulation/simulation";
 import { MoveType } from "./utils/moveType";
 
 const utils = script.Parent?.FindFirstChild("utils") as Folder;
+function requireMoveType(module: string) {
+	return require(utils?.FindFirstChild(module) as ModuleScript) as MoveType;
+}
 
 function SetUp(this: CharacterMod, simulation: Simulation) {
 	simulation.constants.maxSpeed = 16; // Units per second
@@ -17,8 +20,8 @@ function SetUp(this: CharacterMod, simulation: Simulation) {
 	simulation.constants.jumpThrustPower = 0; // If you keep holding jump, how much extra vel per second is there?  (turn this off for no variable height jumps)
 	simulation.constants.jumpThrustDecay = 0.4; // Smaller is faster
 
-	const moveTypeRunning = require(utils?.FindFirstChild("moveTypeRunning") as ModuleScript) as MoveType;
-	moveTypeRunning.ModifySimulation(simulation);
+	const moveTypeWalking = requireMoveType("moveTypeWalking");
+	moveTypeWalking.ModifySimulation(simulation);
 }
 
 export = {

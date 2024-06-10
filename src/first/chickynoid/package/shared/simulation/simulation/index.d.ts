@@ -1,9 +1,10 @@
+import { Commands } from "../../vendor/crunchTable";
 import CharacterData from "../characterData";
-import { ChickynoidCommand } from "../command";
+import { SweepResult } from "../collisionModule";
 import { SimulationConstants } from "./simulation-constants";
 import { SimulationState } from "./simulation-state";
 
-type ThinkFunc = (simulation: Simulation, command: ChickynoidCommand) => void;
+type ThinkFunc = (simulation: Simulation, command: Commands) => void;
 
 interface Simulation {
 	state: SimulationState;
@@ -39,7 +40,13 @@ interface Simulation {
 		deltaTime: number,
 	): LuaTuple<[movePos: Vector3, moveVel: Vector3, hitSomething: boolean]>;
 
-	DoGroundCheck(pos: Vector3): unknown | undefined;
+	DoGroundCheck(pos: Vector3): SweepResult | undefined;
+	CheckGroundSlopes(startPos: Vector3): boolean;
+
+	CrashLand(vel: Vector3, ground: SweepResult): Vector3;
+
+	DoStepUp(pos: Vector3, vel: Vector3, deltaTime: number): undefined | { stepUp: number; pos: Vector3; vel: Vector3 };
+	DoStepDown(pos: Vector3): undefined | { pos: Vector3; stepDown: number };
 }
 
 interface SimulationConstructor {
