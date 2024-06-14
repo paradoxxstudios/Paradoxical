@@ -16,6 +16,18 @@ const module: MoveType = {
 	},
 
 	ActiveThink: (simulation, command) => {
+		if (command.running === 1) {
+			simulation.constants.maxSpeed = 24;
+			simulation.constants.airSpeed = 24;
+			simulation.constants.brakeFriction = 0.1;
+			simulation.constants.accel = 4;
+		} else {
+			simulation.constants.maxSpeed = 16;
+			simulation.constants.airSpeed = 16;
+			simulation.constants.brakeFriction = 0.05;
+			simulation.constants.accel = 50;
+		}
+
 		// Check ground
 		let onGround = undefined;
 		onGround = simulation.DoGroundCheck(simulation.state.pos);
@@ -72,7 +84,11 @@ const module: MoveType = {
 				if (simulation.state.pushing > 0) {
 					simulation.characterData.PlayAnimation("Push", ChickyEnumAnimationChannels.Channel0, false);
 				} else {
-					simulation.characterData.PlayAnimation("Walk", ChickyEnumAnimationChannels.Channel0, false);
+					if (command.running === 1) {
+						simulation.characterData.PlayAnimation("Run", ChickyEnumAnimationChannels.Channel0, false);
+					} else {
+						simulation.characterData.PlayAnimation("Walk", ChickyEnumAnimationChannels.Channel0, false);
+					}
 				}
 			} else {
 				// Moving through the air under player control
