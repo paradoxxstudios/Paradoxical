@@ -124,21 +124,23 @@ const module: MoveType = {
 			simulation.state.inAir += command.deltaTime;
 			// Capped just to keep the state var reasonable
 			if (simulation.state.inAir > 10) simulation.state.inAir = 10;
-		}
 
-		// Jump thrust
-		if (command.y > 0) {
-			if (simulation.state.jumpThrust > 0) {
-				simulation.state.vel = simulation.state.vel.add(
-					new Vector3(0, simulation.state.jumpThrust * command.deltaTime, 0),
-				);
-				simulation.state.jumpThrust = MathUtils.Friction(
-					simulation.state.jumpThrust,
-					simulation.constants.jumpThrustDecay,
-					command.deltaTime,
-				);
+			// Jump thrust
+			if (command.y > 0) {
+				if (simulation.state.jumpThrust > 0) {
+					simulation.state.vel = simulation.state.vel.add(
+						new Vector3(0, simulation.state.jumpThrust * command.deltaTime, 0),
+					);
+					simulation.state.jumpThrust = MathUtils.Friction(
+						simulation.state.jumpThrust,
+						simulation.constants.jumpThrustDecay,
+						command.deltaTime,
+					);
+				}
+				if (simulation.state.jumpThrust < 0.001) simulation.state.jumpThrust = 0;
+			} else {
+				simulation.state.jumpThrust = 0;
 			}
-			if (simulation.state.jumpThrust < 0.001) simulation.state.jumpThrust = 0;
 
 			// Gravity
 			simulation.state.vel = simulation.state.vel.add(
