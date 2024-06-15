@@ -15,6 +15,7 @@ export type Commands = {
 	fa?: Vector3;
 	reset?: number;
 	running?: number;
+	jumped?: number;
 };
 
 export interface CommandLayout {

@@ -19,6 +19,7 @@ function SetUp(this: CharacterMod, simulation: Simulation) {
 	simulation.constants.maxGroundSlope = 0.55; // about 45o
 	simulation.constants.jumpThrustPower = 0; // If you keep holding jump, how much extra vel per second is there?  (turn this off for no variable height jumps)
 	simulation.constants.jumpThrustDecay = 0.4; // Smaller is faster
+	simulation.constants.stepSize = 2;
 
 	const moveTypeWalking = requireMoveType("moveTypeWalking");
 	moveTypeWalking.ModifySimulation(simulation);

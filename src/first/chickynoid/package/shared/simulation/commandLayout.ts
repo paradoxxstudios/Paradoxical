@@ -1,4 +1,4 @@
-import type { CommandLayout, Commands, CrunchTable as CrunchTableType } from "../vendor/crunchTable";
+import { CommandLayout, Commands, CrunchTable as CrunchTableType } from "../vendor/crunchTable";
 
 const CrunchTable = require(
 	script.Parent?.Parent?.FindFirstChild("vendor")?.FindFirstChild("crunchTable") as ModuleScript,
@@ -31,6 +31,7 @@ const module: CommandLayoutModule = {
 			this.commandLayout.Add("j", CrunchTable.Enum.FLOAT);
 			this.commandLayout.Add("reset", CrunchTable.Enum.UBYTE);
 			this.commandLayout.Add("running", CrunchTable.Enum.UBYTE);
+			this.commandLayout.Add("jumped", CrunchTable.Enum.UBYTE);
 		}
 
 		return this.commandLayout;

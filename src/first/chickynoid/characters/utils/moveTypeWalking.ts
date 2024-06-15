@@ -13,6 +13,7 @@ const module: MoveType = {
 	ModifySimulation(this, simulation) {
 		simulation.RegisterMoveState("Walking", this.ActiveThink);
 		simulation.SetMoveState("Walking");
+		simulation.state.jumped = false;
 	},
 
 	ActiveThink: (simulation, command) => {
@@ -116,9 +117,12 @@ const module: MoveType = {
 		simulation.state.vel = new Vector3(flatVel.X, simulation.state.vel.Y, flatVel.Z);
 
 		// Do jumping?
-		if (simulation.state.jump > 0) {
+		if (simulation.state.jump > 0 && !simulation.state.jumped) {
+			simulation.state.jumped = true;
 			simulation.state.jump -= command.deltaTime;
 			if (simulation.state.jump < 0) simulation.state.jump = 0;
+		} else if (command.y === 0) {
+			simulation.state.jumped = false;
 		}
 
 		if (onGround !== undefined) {
@@ -164,7 +168,7 @@ const module: MoveType = {
 			);
 
 			// Switch to falling if we have been off the ground for a bit
-			if (simulation.state.vel.Y < 0.01 && simulation.state.inAir > 0.5) {
+			if (simulation.state.vel.Y < -30 && simulation.state.inAir > 0.2) {
 				simulation.characterData.PlayAnimation("Fall", ChickyEnumAnimationChannels.Channel0, false);
 			}
 		} else {
