@@ -1,0 +1,85 @@
+{
+	"name": "start-place",
+	"globIgnorePaths": [
+		"**/package.json",
+		"**/tsconfig.json",
+		"**/*.spec.lua",
+		"**/*.dev.lua"
+	],
+	"tree": {
+		"$className": "DataModel",
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"$path": "out/start/src/server"
+		},
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"rbxts_include": {
+				"$path": "include",
+				"node_modules": {
+					"$className": "Folder",
+					"@rbxts": {
+						"$path": "../../node_modules/@rbxts"
+					}
+				}
+			},
+			"paradoxical": {
+				"$path": "out/start/src/shared"
+			},
+			"assets": {
+				"$path": "assets"
+			}
+		},
+		"StarterPlayer": {
+			"$className": "StarterPlayer",
+			"StarterPlayerScripts": {
+				"$className": "StarterPlayerScripts",
+				"$path": "out/start/src/client"
+			},
+			"StarterCharacterScripts": {
+				"$className": "StarterCharacterScripts",
+				"Health": {
+					"$className": "Script"
+				},
+				"Animate": {
+					"$className": "LocalScript"
+				}
+			},
+			"$properties": {
+				"CameraMaxZoomDistance": 13,
+				"CameraMinZoomDistance": 13
+			}
+		},
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"$path": "out/start/src/first"
+		},
+		"Workspace": {
+			"$className": "Workspace",
+			"$properties": {
+				"FilteringEnabled": true
+			},
+			"gameArea": {
+				"$path": "gameArea"
+			}
+		},
+		"HttpService": {
+			"$className": "HttpService",
+			"$properties": {
+				"HttpEnabled": true
+			}
+		},
+		"SoundService": {
+			"$className": "SoundService",
+			"$properties": {
+				"RespectFilteringEnabled": true
+			}
+		},
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false
+			}
+		}
+	}
+}
