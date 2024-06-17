@@ -4,8 +4,8 @@
 		"allowSyntheticDefaultImports": true,
 		"downlevelIteration": true,
 		"jsx": "react",
-		"jsxFactory": "Roact.createElement",
-		"jsxFragmentFactory": "Roact.Fragment",
+		"jsxFactory": "React.createElement",
+		"jsxFragmentFactory": "React.Fragment",
 		"module": "commonjs",
 		"moduleResolution": "Node",
 		"moduleDetection": "force",
@@ -15,7 +15,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"target": "ESNext",
-		"typeRoots": ["../../node_modules/@rbxts"],
+		"typeRoots": ["node_modules/@rbxts"],
 
 		// configurable
 		"rootDirs": ["src", "../common/src"],

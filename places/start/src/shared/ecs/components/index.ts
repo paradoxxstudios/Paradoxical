@@ -1,8 +1,5 @@
 import { Component, component } from "@rbxts/matter";
-import { 
-	transform,
-	health,
-} from "./defaults";
+import { transform, health } from "./defaults";
 import type {
 	Players as PlayerComponent,
 	Model as ModelComponent,

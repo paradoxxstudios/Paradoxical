@@ -10,7 +10,12 @@
 		"$className": "DataModel",
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
-			"$path": "out/start/src/server"
+			"paradoxical": {
+				"$path": "out/start/src/server"
+			},
+			"common": {
+				"$path": "out/common/src/server"
+			}
 		},
 		"ReplicatedStorage": {
 			"$className": "ReplicatedStorage",
@@ -19,12 +24,15 @@
 				"node_modules": {
 					"$className": "Folder",
 					"@rbxts": {
-						"$path": "../../node_modules/@rbxts"
+						"$path": "node_modules/@rbxts"
 					}
 				}
 			},
 			"paradoxical": {
 				"$path": "out/start/src/shared"
+			},
+			"common": {
+				"$path": "out/common/src/shared"
 			},
 			"assets": {
 				"$path": "assets"
@@ -34,16 +42,19 @@
 			"$className": "StarterPlayer",
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
-				"$path": "out/start/src/client"
+				"paradoxical": {
+					"$path": "out/start/src/client"
+				},
+				"common": {
+					"$path": "out/common/src/client/paradoxical"
+				},
+				"PlayerModule": {
+					"$path": "out/common/src/client/PlayerModule.rbxm"
+				}
 			},
 			"StarterCharacterScripts": {
 				"$className": "StarterCharacterScripts",
-				"Health": {
-					"$className": "Script"
-				},
-				"Animate": {
-					"$className": "LocalScript"
-				}
+				"$path": "out/common/src/client/character"
 			},
 			"$properties": {
 				"CameraMaxZoomDistance": 13,
@@ -52,7 +63,12 @@
 		},
 		"ReplicatedFirst": {
 			"$className": "ReplicatedFirst",
-			"$path": "out/start/src/first"
+			"paradoxical": {
+				"$path": "out/start/src/first"
+			},
+			"common": {
+				"$path": "out/common/src/first"
+			}			
 		},
 		"Workspace": {
 			"$className": "Workspace",
