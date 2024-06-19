@@ -11,4 +11,6 @@ export interface SimulationState {
 	pushing: number;
 	characterData: unknown;
 	jumped: boolean;
+	running: boolean;
+	ran: boolean;
 }

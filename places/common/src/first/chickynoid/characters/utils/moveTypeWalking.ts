@@ -14,10 +14,19 @@ const module: MoveType = {
 		simulation.RegisterMoveState("Walking", this.ActiveThink);
 		simulation.SetMoveState("Walking");
 		simulation.state.jumped = false;
+		simulation.state.running = false;
+		simulation.state.ran = false;
 	},
 
 	ActiveThink: (simulation, command) => {
-		if (command.running === 1) {
+		if (command.running === 1 && !simulation.state.ran) {
+			simulation.state.ran = true;
+			simulation.state.running = !simulation.state.running;
+		} else if (command.running === 0) {
+			simulation.state.ran = false;
+		}
+
+		if (simulation.state.running) {
 			simulation.constants.maxSpeed = 24;
 			simulation.constants.airSpeed = 24;
 			simulation.constants.brakeFriction = 0.1;
@@ -87,7 +96,7 @@ const module: MoveType = {
 				if (simulation.state.pushing > 0) {
 					simulation.characterData.PlayAnimation("Push", ChickyEnumAnimationChannels.Channel0, false);
 				} else {
-					if (command.running === 1) {
+					if (simulation.state.running) {
 						simulation.characterData.PlayAnimation("Run", ChickyEnumAnimationChannels.Channel0, false);
 					} else if (command.y === -1) {
 						simulation.characterData.PlayAnimation("Crouch", ChickyEnumAnimationChannels.Channel0, false);

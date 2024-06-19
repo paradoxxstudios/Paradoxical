@@ -88,6 +88,8 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 		
 		if (run) {
 			command.running = 1;
+		} else {
+			command.running = 0;
 		}
 	}
 
