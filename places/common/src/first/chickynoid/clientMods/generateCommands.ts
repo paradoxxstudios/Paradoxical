@@ -80,11 +80,13 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 		const crouch = UserInputService.IsKeyDown(Enum.KeyCode.C);
 		const run = UserInputService.IsKeyDown(Enum.KeyCode.LeftShift);
 
-		if (jump) {
-			command.y = 1;
-		} else if (crouch) {
+		if (crouch) {
 			command.y = -1;
-		} else if (run) {
+		} else if (jump) {
+			command.y = 1;
+		} 
+		
+		if (run) {
 			command.running = 1;
 		}
 	}

@@ -22,6 +22,8 @@ const module: MoveType = {
 			simulation.constants.airSpeed = 24;
 			simulation.constants.brakeFriction = 0.1;
 			simulation.constants.accel = 4;
+		} else if (command.y === -1) {
+			simulation.constants.maxSpeed = 5;
 		} else {
 			simulation.constants.maxSpeed = 16;
 			simulation.constants.airSpeed = 16;
@@ -87,6 +89,8 @@ const module: MoveType = {
 				} else {
 					if (command.running === 1) {
 						simulation.characterData.PlayAnimation("Run", ChickyEnumAnimationChannels.Channel0, false);
+					} else if (command.y === -1) {
+						simulation.characterData.PlayAnimation("Crouch", ChickyEnumAnimationChannels.Channel0, false);
 					} else {
 						simulation.characterData.PlayAnimation("Walk", ChickyEnumAnimationChannels.Channel0, false);
 					}
@@ -106,7 +110,11 @@ const module: MoveType = {
 				// Just standing around
 				flatVel = MathUtils.VelocityFriction(flatVel, simulation.constants.brakeFriction, command.deltaTime);
 				// Enter idle
-				simulation.characterData.PlayAnimation("Idle", ChickyEnumAnimationChannels.Channel0, false);
+				if (command.y === -1) {
+					simulation.characterData.PlayAnimation("CrouchIdle", ChickyEnumAnimationChannels.Channel0, false);
+				} else {
+					simulation.characterData.PlayAnimation("Idle", ChickyEnumAnimationChannels.Channel0, false);
+				}
 			} else {
 				// Moving through the air with no input
 				flatVel = MathUtils.VelocityFriction(flatVel, simulation.constants.brakeFriction, command.deltaTime);

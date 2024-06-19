@@ -281,7 +281,6 @@ function CharacterData:ModuleSetup()
 	self:RegisterAnimationName("Jump")
 	self:RegisterAnimationName("Fall")
 	self:RegisterAnimationName("Push")
-	
 end
 
 function CharacterData.new()

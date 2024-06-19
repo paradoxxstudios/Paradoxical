@@ -40,6 +40,8 @@ function module:ServerSetup()
 	self:RegisterAnimation("Push")
 	self:RegisterAnimation("Jump")
 	self:RegisterAnimation("Fall")
+	self:RegisterAnimation("Crouch")
+	self:RegisterAnimation("CrouchIdle")
 end
 
 return module
