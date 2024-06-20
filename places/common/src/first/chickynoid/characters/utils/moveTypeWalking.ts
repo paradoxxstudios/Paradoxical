@@ -19,6 +19,11 @@ const module: MoveType = {
 	},
 
 	ActiveThink: (simulation, command) => {
+		simulation.constants.maxSpeed = 16;
+		simulation.constants.airSpeed = 16;
+		simulation.constants.brakeFriction = 0.05;
+		simulation.constants.accel = 50;
+
 		if (command.running === 1 && !simulation.state.ran) {
 			simulation.state.ran = true;
 			simulation.state.running = !simulation.state.running;
@@ -31,13 +36,12 @@ const module: MoveType = {
 			simulation.constants.airSpeed = 24;
 			simulation.constants.brakeFriction = 0.1;
 			simulation.constants.accel = 4;
-		} else if (command.y === -1) {
+		} 
+		
+		if (command.y === -1) {
+			simulation.state.running = false
+			simulation.state.ran = false
 			simulation.constants.maxSpeed = 5;
-		} else {
-			simulation.constants.maxSpeed = 16;
-			simulation.constants.airSpeed = 16;
-			simulation.constants.brakeFriction = 0.05;
-			simulation.constants.accel = 50;
 		}
 
 		// Check ground
