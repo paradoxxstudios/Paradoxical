@@ -6,13 +6,9 @@ environments:
     branches: [dev]
     targetNamePrefix: environmentLabel
     targetAccess: private
-    targetOverrides:
-      places:
-        start:
-          file: places/dev-start.rbxlx
   - label: prod
     branches: [main]
-    targetAccess: public
+    targetAccess: friends
 
 target:
   experience:
