@@ -1,6 +1,6 @@
 import { createBroadcaster } from "@rbxts/reflex";
-import { server } from "../../../shared/state/remotes";
-import { slices } from "../../../shared/state/shared/slices";
+import { server } from "../../../shared/store/remotes";
+import { slices } from "../../../shared/store/shared/slices";
 
 export function broadcasterMiddleware() {
 	const broadcaster = createBroadcaster({

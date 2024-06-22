@@ -1,11 +1,11 @@
 import { World } from "@rbxts/matter";
-import { Players } from "@rbxts/services";
+import { Players, Workspace } from "@rbxts/services";
 import { Health } from "shared/ecs/components";
 import spawnPlayers from "./spawnPlayers";
 import { ComponentCtor } from "@rbxts/matter/lib/component";
 import { StateType } from "shared/ecs/types";
-import { RootProducer } from "../../shared/state/client";
-import { PlayerState } from "../../shared/state/shared/slices/players";
+import { RootProducer } from "../../shared/store/client";
+import { PlayerState } from "../../shared/store/shared/slices/players";
 
 const isInserted = new Array<number>();
 

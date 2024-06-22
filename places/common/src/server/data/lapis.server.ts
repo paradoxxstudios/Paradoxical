@@ -1,7 +1,7 @@
 import { Players } from "@rbxts/services";
 import { store } from "../../server/store";
-import { selectPlayerData } from "../../shared/state/shared/selectors";
-import { SaveablePlayerData, defaultPlayerData } from "../../shared/state/shared/slices/players";
+import { selectPlayerData } from "../../shared/store/shared/selectors";
+import { SaveablePlayerData, defaultPlayerData } from "../../shared/store/shared/slices/players";
 import { validate } from "./validate";
 import DataStoreWrapper from "./dataStore";
 import { createCollection, setConfig } from "../../shared/packages/lapis";

@@ -1,5 +1,5 @@
+import { SaveablePlayerData } from "../../shared/store/shared/slices/players";
 import { t } from "../../shared/packages/t/t";
-import { SaveablePlayerData } from "../../shared/state/shared/slices/players";
 
 export const validate: t.check<SaveablePlayerData> = t.strictInterface({
 	health: t.strictInterface({

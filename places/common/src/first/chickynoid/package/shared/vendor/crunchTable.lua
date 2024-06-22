@@ -23,9 +23,9 @@ table.freeze(module.Sizes)
 function module:CreateLayout()
 	local layout = {}
 	layout.pairTable = {}
-	
+
 	layout.totalBytes = 0
-	
+
 	function layout:Add(field :string, enum : number)
 		table.insert(self.pairTable, {field = field, enum = enum})
 		module:CalcSize(self)
@@ -36,11 +36,11 @@ end
 function module:CalcSize(layout)
 	local totalBytes = 0
 	for index,rec in layout.pairTable do
-		
+
 		rec.size = module.Sizes[rec.enum]
 		totalBytes += rec.size
-		
-	end	
+
+	end
 	local numBytesForIndex = 2
 	layout.totalBytes = totalBytes + numBytesForIndex
 end
@@ -64,20 +64,20 @@ end
 function module:BinaryEncodeTable(srcData, layout)
 
 	local newPacket = self:DeepCopy(srcData)
-	
+
 	local buf = buffer.create(layout.totalBytes)
 	local numBytesForIndex = 2
-	local offset = numBytesForIndex 
+	local offset = numBytesForIndex
 	local contentBits = 0
 	local bitIndex = 0
-	
+
 	for index,rec in layout.pairTable do
-		
+
 		local key = rec.field
 		local encodeChar = rec.enum
-		
+
 		local srcValue = newPacket[key]
-				
+
 		if (encodeChar == module.Enum.INT32) then
 			if (srcValue ~= nil and srcValue ~= 0) then
 				buffer.writei32(buf,offset, srcValue)
@@ -107,7 +107,7 @@ function module:BinaryEncodeTable(srcData, layout)
 				contentBits = bit32.bor(contentBits, bit32.lshift(1, bitIndex))
 			end
 		end
-		
+
 		newPacket[key] = nil
 
 		bitIndex += 1
@@ -121,11 +121,11 @@ function module:BinaryEncodeTable(srcData, layout)
 	buffer.copy(finalBuffer, 0, buf, 0, offset)
 
 	newPacket._b = finalBuffer
- 
+
 	--leave the other fields untouched
-	return newPacket	
+	return newPacket
 end
-	
+
 
 function module:BinaryDecodeTable(srcData, layout)
 
@@ -143,13 +143,13 @@ function module:BinaryDecodeTable(srcData, layout)
 	offset+=2
 
 	local bitIndex = 0
-	
+
 	for index,rec in layout.pairTable do
 		local key = rec.field
 		local encodeChar = rec.enum
-		
+
 		local hasBit = bit32.band(contentBits, bit32.lshift(1, bitIndex)) > 0
-		
+
 		if (hasBit == false) then
 			if (encodeChar == module.Enum.INT32) then
 				command[key] = 0

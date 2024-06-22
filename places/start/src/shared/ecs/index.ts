@@ -10,7 +10,7 @@ import { start as startSystems, stop as stopSystems } from "./systems";
 import { start as startTags, stop as stopTags } from "./tags";
 import { CombineProducers, combineProducers } from "@rbxts/reflex";
 
-import { store as clientStore, RootProducer as ClientRootProducer } from "../../shared/state/client";
+import { store as clientStore, RootProducer as ClientRootProducer } from "../../shared/store/client";
 import recieveReplication from "./recieveReplication";
 import { SparkState, sparkState } from "shared/spark";
 import { StateType } from "./types";

@@ -173,7 +173,6 @@ function module:FetchCellMarching(x, y, z)
 	local botDPos = Vector3.new(4, 0, 4)
 	
 	local new = 0
-	local old = 0
 	
     for xx = 0, max do
         for yy = 0, max do

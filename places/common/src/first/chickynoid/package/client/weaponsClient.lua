@@ -1,7 +1,6 @@
 local module = {}
 
 local path = script.Parent.Parent
-local EffectsModule = require(path.client.effects)
 local Enums = require(path.shared.enums)
 
 local FastSignal = require(path.shared.vendor.fastSignal)

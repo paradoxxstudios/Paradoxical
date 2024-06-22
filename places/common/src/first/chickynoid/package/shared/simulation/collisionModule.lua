@@ -1,6 +1,5 @@
 --@!native
 local RunService = game:GetService("RunService")
-local CollectionService = game:GetService("CollectionService")
 
 local path = script.Parent.Parent
 
@@ -241,12 +240,12 @@ function module:FetchHullsForPoint(point)
         end
     end
 
-    local cell = self:FetchFatCell(
+    cell = self:FetchFatCell(
         point.x // self.fatGridSize,
         point.y // self.fatGridSize,
         point.z // self.fatGridSize
     )
-    local hullRecords = {}
+    hullRecords = {}
     if cell then
         for _, hull in cell do
             hullRecords[hull] = hull
@@ -338,7 +337,7 @@ function module:FetchHullsForBox(min, max)
 	end
 	
 	--Store it
-	local cached = self.cache[key]
+	cached = self.cache[key]
 	if (cached == nil) then
 		cached = {}
 		self.cache[key] = cached
@@ -347,14 +346,14 @@ function module:FetchHullsForBox(min, max)
 	
 	
 	--Inflate missing hulls
-	for key,record in pairs(hullRecords) do
+	for k, record in pairs(hullRecords) do
        
     	if (record.hull == nil) then
 			record.hull = self:GenerateConvexHullAccurate(record.instance, module.expansionSize, self:GenerateSnappedCFrame(record.instance))
 			
 		 
             if (record.hull == nil) then
-                hullRecords[key] = nil
+                hullRecords[k] = nil
             end
 		end
 	end
@@ -768,7 +767,7 @@ function module:Sweep(startPos, endPos)
             data.checks += 1
 
             self:CheckBrushNoStuck(data, hullRecord)
-            if (data.allSolid == true) then
+            if (data.allSolid) then
                 data.fraction = 0
                 break
             end
@@ -842,7 +841,6 @@ function module:MakeWorld(folder, playerSize)
 	self.processing = true
     TerrainModule:Setup(self.gridSize, playerSize)
 	
-	local startTime = tick()
 	local meshTime = 0
 
 	coroutine.wrap(function()
@@ -881,7 +879,7 @@ function module:MakeWorld(folder, playerSize)
 		--print("Collision processing: 100%")
 		self.processing = false
 		
-		if (game["Run Service"]:IsServer()) then
+		if (game:GetService("RunService"):IsServer()) then
 			--print("Server Time Taken: ", math.floor(tick() - startTime), "seconds")
 			
 		else

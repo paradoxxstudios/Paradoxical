@@ -1,19 +1,15 @@
 --!native
 local module = {}
 
-local UnreliableRemoteEvent = game.ReplicatedStorage:WaitForChild("ChickynoidUnreliableReplication") :: RemoteEvent
-
 local path = game.ReplicatedFirst.common.chickynoid.package
-local Profiler = require(path.shared.vendor.profiler)
-local CharacterData = require(path.shared.simulation.characterData)
+local Profiler = require(path.shared.vendor.profiler :: ModuleScript)
+local CharacterData = require(path.shared.simulation.characterData :: ModuleScript)
 
-local DeltaTable = require(path.shared.vendor.deltaTable)
-local Enums = require(path.shared.enums)
+local Enums = require(path.shared.enums :: ModuleScript)
 local EventType = Enums.EventType
 local absoluteMaxSizeOfBuffer = 4096
 local smallBufferSize = 64
 local timeToKeepCache = 30 --in frames
-local doCRC = false
 
 local cache = {} 
 
@@ -108,7 +104,6 @@ function module:DoWork(playerRecords, serverTotalFrames, serverSimulationTime, d
 		fullSnapshot = true
 
 		local currentPacket = nil
-		local series = 0
 		local queue = {}
 		tempQueues[userId] = queue
 		

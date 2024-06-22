@@ -25,7 +25,6 @@ local Animations = require(path.shared.simulation.animations)
 
 local Enums = require(path.shared.enums)
 local MathUtils = require(path.shared.simulation.mathUtils)
-local CrunchTable = require(path.shared.vendor.crunchTable)
 
 local FpsGraph = require(path.client.fpsGraph)
 local NetGraph = require(path.client.netGraph)
@@ -997,8 +996,6 @@ function ClientModule:AddPingToNetgraph(mispredicted, serverHealthFps, networkPr
 end
 
 function ClientModule:IsConnectionBad()
-
-    local pings 
     if #self.pings > 10 and self.ping > 2000 then
         return true
     end

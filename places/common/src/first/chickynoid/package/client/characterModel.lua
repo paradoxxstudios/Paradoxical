@@ -14,7 +14,6 @@ CharacterModel.__index = CharacterModel
 ]=]
 
 local path = script.Parent.Parent
-local Enums = require(path.shared.enums)
 local FastSignal = require(path.shared.vendor.fastSignal)
 local ClientMods = require(path.client.clientMods)
 local Animations = require(path.shared.simulation.animations)

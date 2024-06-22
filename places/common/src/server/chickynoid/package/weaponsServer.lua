@@ -8,8 +8,8 @@ module.customWeapons = {}
 
 local path = game.ReplicatedFirst.common.chickynoid.package
 
-local DeltaTable = require(path.shared.vendor.deltaTable)
-local Enums = require(path.shared.enums)
+local DeltaTable = require(path.shared.vendor.deltaTable :: ModuleScript)
+local Enums = require(path.shared.enums :: ModuleScript)
 local Antilag = require(script.Parent.antilag)
 local ServerMods = require(script.Parent.serverMods)
 

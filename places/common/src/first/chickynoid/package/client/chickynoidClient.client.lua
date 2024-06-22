@@ -1,4 +1,4 @@
-local Packages = game.ReplicatedFirst.common.chickynoid.package
+local Packages = script.Parent.Parent
 local ClientModule = require(Packages.client.clientModule)
 local ClientMods = require(Packages.client.clientMods)
 

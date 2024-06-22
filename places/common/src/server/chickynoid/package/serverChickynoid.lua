@@ -6,17 +6,18 @@
     Server-side character which exposes methods for manipulating a player's simulation
     such as teleporting and applying impulses.
 ]=]
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
-local path = game.ReplicatedFirst.common.chickynoid.package
+local path = ReplicatedFirst.common.chickynoid.package
 
-local Enums = require(path.shared.enums)
+local Enums = require(path.shared.enums :: ModuleScript)
 local EventType = Enums.EventType
-local FastSignal = require(path.shared.vendor.fastSignal)
+local FastSignal = require(path.shared.vendor.fastSignal :: ModuleScript)
 
-local Simulation = require(path.shared.simulation.simulation)
-local TrajectoryModule = require(path.shared.simulation.trajectoryModule)
-local DeltaTable = require(path.shared.vendor.deltaTable)
-local CommandLayout = require(path.shared.simulation.commandLayout)
+local Simulation = require(path.shared.simulation.simulation :: ModuleScript)
+local TrajectoryModule = require(path.shared.simulation.trajectoryModule :: ModuleScript)
+local DeltaTable = require(path.shared.vendor.deltaTable :: ModuleScript)
+local CommandLayout = require(path.shared.simulation.commandLayout :: ModuleScript)
 
 local ServerMods = require(script.Parent.serverMods)
 

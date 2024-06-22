@@ -9,7 +9,6 @@
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local RemoteEvent = ReplicatedStorage:WaitForChild("ChickynoidReplication") :: RemoteEvent
 local UnreliableRemoteEvent = ReplicatedStorage:WaitForChild("ChickynoidUnreliableReplication") :: UnreliableRemoteEvent
 
 local path = script.Parent.Parent
@@ -21,8 +20,6 @@ local DeltaTable = require(path.shared.vendor.deltaTable)
 local CommandLayout = require(path.shared.simulation.commandLayout)
 
 local TrajectoryModule = require(path.shared.simulation.trajectoryModule)
-local Enums = require(path.shared.enums)
-local EventType = Enums.EventType
 
 local ClientChickynoid = {}
 ClientChickynoid.__index = ClientChickynoid

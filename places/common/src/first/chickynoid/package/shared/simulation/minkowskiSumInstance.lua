@@ -88,7 +88,7 @@ end
 --     return true
 -- end
 
-local function IsValidTri(tri, origin)
+local function _IsValidTri(tri, origin)
 	
 	local normal = (tri[1] - tri[2]):Cross(tri[1] - tri[3]).unit
 	local pos = (tri[1]+tri[2]+tri[3]) / 3
@@ -142,7 +142,6 @@ function module:VisualizePlanesForPoints(points, debugPart)
 	--Run quickhull
 	
 	local r = QuickHull2:GenerateHull(points)
-	local recs = {}
 	
 	self:VisualizeTriangles(r, Vector3.zero)
 end
@@ -302,9 +301,9 @@ function module:GetRaytraceInstancePoints(instance, cframe)
 					AddUnique(points, result.Position)
 				
 					--we hit something, trace from the other side too
-					local pos = Vector3.new(x,2,y)
-					local dir = Vector3.new(0,-4,0)
-					local result = game.Workspace:Raycast(pos, dir, raycastParam)
+					pos = Vector3.new(x,2,y)
+					dir = Vector3.new(0,-4,0)
+					result = game.Workspace:Raycast(pos, dir, raycastParam)
 					if (result) then 
 						AddUnique(points, result.Position)
 					end
@@ -321,9 +320,9 @@ function module:GetRaytraceInstancePoints(instance, cframe)
 					AddUnique(points, result.Position)
 					
                     --we hit something, trace from the other side too
-					local pos = Vector3.new(2,x,y)
-					local dir = Vector3.new(-4,0,0)
-					local result = game.Workspace:Raycast(pos, dir, raycastParam)
+					pos = Vector3.new(2,x,y)
+					dir = Vector3.new(-4,0,0)
+					result = game.Workspace:Raycast(pos, dir, raycastParam)
 					if (result) then 
 						AddUnique(points, result.Position)
 					end
@@ -340,9 +339,9 @@ function module:GetRaytraceInstancePoints(instance, cframe)
 					AddUnique(points, result.Position)
 
 					--we hit something, trace from the other side too
-					local pos = Vector3.new(x,y,2)
-					local dir = Vector3.new(0,0,-4)
-					local result = game.Workspace:Raycast(pos, dir, raycastParam)
+					pos = Vector3.new(x,y,2)
+					dir = Vector3.new(0,0,-4)
+					result = game.Workspace:Raycast(pos, dir, raycastParam)
 					if (result) then 
 						AddUnique(points, result.Position)
 					end
@@ -372,7 +371,7 @@ function module:GetRaytraceInstancePoints(instance, cframe)
 					})
 				end
 			end
-			local points = {}
+			points = {}
 			for key,record in pairs(recs) do
 				
 				if (IsUniquePoint(points, record.tri[1])) then

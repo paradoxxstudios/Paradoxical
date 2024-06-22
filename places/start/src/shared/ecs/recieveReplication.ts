@@ -1,6 +1,6 @@
 import { AnyEntity, World } from "@rbxts/matter";
 import * as Components from "./components";
-import { RootProducer } from "../../shared/state/client";
+import { RootProducer } from "../../shared/store/client";
 import { matterReplication } from "shared/net";
 import { StateType } from "./types";
 

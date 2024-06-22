@@ -1,6 +1,6 @@
 import { World, useEvent } from "@rbxts/matter";
 import { Players } from "@rbxts/services";
-import { RootProducer } from "../../shared/state/client";
+import { RootProducer } from "../../shared/store/client";
 import { Model, Player, Transform } from "shared/ecs/components";
 import { StateType } from "shared/ecs/types";
 

@@ -7,7 +7,7 @@ local module = {}
 local UNASSIGNED = -2
 local INSIDE = -1
 local EPSILON = 0.0001
-local NaN = math.NaN
+local NaN = nil
 local counter = 0
 
 --Notes: openSetTail correctly bumped to be 1-based
@@ -64,7 +64,7 @@ local function Face(v0, v1, v2, o0, o1, o2, normal)
     }
 end
 
-function FaceEquals(left, other)
+function _FaceEquals(left, other)
     return (left.Vertex0   == other.Vertex0)
         and (left.Vertex1   == other.Vertex1)
         and (left.Vertex2   == other.Vertex2)
@@ -121,7 +121,7 @@ local function HasEdge(f, e0, e1)
         or (f.Vertex2 == e0 and f.Vertex0 == e1)
 end
 
-local function VerifyFaces(points)
+local function _VerifyFaces(points)
     for kvpKey, kpvValue in pairs(faces) do
         local fi = kvpKey
         local face = kpvValue
@@ -248,7 +248,7 @@ local function ReassignPoints(points)
 	end
 end
 
-local function VerifyOpenSet(points)
+local function _VerifyOpenSet(points)
     --for (int i = 0; i < openSet.Count; i++) --@@@
     for i=1, Count(openSet) do --@@@
         if (i > openSetTail) then
@@ -265,7 +265,7 @@ local function VerifyOpenSet(points)
     end
 end
 
-local function VerifyHorizon()
+local function _VerifyHorizon()
 	--for (int i = 0; i < horizon.Count; i++) --@@@
 	
     for i = 1, Count(horizon) do --@@@
@@ -412,9 +412,9 @@ local function FindHorizon(points, point, fi, face)
  
 
     if (Contains(litFaces, face.Opposite1) == false) then
-        local oppositeFace = faces[face.Opposite1]
+        oppositeFace = faces[face.Opposite1]
 
-        local dist = PointFaceDistance(
+        dist = PointFaceDistance(
             point,
             points[oppositeFace.Vertex0],
             oppositeFace);
@@ -427,9 +427,9 @@ local function FindHorizon(points, point, fi, face)
     end
 
     if (Contains(litFaces, face.Opposite2) == false) then
-        local oppositeFace = faces[face.Opposite2]
+        oppositeFace = faces[face.Opposite2]
 
-        local dist = PointFaceDistance(point, points[oppositeFace.Vertex0], oppositeFace)
+        dist = PointFaceDistance(point, points[oppositeFace.Vertex0], oppositeFace)
 
         if (dist <= 0.0) then
             table.insert(horizon, HorizonEdge(face.Opposite2, face.Vertex0, face.Vertex1))

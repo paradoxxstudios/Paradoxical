@@ -147,10 +147,10 @@ function Simulation:ProcessCommand(cmd)
         warn("No such updateState: ", self.state.moveState)
     end
 	
-	for key,record in self.executionOrder do
+	for key, record1 in self.executionOrder do
 
-		if (record.alwaysThinkLate) then
-			record.alwaysThinkLate(self, cmd)
+		if (record1.alwaysThinkLate) then
+			record1.alwaysThinkLate(self, cmd)
 		end
 	end
   
@@ -422,7 +422,7 @@ function Simulation:CheckGroundSlopes(startPos)
 	end
 	
 	--Try and move it
-	local result = CollisionModule:Sweep(movePos, movePos + moveDir)
+	result = CollisionModule:Sweep(movePos, movePos + moveDir)
 	if (result.fraction == 0) then
 		return true --stuck
 	end

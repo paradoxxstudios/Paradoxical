@@ -8,24 +8,22 @@
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
 local RunService = game:GetService("RunService")
 
-local path = game.ReplicatedFirst.common.chickynoid.package
+local path = ReplicatedFirst.common.chickynoid.package
 
-local Enums = require(path.shared.enums)
+local Enums = require(path.shared.enums :: ModuleScript)
 local EventType = Enums.EventType
 local ServerChickynoid = require(script.Parent.serverChickynoid)
-local CharacterData = require(path.shared.simulation.characterData)
 
-local DeltaTable = require(path.shared.vendor.deltaTable)
+local DeltaTable = require(path.shared.vendor.deltaTable :: ModuleScript)
 local WeaponsModule = require(script.Parent.weaponsServer)
-local CollisionModule = require(path.shared.simulation.collisionModule)
+local CollisionModule = require(path.shared.simulation.collisionModule :: ModuleScript)
 local Antilag = require(script.Parent.antilag)
-local FastSignal = require(path.shared.vendor.fastSignal)
+local FastSignal = require(path.shared.vendor.fastSignal :: ModuleScript)
 local ServerMods = require(script.Parent.serverMods)
-local Animations = require(path.shared.simulation.animations)
-
-local Profiler = require(path.shared.vendor.profiler)
+local Animations = require(path.shared.simulation.animations :: ModuleScript)
 
 local RemoteEvent = Instance.new("RemoteEvent")
 RemoteEvent.Name = "ChickynoidReplication"
@@ -295,7 +293,7 @@ function ServerModule:AddConnection(userId, player)
         if self.chickynoid then
             ServerModule.OnPlayerDespawn:Fire(self)
 
-            print("Despawned!")
+            --print("Despawned!")
             self.chickynoid:Destroy()
             self.chickynoid = nil
             self.respawnTime = tick() + self.respawnDelay
@@ -490,7 +488,6 @@ function ServerModule:RobloxHeartbeat(deltaTime)
     
 	    --Much simpler - assumes server runs at 60.
 	    self.accumulatedTime = 0
-	    local frac = 1 / 60
 		self:Think(deltaTime)
 	end
 
@@ -631,8 +628,6 @@ function ServerModule:UpdatePlayerStatesToPlayers()
 
 			if (self.config.antiWarp == true) then
 				local timeElapsed = playerRecord.chickynoid.processedTimeSinceLastSnapshot
-
-				local possibleStep = playerRecord.chickynoid.elapsedTime - playerRecord.chickynoid.playerElapsedTime
 
 				if (timeElapsed == 0 and playerRecord.chickynoid.lastProcessedCommand ~= nil) then
 					--This player didn't move this snapshot

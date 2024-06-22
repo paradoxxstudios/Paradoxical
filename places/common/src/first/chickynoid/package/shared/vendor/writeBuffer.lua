@@ -1,6 +1,4 @@
 local module = {}
-
-local module = {}
 module.__index = module
 
 function module.new(startSize)

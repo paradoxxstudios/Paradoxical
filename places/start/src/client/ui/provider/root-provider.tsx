@@ -1,7 +1,7 @@
 import { ReflexProvider } from "@rbxts/react-reflex";
 import { RemProvider, RemProviderProps } from "./rem-provider";
 import React from "@rbxts/react";
-import { store } from "../../../shared/state/client";
+import { store } from "../../../shared/store/client";
 
 interface RootProviderProps extends RemProviderProps {}
 
