@@ -22,7 +22,7 @@
 		"outDir": "out",
 		"baseUrl": "src",
 		"paths": {
-			"common/*": ["../../common/src/*"]
+			"common/*": ["../common/src/*"]
 		},
 		"incremental": true,
 		"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",

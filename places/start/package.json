@@ -17,7 +17,6 @@
     "@rbxts/matter": "0.8.1",
     "@rbxts/matter-hooks": "0.1.2",
     "@rbxts/mock-memory-store-service": "0.2.0-13",
-    "@rbxts/net": "^3.0.9",
     "@rbxts/plasma": "0.4.5",
     "@rbxts/pretty-react-hooks": "0.5.0",
     "@rbxts/react": "^0.4.0",
