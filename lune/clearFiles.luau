@@ -1,5 +1,5 @@
-local fs = require("@lune/fs")
-local task = require("@lune/task")
+local fs = require("@lune/fs" :: string)
+local task = require("@lune/task" :: string)
 
 return function(dir)
     print("\nRemoving files from:", dir)
