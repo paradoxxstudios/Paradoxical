@@ -15,7 +15,7 @@ const module: MoveType = {
 		simulation.SetMoveState("Walking");
 		simulation.state.jumped = false;
 		simulation.state.running = false;
-		simulation.state.ran = false;
+		simulation.state.runToggle = false;
 	},
 
 	ActiveThink: (simulation, command) => {
@@ -24,11 +24,11 @@ const module: MoveType = {
 		simulation.constants.brakeFriction = 0.05;
 		simulation.constants.accel = 50;
 
-		if (command.running === 1 && !simulation.state.ran) {
-			simulation.state.ran = true;
+		if (command.running === 1 && !simulation.state.runToggle) {
+			simulation.state.runToggle = true;
 			simulation.state.running = !simulation.state.running;
 		} else if (command.running === 0) {
-			simulation.state.ran = false;
+			simulation.state.runToggle = false;
 		}
 
 		if (simulation.state.running) {
@@ -40,13 +40,17 @@ const module: MoveType = {
 		
 		if (command.y === -1) {
 			simulation.state.running = false
-			simulation.state.ran = false
+			simulation.state.runToggle = false
 			simulation.constants.maxSpeed = 5;
 		}
 
 		// Check ground
 		let onGround = undefined;
 		onGround = simulation.DoGroundCheck(simulation.state.pos);
+
+		if (onGround !== undefined) {
+			print(onGround.normal.Y);
+		}
 
 		// If the player is on too steep of a slope, then its not on ground
 		if (onGround !== undefined && onGround.normal.Y < simulation.constants.maxGroundSlope) {

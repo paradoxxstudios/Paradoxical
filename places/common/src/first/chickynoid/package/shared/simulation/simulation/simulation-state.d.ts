@@ -12,5 +12,5 @@ export interface SimulationState {
 	characterData: unknown;
 	jumped: boolean;
 	running: boolean;
-	ran: boolean;
+	runToggle: boolean;
 }
