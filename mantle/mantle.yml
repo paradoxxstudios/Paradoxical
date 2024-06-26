@@ -25,7 +25,7 @@ target:
       avatarAnimationType: standard
     places:
       start:
-        file: places/start.rbxlx
+        file: places/start.rbxl
         configuration:
           name: Paradoxical
           maxPlayerCount: 25

@@ -4,3 +4,4 @@
 *.tsbuildinfo
 *.lock
 **/sourcemap.json
+.env
