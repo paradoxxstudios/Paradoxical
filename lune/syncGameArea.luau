@@ -2,8 +2,7 @@ local fs = require("@lune/fs" :: string)
 local process = require("@lune/process" :: string)
 local roblox = require("@lune/roblox" :: string)
 
-local placeFile = process.args[1] .. ".rbxlx"
-if process.args[1] == "dev" then placeFile = "dev-" .. process.args[2] .. ".rbxlx" end
+local placeFile = process.args[1] .. ".rbxl"
 
 assert(table.find(fs.readDir("mantle/places"), placeFile), "File [" .. placeFile .. "] does not exist.")
 assert(table.find(fs.readDir("places"), process.args[#process.args]), "Place [" .. process.args[#process.args] .. "] does not exist")
