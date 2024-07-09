@@ -1,6 +1,14 @@
 import { MathUtils as MathUtilsModule } from "../../package/shared/simulation/mathUtils";
 import { MoveType } from "./moveType";
 import { ChickyEnumAnimationChannels } from "../../package/shared/enums";
+import { RunService, ServerScriptService } from "@rbxts/services";
+import { RootProducer } from "../../../../server/store";
+import { store as clientStore, RootProducer as clientRoot } from "../../../../shared/store/client";
+
+// let store: clientRoot | RootProducer = clientStore;
+// if (RunService.IsServer()) {
+// 	store = (require(ServerScriptService.WaitForChild("common")?.WaitForChild("store") as ModuleScript) as {store: RootProducer}).store;
+// }
 
 const MathUtils = require(
 	script.Parent?.Parent?.Parent?.FindFirstChild("package")
@@ -16,19 +24,25 @@ const module: MoveType = {
 		simulation.state.jumped = false;
 		simulation.state.running = false;
 		simulation.state.runToggle = false;
+		simulation.state.crouching = false;
 	},
 
 	ActiveThink: (simulation, command) => {
+		// if (RunService.IsServer()) {
+		// 	simulation.constants.maxSpeed = store.getState().players.test[simulation.userId + ""]?.test as number;
+		// }
 		simulation.constants.maxSpeed = 16;
 		simulation.constants.airSpeed = 16;
 		simulation.constants.brakeFriction = 0.05;
 		simulation.constants.accel = 50;
 
-		if (command.running === 1 && !simulation.state.runToggle) {
+		if (command.running === 1 && !simulation.state.runToggle && !simulation.state.crouching) {
 			simulation.state.runToggle = true;
 			simulation.state.running = !simulation.state.running;
+			simulation.state.crouching = false;
 		} else if (command.running === 0) {
 			simulation.state.runToggle = false;
+			simulation.state.crouching = false;
 		}
 
 		if (simulation.state.running) {
@@ -37,19 +51,14 @@ const module: MoveType = {
 			simulation.constants.brakeFriction = 0.1;
 			simulation.constants.accel = 4;
 		} 
-		
-		if (command.y === -1) {
-			simulation.state.running = false
-			simulation.state.runToggle = false
-			simulation.constants.maxSpeed = 5;
-		}
 
 		// Check ground
 		let onGround = undefined;
 		onGround = simulation.DoGroundCheck(simulation.state.pos);
 
-		if (onGround !== undefined) {
-			print(onGround.normal.Y);
+		if (command.y === -1 && onGround !== undefined) {
+			simulation.state.crouching = true;
+			simulation.constants.maxSpeed = 5;
 		}
 
 		// If the player is on too steep of a slope, then its not on ground
@@ -104,10 +113,10 @@ const module: MoveType = {
 				if (simulation.state.pushing > 0) {
 					simulation.characterData.PlayAnimation("Push", ChickyEnumAnimationChannels.Channel0, false);
 				} else {
-					if (simulation.state.running) {
-						simulation.characterData.PlayAnimation("Run", ChickyEnumAnimationChannels.Channel0, false);
-					} else if (command.y === -1) {
+					if (simulation.state.crouching) {
 						simulation.characterData.PlayAnimation("Crouch", ChickyEnumAnimationChannels.Channel0, false);
+					} else if (simulation.state.running) {
+						simulation.characterData.PlayAnimation("Run", ChickyEnumAnimationChannels.Channel0, false);
 					} else {
 						simulation.characterData.PlayAnimation("Walk", ChickyEnumAnimationChannels.Channel0, false);
 					}

@@ -11,6 +11,12 @@ export interface SimulationState {
 	pushing: number;
 	characterData: unknown;
 	jumped: boolean;
+	
 	running: boolean;
 	runToggle: boolean;
+
+	slide: number;
+	slideDuration: number;
+
+	crouching: boolean;
 }
