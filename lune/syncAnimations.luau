@@ -1,3 +1,5 @@
+-- lune run syncAnimations place
+
 local fs = require("@lune/fs" :: string)
 local process = require("@lune/process" :: string)
 local roblox = require("@lune/roblox" :: string)
