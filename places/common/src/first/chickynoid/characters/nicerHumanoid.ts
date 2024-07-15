@@ -1,6 +1,14 @@
+import { RunService, ServerScriptService } from "@rbxts/services";
 import { CharacterMod } from "../package/client/characterMod";
 import Simulation from "../package/shared/simulation/simulation";
 import { MoveType } from "./utils/moveType";
+import { RootProducer } from "../../../server/store";
+import { store as clientStore, RootProducer as clientRoot } from "../../../shared/store/client";
+
+// let store: clientRoot | RootProducer = clientStore;
+// if (RunService.IsServer()) {
+// 	store = (require(ServerScriptService.WaitForChild("common")?.WaitForChild("store") as ModuleScript) as {store: RootProducer}).store;
+// }
 
 const utils = script.Parent?.FindFirstChild("utils") as Folder;
 function requireMoveType(module: string) {
@@ -8,7 +16,8 @@ function requireMoveType(module: string) {
 }
 
 function SetUp(this: CharacterMod, simulation: Simulation) {
-	simulation.constants.maxSpeed = 16; // Units per second
+	//simulation.constants.maxSpeed = store.getState().players.test[simulation.userId + ""]?.test as number; // Units per second
+	simulation.constants.maxSpeed = 16;
 	simulation.constants.airSpeed = 16; // Units per second
 	simulation.constants.accel = 50; // Units per second per second
 	simulation.constants.airAccel = 4; // Uses a different function than ground accel!
@@ -23,6 +32,9 @@ function SetUp(this: CharacterMod, simulation: Simulation) {
 
 	const moveTypeWalking = requireMoveType("moveTypeWalking");
 	moveTypeWalking.ModifySimulation(simulation);
+
+	const moveTypeSliding = requireMoveType("moveTypeSliding");
+	moveTypeSliding.ModifySimulation(simulation);
 }
 
 export = {

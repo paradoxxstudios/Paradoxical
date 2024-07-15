@@ -19,12 +19,16 @@ const MathUtils = require(
 
 const module: MoveType = {
 	ModifySimulation(this, simulation) {
-		simulation.RegisterMoveState("Walking", this.ActiveThink);
+		simulation.RegisterMoveState("Walking", this.ActiveThink, undefined, undefined, undefined, this.AlwaysThinkLate);
 		simulation.SetMoveState("Walking");
 		simulation.state.jumped = false;
 		simulation.state.running = false;
 		simulation.state.runToggle = false;
 		simulation.state.crouching = false;
+	},
+
+	AlwaysThinkLate: (simulation, command) => {
+		simulation.state.previousPos = simulation.state.pos;
 	},
 
 	ActiveThink: (simulation, command) => {

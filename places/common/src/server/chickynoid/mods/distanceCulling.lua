@@ -1,7 +1,7 @@
 local module = {}
 
 local path = game.ReplicatedFirst.common.chickynoid.package
-local Profiler = require(path.shared.vendor.profiler)
+local Profiler = require(path.shared.vendor.profiler :: ModuleScript)
 
 function module:Setup(_server) end
 

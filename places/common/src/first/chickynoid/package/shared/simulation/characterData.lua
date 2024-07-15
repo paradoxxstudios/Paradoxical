@@ -509,7 +509,6 @@ function CharacterData:DeserializeFromBitBuffer(buf : buffer, offset: number)
 	
 	local bitIndex = 0
 	for keyIndex, key in CharacterData.keys do
-		local value = self.serialized[key]
 		local hasBit = bit32.band(contentBits, bit32.lshift(1, bitIndex)) > 0
 		
         if hasBit then

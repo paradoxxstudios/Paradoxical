@@ -269,7 +269,7 @@ function module:GetRaytraceInstancePoints(instance, cframe)
 	local points = self.meshCache[instance.MeshId]
 	
 	if (points == nil) then
-		print("Raytracing ", instance.Name, instance.MeshId)
+		--print("Raytracing ", instance.Name, instance.MeshId)
 		points = {}
 		local step = 0.2
 		

@@ -42,6 +42,7 @@ function module:ServerSetup()
 	self:RegisterAnimation("Fall")
 	self:RegisterAnimation("Crouch")
 	self:RegisterAnimation("CrouchIdle")
+	self:RegisterAnimation("Slide")
 end
 
 return module

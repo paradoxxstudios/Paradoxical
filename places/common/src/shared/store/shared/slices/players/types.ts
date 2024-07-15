@@ -1,5 +1,4 @@
 import { AnimationState } from "./animation";
-import { AnimationIdState } from "./animationIds";
 import { HealthState } from "./health";
 import { LedgeInfoState } from "./ledgeInfo";
 
@@ -51,4 +50,4 @@ export type PlayerLedgeInfo = {
 	readonly raycastParams?: RaycastParams;
 };
 
-export type PlayerState = HealthState | AnimationState | AnimationIdState | LedgeInfoState;
+export type PlayerState = HealthState | AnimationState | LedgeInfoState;
