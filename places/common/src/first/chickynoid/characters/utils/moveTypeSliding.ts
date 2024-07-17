@@ -18,6 +18,8 @@ const module: MoveType = {
     },
 
     AlwaysThink: (simulation, command) => {
+        if (simulation.GetMoveState().name !== "Walking") return;
+
         let onGround = undefined;
 		onGround = simulation.DoGroundCheck(simulation.state.pos);
         if (onGround === undefined) return;
@@ -28,8 +30,7 @@ const module: MoveType = {
         }
 
         if (command.y < 0 && simulation.state.running && simulation.state.slide <= 0 && !simulation.state.crouching) {
-            if (command.z !== 0 && command.x !== 0) {
-                simulation.state.slide = 1.5;
+            if (command.z !== 0 || command.x !== 0) {
                 simulation.state.pushDir = new Vector2(command.x, command.z);
                 simulation.state.previousPos = simulation.state.pos;
                 simulation.state.deltaPos = simulation.state.pos.sub(simulation.state.previousPos);
@@ -119,7 +120,7 @@ const module: MoveType = {
             let stepUpResult = undefined;
             const result = simulation.ProjectVelocity(simulation.state.pos, simulation.state.vel, command.deltaTime);
             const walkNewPos = result[0];
-            let walkNewVel = result[1];
+            const walkNewVel = result[1];
             const hitSomething = result[2];
 
             // Did we attempt a stepup?
@@ -140,25 +141,13 @@ const module: MoveType = {
             }
 
             // Do angles
-            if (command.shiftLock === 1) {
-                if (command.fa) {
-                    const vec = command.fa.sub(simulation.state.pos);
-                    simulation.state.targetAngle = MathUtils.PlayerVecToAngle(vec);
-                    simulation.state.angle = MathUtils.LerpAngle(
-                        simulation.state.angle,
-                        simulation.state.targetAngle,
-                        simulation.constants.turnSpeedFrac * command.deltaTime,
-                    );
-                }
-            } else {
-                if (wishDir !== undefined) {
-                    simulation.state.targetAngle = MathUtils.PlayerVecToAngle(wishDir);
-                    simulation.state.angle = MathUtils.LerpAngle(
-                        simulation.state.angle,
-                        simulation.state.targetAngle,
-                        simulation.constants.turnSpeedFrac * command.deltaTime,
-                    );
-                }
+            if (wishDir !== undefined) {
+                simulation.state.targetAngle = MathUtils.PlayerVecToAngle(wishDir);
+                simulation.state.angle = MathUtils.LerpAngle(
+                    simulation.state.angle,
+                    simulation.state.targetAngle,
+                    simulation.constants.turnSpeedFrac * command.deltaTime,
+                );
             }
 
             simulation.state.deltaPos = simulation.state.pos.sub(simulation.state.previousPos);
@@ -178,6 +167,7 @@ const module: MoveType = {
         simulation.state.running = true;
         simulation.state.runToggle = true;
         simulation.state.slideDuration = 1;
+        simulation.state.slide = 1.5;
         simulation.state.timeSliding = 0;
         simulation.state.jumped = false;
         simulation.state.inAir = 0;

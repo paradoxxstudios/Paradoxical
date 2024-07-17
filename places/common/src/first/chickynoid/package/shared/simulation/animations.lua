@@ -43,6 +43,10 @@ function module:ServerSetup()
 	self:RegisterAnimation("Crouch")
 	self:RegisterAnimation("CrouchIdle")
 	self:RegisterAnimation("Slide")
+	self:RegisterAnimation("FrontDash")
+	self:RegisterAnimation("BackDash")
+	self:RegisterAnimation("RightDash")
+	self:RegisterAnimation("LeftDash")
 end
 
 return module

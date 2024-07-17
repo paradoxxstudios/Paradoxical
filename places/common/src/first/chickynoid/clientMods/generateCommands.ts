@@ -79,19 +79,21 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 		const jump = UserInputService.IsKeyDown(Enum.KeyCode.Space);
 		const crouch = UserInputService.IsKeyDown(Enum.KeyCode.C);
 		const run = UserInputService.IsKeyDown(Enum.KeyCode.LeftShift);
+		const dash = UserInputService.IsKeyDown(Enum.KeyCode.Q);
 
 		if (crouch) {
 			command.y = -1;
 		} else if (jump) {
 			command.y = 1;
-		} 
-		
-		if (run) {
-			command.running = 1;
-		} else {
-			command.running = 0;
 		}
+
+		command.running = run ? 1 : 0;
+		command.dash = dash ? 1 : 0;
 	}
+
+	if (GetIsJumping()) command.y = 1;
+    command.fa = GetAimPoint(this);
+	command.shiftLock = this.shiftlock;
 
 	if (this.resetRequested) {
 		this.resetRequested = false;
@@ -111,6 +113,34 @@ function CalculateRawMoveVector(cameraRelativeMoveVector: Vector3) {
 	return CFrame.fromEulerAnglesYXZ(0, yaw, 0).mul(
 		new Vector3(cameraRelativeMoveVector.X, 0, cameraRelativeMoveVector.Z),
 	);
+}
+
+function GetIsJumping(): boolean {
+	if (ControlModule === undefined) return false;
+	if (ControlModule.activeController === undefined) return false;
+
+	return (ControlModule as {activeController: {GetIsJumping(): boolean}}).activeController.GetIsJumping() ||
+				(ControlModule.touchJumpController !== undefined &&
+				(ControlModule as {touchJumpController: {GetIsJumping(): boolean}}).touchJumpController.GetIsJumping())
+}
+
+function GetAimPoint(clientMod: ClientMod): Vector3 {
+	const mouse = game.GetService("Players").LocalPlayer.GetMouse();
+	const ray = game.Workspace.CurrentCamera?.ScreenPointToRay(mouse.X, mouse.Y) as Ray;
+
+	const raycastParams = new RaycastParams();
+	raycastParams.FilterType = Enum.RaycastFilterType.Include;
+
+	const whitelist: Array<Instance> = [game.Workspace.Terrain];
+	const collisionRoot = clientMod.client.GetCollisionRoot();
+	if (collisionRoot !== undefined) whitelist.push(collisionRoot);
+	raycastParams.FilterDescendantsInstances = whitelist;
+
+	const raycastResults = game.Workspace.Raycast(ray.Origin, ray.Direction.mul(2000), raycastParams);
+	if (raycastResults !== undefined) return raycastResults.Position;
+
+	// We hit the sky perhaps?
+    return ray.Origin.add(ray.Direction.mul(2000));
 }
 
 export = {

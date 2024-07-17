@@ -1,5 +1,4 @@
 export interface SimulationState {
-	characterData: unknown;
 	pos: Vector3;
 	previousPos: Vector3;
 	deltaPos: Vector3;
@@ -7,6 +6,7 @@ export interface SimulationState {
 	stepUp: number;
 	inAir: number;
 
+	lookDirection: Vector3;
 	angle: number;
 	targetAngle: number;
 
@@ -23,6 +23,10 @@ export interface SimulationState {
 	slide: number;
 	slideDuration: number;
 	timeSliding: number;
+
+	dash: number;
+	dashDuration: number;
+	dashName: string;
 
 	crouching: boolean;
 }

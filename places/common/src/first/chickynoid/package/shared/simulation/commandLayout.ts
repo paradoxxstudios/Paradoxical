@@ -32,6 +32,7 @@ const module: CommandLayoutModule = {
 			this.commandLayout.Add("reset", CrunchTable.Enum.UBYTE);
 			this.commandLayout.Add("running", CrunchTable.Enum.UBYTE);
 			this.commandLayout.Add("jumped", CrunchTable.Enum.UBYTE);
+			this.commandLayout.Add("dash", CrunchTable.Enum.UBYTE);
 		}
 
 		return this.commandLayout;

@@ -14,6 +14,8 @@ interface ClientChickynoidConstructor {
 	 * @private
 	 */
 	new (): ClientChickynoid;
+
+	GetCollisionRoot(): Instance;
 }
 
 declare const ClientChickynoid: ClientChickynoidConstructor;

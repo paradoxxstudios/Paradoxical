@@ -11,8 +11,12 @@ import { store as clientStore, RootProducer as clientRoot } from "../../../share
 // }
 
 const utils = script.Parent?.FindFirstChild("utils") as Folder;
-function requireMoveType(module: string) {
-	return require(utils?.FindFirstChild(module) as ModuleScript) as MoveType;
+function requireMoveTypes(simulation: Simulation) {
+	for (const module of utils.GetChildren()) {
+		if (module.Name.sub(0, 8) !== "moveType") continue;
+		const moveType = require(module as ModuleScript) as MoveType;
+		moveType.ModifySimulation(simulation);
+	}
 }
 
 function SetUp(this: CharacterMod, simulation: Simulation) {
@@ -30,11 +34,7 @@ function SetUp(this: CharacterMod, simulation: Simulation) {
 	simulation.constants.jumpThrustDecay = 0.4; // Smaller is faster
 	simulation.constants.stepSize = 2;
 
-	const moveTypeWalking = requireMoveType("moveTypeWalking");
-	moveTypeWalking.ModifySimulation(simulation);
-
-	const moveTypeSliding = requireMoveType("moveTypeSliding");
-	moveTypeSliding.ModifySimulation(simulation);
+	requireMoveTypes(simulation);
 }
 
 export = {

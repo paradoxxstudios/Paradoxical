@@ -12,10 +12,12 @@ export type Commands = {
 
 	f?: number;
 	j?: number;
-	fa?: Vector3;
+	fa: Vector3;
 	reset?: number;
 	running?: number;
 	jumped?: number;
+
+	dash?: number;
 };
 
 export interface CommandLayout {

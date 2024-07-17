@@ -19,7 +19,7 @@ const MathUtils = require(
 
 const module: MoveType = {
 	ModifySimulation(this, simulation) {
-		simulation.RegisterMoveState("Walking", this.ActiveThink, undefined, undefined, undefined, this.AlwaysThinkLate);
+		simulation.RegisterMoveState("Walking", this.ActiveThink, this.AlwaysThink);
 		simulation.SetMoveState("Walking");
 		simulation.state.jumped = false;
 		simulation.state.running = false;
@@ -27,8 +27,10 @@ const module: MoveType = {
 		simulation.state.crouching = false;
 	},
 
-	AlwaysThinkLate: (simulation, command) => {
-		simulation.state.previousPos = simulation.state.pos;
+	AlwaysThink: (simulation, command) => {
+		if (command.x !== 0 || command.z !== 0) {
+			simulation.state.lookDirection = new Vector3(command.x, 0, command.z);
+		}
 	},
 
 	ActiveThink: (simulation, command) => {
