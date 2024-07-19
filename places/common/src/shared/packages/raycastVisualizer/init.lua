@@ -32,6 +32,10 @@ function CastVisualiser:Raycast(Origin: Vector3, Direction: Vector3, RaycastPara
 	self.SphereVisual.Visible = false
 	
 	self.CastOriginPart.Parent = self.WorldRoot:FindFirstChild("Terrain") or self.WorldRoot
+
+	task.delay(1, function()
+		self:Hide()
+	end)
 end
 
 

@@ -35,7 +35,8 @@ const module: MoveType = {
 			simulation.state.lastMoveDirection = new Vector3(command.x, 0, command.z).Unit;
 		}
 
-		if (command.cameraLookVector) simulation.state.lookVector = command.cameraLookVector;
+		simulation.state.lookVector = command.cameraLookVector;
+		simulation.state.rightVector = simulation.state.lookVector.Cross(Vector3.yAxis);
 		if (!simulation.state.doNotReconcileAngle) {
 			simulation.state.targetAngle = MathUtils.PlayerVecToAngle(simulation.state.lookVector);
 			simulation.state.angle = MathUtils.LerpAngle(
