@@ -29,14 +29,15 @@ const module: MoveType = {
 	},
 
 	AlwaysThink: (simulation, command) => {
+		simulation.state.moveDirection = command.moveDirection;
+
 		if (command.x !== 0 || command.z !== 0) {
-			simulation.state.moveDirection = new Vector3(command.x, 0, command.z).Unit;
-		} else {
-			simulation.state.moveDirection = Vector3.zero;
+			simulation.state.lastMoveDirection = new Vector3(command.x, 0, command.z).Unit;
 		}
 
-		if (command.cameraLookVector && !simulation.state.doNotReconcileAngle) {
-			simulation.state.targetAngle = MathUtils.PlayerVecToAngle(command.cameraLookVector);
+		if (command.cameraLookVector) simulation.state.lookVector = command.cameraLookVector;
+		if (!simulation.state.doNotReconcileAngle) {
+			simulation.state.targetAngle = MathUtils.PlayerVecToAngle(simulation.state.lookVector);
 			simulation.state.angle = MathUtils.LerpAngle(
 				simulation.state.angle,
 				simulation.state.targetAngle,

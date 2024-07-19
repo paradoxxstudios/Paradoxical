@@ -7,6 +7,8 @@ export interface SimulationState {
 	inAir: number;
 
 	moveDirection: Vector3;
+	lastMoveDirection: Vector3;
+	lookVector: Vector3;
 	rightVector: Vector3;
 
 	angle: number;

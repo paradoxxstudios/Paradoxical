@@ -5,10 +5,11 @@ export type Commands = {
 	snapshotServerFrame: number;
 	playerStateFrame: number;
 
-	shiftLock?: number;
 	x: number;
 	y: number;
 	z: number;
+	moveDirection: Vector3;
+	cameraLookVector: Vector3;
 
 	f?: number;
 	j?: number;

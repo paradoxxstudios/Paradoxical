@@ -8,5 +8,4 @@ export interface ClientMod {
 
 	resetRequested?: boolean;
 	client: typeof ClientChickynoid;
-	shiftlock?: 0 | 1;
 }

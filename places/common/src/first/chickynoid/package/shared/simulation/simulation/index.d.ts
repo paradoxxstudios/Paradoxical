@@ -21,7 +21,7 @@ interface Simulation {
 		alwaysThink?: ThinkFunc,
 		startState?: ThinkFunc,
 		/** Cleanup */
-		lastThink?: ThinkFunc,
+		endState?: ThinkFunc,
 		alwaysThinkLate?: ThinkFunc,
 		executionOrder?: number,
 	): void;

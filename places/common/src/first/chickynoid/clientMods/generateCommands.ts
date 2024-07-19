@@ -18,8 +18,8 @@ function coreCall(method: keyof StarterGui, ...args: unknown[]) {
 }
 
 const UserInputService = game.GetService("UserInputService");
-let ControlModule: undefined | { [index: string]: unknown } = undefined;
 const camera = game.Workspace.CurrentCamera;
+let ControlModule: undefined | { [index: string]: unknown } = undefined;
 
 function GetControlModule() {
 	if (ControlModule === undefined) {
@@ -39,15 +39,6 @@ function GetControlModule() {
 
 function Setup(this: ClientMod, _client: typeof ClientChickynoid) {
 	this.client = _client;
-
-	UserInputService.GetPropertyChangedSignal("MouseBehavior").Connect(() => {
-		if (UserInputService.MouseBehavior === Enum.MouseBehavior.LockCenter) {
-			this.shiftlock = 1;
-		}
-		if (UserInputService.MouseBehavior === Enum.MouseBehavior.Default) {
-			this.shiftlock = 0;
-		}
-	});
 
 	const resetBindable = new Instance("BindableEvent");
 	resetBindable.Event.Connect(() => {
@@ -74,6 +65,8 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 			command.y = moveVector.Y;
 			command.z = moveVector.Z;
 		}
+
+		command.moveDirection = moveVector;
 	}
 
 	if (!UserInputService.GetFocusedTextBox()) {
@@ -92,11 +85,10 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 		command.dash = dash ? 1 : 0;
 	}
 
-	if (camera) command.cameraLookVector = camera.CFrame.LookVector;
+	if (camera) command.cameraLookVector = new Vector3(camera.CFrame.LookVector.X, 0, camera.CFrame.LookVector.Z).Unit;
 
 	if (GetIsJumping()) command.y = 1;
     command.fa = GetAimPoint(this);
-	command.shiftLock = this.shiftlock;
 
 	if (this.resetRequested) {
 		this.resetRequested = false;

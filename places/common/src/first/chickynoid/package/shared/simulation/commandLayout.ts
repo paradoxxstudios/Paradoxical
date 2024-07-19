@@ -22,7 +22,6 @@ const module: CommandLayoutModule = {
 			this.commandLayout.Add("deltaTime", CrunchTable.Enum.FLOAT);
 			this.commandLayout.Add("snapshotServerFrame", CrunchTable.Enum.INT32);
 			this.commandLayout.Add("playerStateFrame", CrunchTable.Enum.INT32);
-			this.commandLayout.Add("shiftLock", CrunchTable.Enum.UBYTE);
 			this.commandLayout.Add("x", CrunchTable.Enum.FLOAT);
 			this.commandLayout.Add("y", CrunchTable.Enum.FLOAT);
 			this.commandLayout.Add("z", CrunchTable.Enum.FLOAT);
@@ -33,6 +32,8 @@ const module: CommandLayoutModule = {
 			this.commandLayout.Add("running", CrunchTable.Enum.UBYTE);
 			this.commandLayout.Add("jumped", CrunchTable.Enum.UBYTE);
 			this.commandLayout.Add("dash", CrunchTable.Enum.UBYTE);
+			this.commandLayout.Add("moveDirection", CrunchTable.Enum.VECTOR3);
+			//this.commandLayout.Add("cameraLookVector", CrunchTable.Enum.VECTOR3);
 		}
 
 		return this.commandLayout;

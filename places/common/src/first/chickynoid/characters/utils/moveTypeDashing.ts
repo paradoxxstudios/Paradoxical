@@ -11,7 +11,7 @@ const MathUtils = require(
 
 const module: MoveType = {
     ModifySimulation(this, simulation) {
-        simulation.RegisterMoveState("Dashing", this.ActiveThink, this.AlwaysThink, undefined, this.EndState);
+        simulation.RegisterMoveState("Dashing", this.ActiveThink, this.AlwaysThink, this.StartState, this.EndState);
         simulation.state.dash = 0;
         simulation.state.dashDuration = 0.65;
         simulation.state.dashName = "FrontDash";
@@ -20,8 +20,7 @@ const module: MoveType = {
     AlwaysThink: (simulation, command) => {
         if (simulation.GetMoveState().name !== "Walking") return;
 
-        let onGround = undefined;
-        onGround = simulation.DoGroundCheck(simulation.state.pos);
+        const onGround = simulation.DoGroundCheck(simulation.state.pos);
         if (onGround === undefined) return;
 
         if (simulation.state.dash > 0) {
@@ -29,58 +28,36 @@ const module: MoveType = {
             if (simulation.state.dash < 0) simulation.state.dash = 0;
         }
 
-        if (command.dash === 1 && simulation.state.dash <= 0 && (command.x !== 0 || command.z !== 0)) {
+        if (command.dash === 1 && simulation.state.dash <= 0 && simulation.state.moveDirection.Magnitude !== 0) {
             simulation.SetMoveState("Dashing");
+        }
+    },
+
+    StartState: (simulation) => {
+        if (simulation.state.moveDirection.Z === -1) {
+            simulation.state.dashName = "FrontDash";
+        } else if (simulation.state.moveDirection.Z === 1) {
+            simulation.state.dashName = "BackDash";
+        } else if (simulation.state.moveDirection.X === 1) {
+            simulation.state.dashName = "RightDash";
+        } else if (simulation.state.moveDirection.X === -1) {
+            simulation.state.dashName = "LeftDash";
         }
     },
 
     ActiveThink: (simulation, command) => {
         if (simulation.state.dashDuration > 0) {
+            if (simulation.state.moveDirection.Magnitude === 0) {
+                simulation.state.dashDuration -= command.deltaTime * 2;
+            }
+
             // Check ground
             let onGround = undefined;
             onGround = simulation.DoGroundCheck(simulation.state.pos);
 
             let flatVel = MathUtils.FlatVec(simulation.state.vel);
-            let wishDir = simulation.state.lookDirection.Unit;
-
-            // Do angles
-            if (command.shiftLock === 1) {
-                const vec = command.fa.sub(simulation.state.pos);
-                simulation.state.targetAngle = MathUtils.PlayerVecToAngle(vec);
-                simulation.state.angle = MathUtils.LerpAngle(
-                    simulation.state.angle,
-                    simulation.state.targetAngle,
-                    simulation.constants.turnSpeedFrac * command.deltaTime,
-                );
-
-                if (command.x === 0 && command.z === 0) wishDir = vec.Unit;
-                
-                if (simulation.state.dashDuration === 0.65) {
-                    const moveDir = simulation.state.lookDirection.Dot(vec);
-                    if (moveDir > 1.7 && moveDir < 1.75) {
-                        simulation.state.dashName = "RightDash";
-                    } else if (moveDir < -1.7 && moveDir > -1.75) {
-                        simulation.state.dashName = "LeftDash";
-                    } else if (moveDir >= 1.75) {
-                        simulation.state.dashName = "FrontDash";
-                    } else if (moveDir <= -1.75) {
-                        simulation.state.dashName = "BackDash";
-                    }
-                }  
-                
-            } else {
-                if (simulation.state.lookDirection !== undefined) {
-                    simulation.state.targetAngle = MathUtils.PlayerVecToAngle(simulation.state.lookDirection);
-                    simulation.state.angle = MathUtils.LerpAngle(
-                        simulation.state.angle,
-                        simulation.state.targetAngle,
-                        simulation.constants.turnSpeedFrac * command.deltaTime,
-                    );
-                }
-            }
-
             flatVel = MathUtils.GroundAccelerate(
-                wishDir,
+                simulation.state.lastMoveDirection,
                 simulation.constants.maxSpeed * 5 * (simulation.state.dashDuration + 0.1),
                 20,
                 flatVel,
@@ -128,8 +105,8 @@ const module: MoveType = {
 
     EndState: (simulation, _) => {
         simulation.state.dashName = "FrontDash";
+        simulation.state.dash = simulation.state.dashDuration > 0.49 ? 0 : 2;
         simulation.state.dashDuration = 0.65;
-        simulation.state.dash = 2;
     },
 }
 
