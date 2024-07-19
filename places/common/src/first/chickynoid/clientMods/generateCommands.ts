@@ -19,6 +19,7 @@ function coreCall(method: keyof StarterGui, ...args: unknown[]) {
 
 const UserInputService = game.GetService("UserInputService");
 let ControlModule: undefined | { [index: string]: unknown } = undefined;
+const camera = game.Workspace.CurrentCamera;
 
 function GetControlModule() {
 	if (ControlModule === undefined) {
@@ -90,6 +91,8 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 		command.running = run ? 1 : 0;
 		command.dash = dash ? 1 : 0;
 	}
+
+	if (camera) command.cameraLookVector = camera.CFrame.LookVector;
 
 	if (GetIsJumping()) command.y = 1;
     command.fa = GetAimPoint(this);

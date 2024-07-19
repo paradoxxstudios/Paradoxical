@@ -6,9 +6,12 @@ export interface SimulationState {
 	stepUp: number;
 	inAir: number;
 
-	lookDirection: Vector3;
+	moveDirection: Vector3;
+	rightVector: Vector3;
+
 	angle: number;
 	targetAngle: number;
+	doNotReconcileAngle: boolean;
 
 	pushing: number;
 	pushDir: Vector2;

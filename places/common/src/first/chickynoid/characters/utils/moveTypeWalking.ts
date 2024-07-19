@@ -25,11 +25,23 @@ const module: MoveType = {
 		simulation.state.running = false;
 		simulation.state.runToggle = false;
 		simulation.state.crouching = false;
+		simulation.state.doNotReconcileAngle = false;
 	},
 
 	AlwaysThink: (simulation, command) => {
 		if (command.x !== 0 || command.z !== 0) {
-			simulation.state.lookDirection = new Vector3(command.x, 0, command.z);
+			simulation.state.moveDirection = new Vector3(command.x, 0, command.z).Unit;
+		} else {
+			simulation.state.moveDirection = Vector3.zero;
+		}
+
+		if (command.cameraLookVector && !simulation.state.doNotReconcileAngle) {
+			simulation.state.targetAngle = MathUtils.PlayerVecToAngle(command.cameraLookVector);
+			simulation.state.angle = MathUtils.LerpAngle(
+				simulation.state.angle,
+				simulation.state.targetAngle,
+				simulation.constants.turnSpeedFrac * command.deltaTime,
+			);
 		}
 	},
 
@@ -251,28 +263,6 @@ const module: MoveType = {
 			if (stepDownResult !== undefined) {
 				simulation.state.stepUp += stepDownResult.stepDown;
 				simulation.state.pos = stepDownResult.pos;
-			}
-		}
-
-		// Do angles
-		if (command.shiftLock === 1) {
-			if (command.fa) {
-				const vec = command.fa.sub(simulation.state.pos);
-				simulation.state.targetAngle = MathUtils.PlayerVecToAngle(vec);
-				simulation.state.angle = MathUtils.LerpAngle(
-					simulation.state.angle,
-					simulation.state.targetAngle,
-					simulation.constants.turnSpeedFrac * command.deltaTime,
-				);
-			}
-		} else {
-			if (wishDir !== undefined) {
-				simulation.state.targetAngle = MathUtils.PlayerVecToAngle(wishDir);
-				simulation.state.angle = MathUtils.LerpAngle(
-					simulation.state.angle,
-					simulation.state.targetAngle,
-					simulation.constants.turnSpeedFrac * command.deltaTime,
-				);
 			}
 		}
 	},

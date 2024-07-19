@@ -58,7 +58,8 @@
 			},
 			"$properties": {
 				"CameraMaxZoomDistance": 13,
-				"CameraMinZoomDistance": 13
+				"CameraMinZoomDistance": 13,
+				"EnableMouseLockOption": false
 			}
 		},
 		"ReplicatedFirst": {
