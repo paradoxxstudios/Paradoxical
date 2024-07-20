@@ -34,9 +34,9 @@ const module: MoveType = {
     },
 
     StartState: (simulation) => {
-        if (simulation.state.moveDirection.Z === -1) {
+        if (simulation.state.moveDirection.Z < -0.7) {
             simulation.state.dashName = "FrontDash";
-        } else if (simulation.state.moveDirection.Z === 1) {
+        } else if (simulation.state.moveDirection.Z > 0.7) {
             simulation.state.dashName = "BackDash";
         } else if (simulation.state.moveDirection.X === 1) {
             simulation.state.dashName = "RightDash";
