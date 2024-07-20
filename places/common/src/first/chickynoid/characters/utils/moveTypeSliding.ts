@@ -2,9 +2,6 @@ import { ChickyEnumAnimationChannels } from "../../package/shared/enums";
 import { MathUtils as MathUtilsModule } from "../../package/shared/simulation/mathUtils";
 import { MoveType } from "./moveType";
 
-const RunService = game.GetService("RunService");
-const Players = game.GetService("Players");
-
 const MathUtils = require(
 	script.Parent?.Parent?.Parent?.FindFirstChild("package")
 		?.FindFirstChild("shared")
@@ -108,6 +105,8 @@ const module: MoveType = {
                 if (simulation.state.vel.Y < -30 && simulation.state.inAir > 0.2) {
                     simulation.characterData.PlayAnimation("Fall", ChickyEnumAnimationChannels.Channel0, false);
                 }
+
+                simulation.state.slideDuration -= command.deltaTime * 1.5;
             } else {
                 if (simulation.state.jumped && simulation.state.inAir > 0.2) {
                     simulation.SetMoveState("Walking");
