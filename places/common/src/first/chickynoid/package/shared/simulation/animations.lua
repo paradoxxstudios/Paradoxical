@@ -38,15 +38,23 @@ function module:ServerSetup()
 	self:RegisterAnimation("Walk")
 	self:RegisterAnimation("Run")
 	self:RegisterAnimation("Push")
+
 	self:RegisterAnimation("Jump")
 	self:RegisterAnimation("Fall")
+
 	self:RegisterAnimation("Crouch")
 	self:RegisterAnimation("CrouchIdle")
+
 	self:RegisterAnimation("Slide")
+
 	self:RegisterAnimation("FrontDash")
 	self:RegisterAnimation("BackDash")
 	self:RegisterAnimation("RightDash")
 	self:RegisterAnimation("LeftDash")
+
+	self:RegisterAnimation("WallSlideStart")
+	self:RegisterAnimation("WallSlide")
+	self:RegisterAnimation("WallSlideEnd")
 end
 
 return module

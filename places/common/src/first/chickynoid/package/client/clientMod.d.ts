@@ -1,4 +1,4 @@
-import ClientChickynoid from "./clientChickynoid";
+import { ChickynoidClient } from "./chickynoidClient";
 
 export interface ClientMod {
 	GetPriority?(): number;
@@ -7,5 +7,5 @@ export interface ClientMod {
 	GenerateCommand(command: unknown, serverTime: number, deltaTime: number): unknown;
 
 	resetRequested?: boolean;
-	client: typeof ClientChickynoid;
+	client: typeof ChickynoidClient;
 }

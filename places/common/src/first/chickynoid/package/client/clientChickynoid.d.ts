@@ -16,6 +16,9 @@ interface ClientChickynoidConstructor {
 	new (): ClientChickynoid;
 
 	GetCollisionRoot(): Instance;
+	GetPlayerDataByUserId(userId: number): CharacterData;
+	ping: number;
+	simulation: Simulation;
 }
 
 declare const ClientChickynoid: ClientChickynoidConstructor;

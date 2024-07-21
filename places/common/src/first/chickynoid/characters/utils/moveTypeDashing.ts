@@ -96,6 +96,7 @@ const module: MoveType = {
                 simulation.state.vel = walkNewVel;
             }
 
+            simulation.state.vecAngle = simulation.state.lookVector;
             simulation.characterData.PlayAnimation(simulation.state.dashName, ChickyEnumAnimationChannels.Channel0, false);
             simulation.state.dashDuration -= command.deltaTime;
         } else {

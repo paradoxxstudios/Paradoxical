@@ -1,3 +1,4 @@
+import { ChickynoidClient } from "../package/client/chickynoidClient";
 import ClientChickynoid from "../package/client/clientChickynoid";
 import { ClientMod } from "../package/client/clientMod";
 import { Commands } from "../package/shared/vendor/crunchTable";
@@ -37,7 +38,7 @@ function GetControlModule() {
 	return ControlModule;
 }
 
-function Setup(this: ClientMod, _client: typeof ClientChickynoid) {
+function Setup(this: ClientMod, _client: typeof ChickynoidClient) {
 	this.client = _client;
 
 	const resetBindable = new Instance("BindableEvent");
@@ -68,6 +69,8 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 
 		command.moveDirection = moveVector;
 	}
+
+	command.model = this.client.characterModel?.model;
 
 	if (!UserInputService.GetFocusedTextBox()) {
 		const jump = UserInputService.IsKeyDown(Enum.KeyCode.Space);

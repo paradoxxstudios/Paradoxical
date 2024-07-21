@@ -1,7 +1,7 @@
 import Signal from "@rbxts/signal";
 import CharacterModel from "./characterModel";
 import CharacterRecord from "./characterRecord";
-import ClientChickynoid from "./clientChickynoid";
+import ClientChickynoid, { GetCollisionRoot } from "./clientChickynoid";
 import { WeaponsClient } from "./weaponsClient";
 
 /** @client */
@@ -37,6 +37,9 @@ export namespace ChickynoidClient {
 	export const flags: {
 		HANDLE_CAMERA: boolean;
 	};
+
+	export function GetCollisionRoot(this: typeof ChickynoidClient): Instance;
+
 	/**
 	 * Creates connections so that Chickynoid can run on the client. Specifically, it connects to relevant networking and
 	 * RunService events.

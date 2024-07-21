@@ -19,6 +19,8 @@ export type Commands = {
 	jumped?: number;
 
 	dash?: number;
+
+	model?: Model;
 };
 
 export interface CommandLayout {

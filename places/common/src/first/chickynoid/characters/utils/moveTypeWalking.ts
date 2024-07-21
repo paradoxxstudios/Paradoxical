@@ -25,7 +25,7 @@ const module: MoveType = {
 		simulation.state.running = false;
 		simulation.state.runToggle = false;
 		simulation.state.crouching = false;
-		simulation.state.doNotReconcileAngle = false;
+		simulation.state.vecAngle = Vector3.zero;
 	},
 
 	AlwaysThink: (simulation, command) => {
@@ -37,14 +37,23 @@ const module: MoveType = {
 
 		simulation.state.lookVector = command.cameraLookVector;
 		simulation.state.rightVector = simulation.state.lookVector.Cross(Vector3.yAxis);
-		if (!simulation.state.doNotReconcileAngle) {
-			simulation.state.targetAngle = MathUtils.PlayerVecToAngle(simulation.state.lookVector);
-			simulation.state.angle = MathUtils.LerpAngle(
-				simulation.state.angle,
-				simulation.state.targetAngle,
-				simulation.constants.turnSpeedFrac * command.deltaTime,
-			);
+		simulation.state.targetAngle = MathUtils.PlayerVecToAngle(simulation.state.vecAngle);
+		simulation.state.angle = MathUtils.LerpAngle(
+			simulation.state.angle,
+			simulation.state.targetAngle,
+			simulation.constants.turnSpeedFrac * command.deltaTime,
+		);
+
+		// Do jumping?
+		if (simulation.state.jump > 0 && !simulation.state.jumped) {
+			simulation.state.jumped = true;
+			simulation.state.jump -= command.deltaTime;
+			if (simulation.state.jump < 0) simulation.state.jump = 0;
+		} else if (command.y === 0) {
+			simulation.state.jumped = false;
 		}
+
+		simulation.state.wasJumping = simulation.state.jumped;
 	},
 
 	ActiveThink: (simulation, command) => {
@@ -170,15 +179,6 @@ const module: MoveType = {
 		// Turn out flatvel back into our vel
 		simulation.state.vel = new Vector3(flatVel.X, simulation.state.vel.Y, flatVel.Z);
 
-		// Do jumping?
-		if (simulation.state.jump > 0 && !simulation.state.jumped) {
-			simulation.state.jumped = true;
-			simulation.state.jump -= command.deltaTime;
-			if (simulation.state.jump < 0) simulation.state.jump = 0;
-		} else if (command.y === 0) {
-			simulation.state.jumped = false;
-		}
-
 		if (onGround !== undefined) {
 			// Jump!
 			if (command.y > 0 && simulation.state.jump <= 0) {
@@ -267,6 +267,8 @@ const module: MoveType = {
 				simulation.state.pos = stepDownResult.pos;
 			}
 		}
+
+		simulation.state.vecAngle = simulation.state.lookVector;
 	},
 };
 

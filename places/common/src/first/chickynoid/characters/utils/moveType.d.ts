@@ -1,3 +1,4 @@
+import { ChickynoidClient } from "first/chickynoid/package/client/chickynoidClient";
 import Simulation from "../../package/shared/simulation/simulation";
 import { Commands } from "../../package/shared/vendor/crunchTable";
 

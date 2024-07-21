@@ -34,7 +34,6 @@ const module: MoveType = {
                 simulation.state.pushDir = new Vector2(command.x, command.z);
                 simulation.state.previousPos = simulation.state.pos;
                 simulation.state.deltaPos = simulation.state.pos.sub(simulation.state.previousPos);
-                simulation.state.doNotReconcileAngle = true;
                 simulation.SetMoveState("Sliding");
             }
         }
@@ -139,14 +138,7 @@ const module: MoveType = {
             }
 
             // Do angles
-            if (wishDir !== undefined) {
-                simulation.state.targetAngle = MathUtils.PlayerVecToAngle(wishDir);
-                simulation.state.angle = MathUtils.LerpAngle(
-                    simulation.state.angle,
-                    simulation.state.targetAngle,
-                    simulation.constants.turnSpeedFrac * command.deltaTime,
-                );
-            }
+            simulation.state.vecAngle = wishDir;
 
             simulation.state.deltaPos = simulation.state.pos.sub(simulation.state.previousPos);
             simulation.state.slideDuration -= simulation.state.deltaPos.Y * 0.1 + command.deltaTime;
@@ -169,7 +161,6 @@ const module: MoveType = {
         simulation.state.timeSliding = 0;
         simulation.state.jumped = false;
         simulation.state.inAir = 0;
-        simulation.state.doNotReconcileAngle = false;
     }
 }
 

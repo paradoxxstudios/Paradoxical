@@ -13,13 +13,16 @@ export interface SimulationState {
 
 	angle: number;
 	targetAngle: number;
-	doNotReconcileAngle: boolean;
+	vecAngle: Vector3;
 
 	pushing: number;
 	pushDir: Vector2;
 
+	crouching: boolean;
+
 	jumped: boolean;
 	jump: number;
+	wasJumping: boolean;
 	jumpThrust: number;
 	
 	running: boolean;
@@ -33,5 +36,11 @@ export interface SimulationState {
 	dashDuration: number;
 	dashName: string;
 
-	crouching: boolean;
+	canWallSlide: boolean;
+	wallNormal?: Vector3;
+	sameWallCD: number;
+	lastWallInstance: Instance;
+	wallInstance: Instance;
+	timeWallSliding: number;
+	wallSide: 1 | -1;
 }

@@ -14,13 +14,16 @@ function CastVisualiser:Hide()
 	self.CastOriginPart.Parent = nil
 end
 
-function CastVisualiser:Raycast(Origin: Vector3, Direction: Vector3, RaycastParameters: RaycastParams?)
+function CastVisualiser:Raycast(Origin: Vector3, Direction: Vector3, Length: number, RaycastParameters: RaycastParams?)
 	local self: CastVisualiserPrivate = self
-	
-	local Cast = self.WorldRoot:Raycast(Origin, Direction, RaycastParameters)
+
+	local Cast = self.WorldRoot:Raycast(Origin, Direction * Length, RaycastParameters)
 	if not Cast then
-		self:Hide()
-		return
+		Cast = {}
+		Cast.Position = Origin + Direction.Unit * Length
+		Cast.Distance = Length
+	else 
+		self.Color = Color3.new(0, 0, 1)
 	end
 	
 	self.CastOriginPart.CFrame = CFrame.lookAt(Origin, Cast.Position)
