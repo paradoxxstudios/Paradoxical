@@ -88,13 +88,11 @@ const module: MoveType = {
         simulation.state.vel = new Vector3(flatVel.X, simulation.state.vel.Y, flatVel.Z);
 
         if (simulation.state.timeWallSliding >= 0.15 && command.y === 1) {
-            simulation.characterData.PlayAnimation("Jump", ChickyEnumAnimationChannels.Channel0, true, 0.2);
-
-            let velX = simulation.state.vel.X * 0.75;
-            let velZ = simulation.state.vel.Z * 0.75;
+            let velX = simulation.state.vel.X;
+            let velZ = simulation.state.vel.Z;
             if (simulation.state.moveDirection.X * simulation.state.wallSide < 0) {
-                velX += simulation.state.wallNormal.X * 50;
-                velZ += simulation.state.wallNormal.Z * 50;
+                velX = velX * 0.75 + simulation.state.wallNormal.X * 50;
+                velZ = velZ * 0.75 + simulation.state.wallNormal.Z * 50;
                 simulation.state.sameWallCD = 0;
             }
 
@@ -117,7 +115,11 @@ const module: MoveType = {
     },
 
     EndState: (simulation) => {
-        simulation.characterData.PlayAnimation("WallSlideEnd", ChickyEnumAnimationChannels.Channel0, true, 0.5);
+        if (simulation.state.jumped) {
+            simulation.characterData.PlayAnimation("Jump", ChickyEnumAnimationChannels.Channel0, true, 0.2);
+        } else {
+            simulation.characterData.PlayAnimation("WallSlideEnd", ChickyEnumAnimationChannels.Channel0, true, 0.5);
+        }
         simulation.state.timeWallSliding = 0;
     },
 }
