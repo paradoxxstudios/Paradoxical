@@ -36,10 +36,10 @@ const module: MoveType = {
         simulation.state.canWallSlide = command.y === 1 && !simulation.state.wasJumping && simulation.state.jump !== 0.2;
 
         if (simulation.state.rightVector) {
-            const rightRay = new RaycastVisualizer();
-            rightRay.Raycast(simulation.state.pos, simulation.state.rightVector, 3.5, raycastParams);
-            const leftRay = new RaycastVisualizer();
-            leftRay.Raycast(simulation.state.pos, simulation.state.rightVector.mul(-1), 3.5, raycastParams);
+            // const rightRay = new RaycastVisualizer();
+            // rightRay.Raycast(simulation.state.pos, simulation.state.rightVector, 3.5, raycastParams);
+            // const leftRay = new RaycastVisualizer();
+            // leftRay.Raycast(simulation.state.pos, simulation.state.rightVector.mul(-1), 3.5, raycastParams);
 
             const rightResult = Workspace.Raycast(simulation.state.pos, simulation.state.rightVector.mul(3), raycastParams);
             const leftResult = Workspace.Raycast(simulation.state.pos, simulation.state.rightVector.mul(-3), raycastParams);
@@ -64,7 +64,7 @@ const module: MoveType = {
     },
 
     StartState: (simulation) => {
-        simulation.state.sameWallCD = 0.5;
+        simulation.state.sameWallCD = 0.75;
         simulation.characterData.PlayAnimation("WallSlideStart", ChickyEnumAnimationChannels.Channel0, true, 0.3);
     },
 
@@ -92,7 +92,7 @@ const module: MoveType = {
 
             let velX = simulation.state.vel.X * 0.75;
             let velZ = simulation.state.vel.Z * 0.75;
-            if (simulation.state.moveDirection.X !== 0) {
+            if (simulation.state.moveDirection.X * simulation.state.wallSide < 0) {
                 velX += simulation.state.wallNormal.X * 50;
                 velZ += simulation.state.wallNormal.Z * 50;
                 simulation.state.sameWallCD = 0;
