@@ -90,7 +90,6 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 
 	if (camera) command.cameraLookVector = new Vector3(camera.CFrame.LookVector.X, 0, camera.CFrame.LookVector.Z).Unit;
 
-	if (GetIsJumping()) command.y = 1;
     command.fa = GetAimPoint(this);
 
 	if (this.resetRequested) {
@@ -111,15 +110,6 @@ function CalculateRawMoveVector(cameraRelativeMoveVector: Vector3) {
 	return CFrame.fromEulerAnglesYXZ(0, yaw, 0).mul(
 		new Vector3(cameraRelativeMoveVector.X, 0, cameraRelativeMoveVector.Z),
 	);
-}
-
-function GetIsJumping(): boolean {
-	if (ControlModule === undefined) return false;
-	if (ControlModule.activeController === undefined) return false;
-
-	return (ControlModule as {activeController: {GetIsJumping(): boolean}}).activeController.GetIsJumping() ||
-				(ControlModule.touchJumpController !== undefined &&
-				(ControlModule as {touchJumpController: {GetIsJumping(): boolean}}).touchJumpController.GetIsJumping())
 }
 
 function GetAimPoint(clientMod: ClientMod): Vector3 {
