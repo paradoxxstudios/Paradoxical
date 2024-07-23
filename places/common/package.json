@@ -1,0 +1,54 @@
+{
+  "name": "common",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rbxtsc",
+    "watch": "rbxtsc -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+<<<<<<< HEAD:package.json
+=======
+    "@rbxts/bytenet": "0.4.3-tsprev4",
+    "@rbxts/charm": "0.3.0",
+>>>>>>> dev:places/common/package.json
+    "@rbxts/lapis": "0.3.0",
+    "@rbxts/matter": "0.8.1",
+    "@rbxts/matter-hooks": "0.1.2",
+    "@rbxts/net": "^3.0.9",
+    "@rbxts/plasma": "0.4.5",
+    "@rbxts/pretty-react-hooks": "0.5.0",
+    "@rbxts/react": "^0.4.0",
+    "@rbxts/react-reflex": "0.3.4",
+    "@rbxts/react-roblox": "0.4.0",
+    "@rbxts/reflex": "4.3.1",
+    "@rbxts/rewire": "0.3.0",
+    "@rbxts/ripple": "0.8.1",
+    "@rbxts/services": "1.5.4",
+    "@rbxts/spark": "file:rbxts-spark-1.0.0.tgz",
+    "@rbxts/squash": "1.1.6-ts.2",
+    "@rbxts/t": "3.1.1",
+    "@rbxts/yetanothernet": "0.8.0",
+    "@rbxts/bytenet": "0.4.3-tsprev4",
+    "@rbxts/mock-memory-store-service": "0.2.0-13",
+    "@rbxts/testez": "0.4.2-ts.0"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "2.3.0-types.1",
+    "@rbxts/testez": "^0.4.2-ts.0",
+    "@rbxts/types": "^1.0.744",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-roblox-ts": "^0.0.36",
+    "prettier": "^3.2.4",
+    "roblox-ts": "^2.3.0-dev-d7847ea",
+    "typescript": "^5.3.3"
+  }
+}

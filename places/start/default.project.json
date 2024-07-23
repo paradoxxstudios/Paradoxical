@@ -1,0 +1,105 @@
+{
+	"name": "start-place",
+	"globIgnorePaths": [
+		"**/package.json",
+		"**/tsconfig.json",
+		"**/*.spec.lua",
+		"**/*.dev.lua"
+	],
+	"tree": {
+		"$className": "DataModel",
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"paradoxical": {
+				"$path": "out/start/src/server"
+			},
+			"common": {
+				"$path": "out/common/src/server"
+			}
+		},
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"rbxts_include": {
+				"$path": "include",
+				"node_modules": {
+					"$className": "Folder",
+					"@rbxts": {
+						"$path": "node_modules/@rbxts"
+					}
+				}
+			},
+			"paradoxical": {
+				"$path": "out/start/src/shared"
+			},
+			"common": {
+				"$path": "out/common/src/shared"
+			},
+			"assets": {
+				"$path": "assets"
+			}
+		},
+		"StarterPlayer": {
+			"$className": "StarterPlayer",
+			"StarterPlayerScripts": {
+				"$className": "StarterPlayerScripts",
+				"paradoxical": {
+					"$path": "out/start/src/client"
+				},
+				"common": {
+					"$path": "out/common/src/client/paradoxical"
+				},
+				"PlayerModule": {
+					"$path": "out/common/src/client/PlayerModule.rbxm"
+				}
+			},
+			"StarterCharacterScripts": {
+				"$className": "StarterCharacterScripts",
+				"$path": "out/common/src/client/character"
+			},
+			"$properties": {
+				"CameraMaxZoomDistance": 13,
+				"CameraMinZoomDistance": 13,
+				"EnableMouseLockOption": false
+			}
+		},
+<<<<<<< HEAD:default.project.json
+=======
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"paradoxical": {
+				"$path": "out/start/src/first"
+			},
+			"common": {
+				"$path": "out/common/src/first"
+			}			
+		},
+>>>>>>> dev:places/start/default.project.json
+		"Workspace": {
+			"$className": "Workspace",
+			"$properties": {
+				"FilteringEnabled": true
+			},
+			"gameMap": {
+				"$path": "gameMap"
+			}
+		},
+		"HttpService": {
+			"$className": "HttpService",
+			"$properties": {
+				"HttpEnabled": true
+			}
+		},
+		"SoundService": {
+			"$className": "SoundService",
+			"$properties": {
+				"RespectFilteringEnabled": true
+			}
+		},
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false
+			}
+		}
+	}
+}
