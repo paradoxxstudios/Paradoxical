@@ -1,0 +1,38 @@
+owner:
+  group: 32887154
+
+environments:
+  - label: dev
+    branches: [dev]
+    targetNamePrefix: environmentLabel
+    targetAccess: private
+  - label: prod
+    branches: [main]
+    targetAccess: friends
+
+target:
+  experience:
+    icon: marketing/game-icon.png
+    thumbnails: 
+      - marketing/game-icon.png
+      - marketing/thumbnail-1.png
+      - marketing/thumbnail-2.png
+    configuration:
+      genre: fighting
+      playableDevices: [computer, phone, tablet]
+      enableStudioAccessToApis: true
+      avatarType: r6
+      avatarAnimationType: standard
+    places:
+      start:
+        file: places/start.rbxl
+        configuration:
+          name: Paradoxical
+          maxPlayerCount: 25
+          description: |-
+            Made with Mantle
+    socialLinks:
+      - title: Join our community server
+        url: https://discord.gg/cG22MvNrAV
+    spatialVoice:
+      enabled: true
