@@ -1,4 +1,4 @@
-import { RaycastVisualizer } from "../../../../shared/packages/raycastVisualizer";
+import { Gizmo } from "../../../../shared/packages/gizmo";
 import { ChickyEnumAnimationChannels } from "../../package/shared/enums";
 import { MathUtils as MathUtilsModule } from "../../package/shared/simulation/mathUtils";
 import { MoveType } from "./moveType";
@@ -36,10 +36,8 @@ const module: MoveType = {
         simulation.state.canWallSlide = command.y === 1 && !simulation.state.wasJumping && simulation.state.jump !== 0.2;
 
         if (simulation.state.rightVector) {
-            // const rightRay = new RaycastVisualizer();
-            // rightRay.Raycast(simulation.state.pos, simulation.state.rightVector, 3.5, raycastParams);
-            // const leftRay = new RaycastVisualizer();
-            // leftRay.Raycast(simulation.state.pos, simulation.state.rightVector.mul(-1), 3.5, raycastParams);
+            Gizmo.drawRay(simulation.state.pos, simulation.state.rightVector.mul(3));
+            Gizmo.drawRay(simulation.state.pos, simulation.state.rightVector.mul(-3));
 
             const rightResult = Workspace.Raycast(simulation.state.pos, simulation.state.rightVector.mul(3), raycastParams);
             const leftResult = Workspace.Raycast(simulation.state.pos, simulation.state.rightVector.mul(-3), raycastParams);
