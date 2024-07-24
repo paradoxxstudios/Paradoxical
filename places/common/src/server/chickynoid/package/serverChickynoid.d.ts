@@ -26,7 +26,7 @@ interface ServerChickynoidConstructor {
 	 * Constructed internally. Do not use directly.
 	 * @private
 	 */
-	new (): ServerChickynoid;
+	new(): ServerChickynoid;
 }
 
 declare const ServerChickynoid: ServerChickynoidConstructor;

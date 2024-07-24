@@ -1,4 +1,4 @@
-export namespace MathUtils {
+declare namespace MathUtils {
 	export function GroundAccelerate(
 		this: typeof MathUtils,
 		wishDir: Vector3,
@@ -29,3 +29,5 @@ export namespace MathUtils {
 
 	export function Friction(val: number, fric: number, deltaTime: number): number;
 }
+
+export = MathUtils;

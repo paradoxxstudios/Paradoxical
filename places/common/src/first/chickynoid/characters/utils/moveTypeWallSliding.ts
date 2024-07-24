@@ -1,16 +1,16 @@
-import { Gizmo } from "../../../../shared/packages/gizmo";
+import GizmoModule from "../../../../shared/packages/gizmo";
 import { ChickyEnumAnimationChannels } from "../../package/shared/enums";
-import { MathUtils as MathUtilsModule } from "../../package/shared/simulation/mathUtils";
+import MathUtils from "../../package/shared/simulation/mathUtils";
 import { MoveType } from "./moveType";
 
 const Workspace = game.GetService("Workspace");
+const ReplicatedStorage = game.GetService("ReplicatedStorage");
 
-const MathUtils = require(
-    script.Parent?.Parent?.Parent?.FindFirstChild("package")
-        ?.FindFirstChild("shared")
-        ?.FindFirstChild("simulation")
-        ?.FindFirstChild("mathUtils") as ModuleScript,
-) as typeof MathUtilsModule;
+const Gizmo = require(
+    ReplicatedStorage.FindFirstChild("common")
+    ?.FindFirstChild("packages")
+    ?.FindFirstChild("gizmo") as ModuleScript
+) as typeof GizmoModule;
 
 const raycastParams = new RaycastParams();
 raycastParams.FilterType = Enum.RaycastFilterType.Include;

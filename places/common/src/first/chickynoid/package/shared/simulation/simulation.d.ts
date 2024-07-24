@@ -1,6 +1,6 @@
-import { Commands } from "../../vendor/crunchTable";
-import CharacterData from "../characterData";
-import { SweepResult } from "../collisionModule";
+import { Commands } from "../vendor/crunchTable";
+import CharacterData from "./characterData";
+import { SweepResult } from "./collisionModule";
 import { SimulationConstants } from "./simulation-constants";
 import { SimulationState } from "./simulation-state";
 
@@ -54,7 +54,7 @@ interface SimulationConstructor {
 	 * Constructed internally. Do not use directly.
 	 * @private
 	 */
-	new (): Simulation;
+	new(): Simulation;
 }
 
 declare const Simulation: SimulationConstructor;

@@ -13,7 +13,7 @@ interface ClientChickynoidConstructor {
 	 * Constructed internally. Do not use directly.
 	 * @private
 	 */
-	new (): ClientChickynoid;
+	new(): ClientChickynoid;
 
 	GetCollisionRoot(): Instance;
 	GetPlayerDataByUserId(userId: number): CharacterData;

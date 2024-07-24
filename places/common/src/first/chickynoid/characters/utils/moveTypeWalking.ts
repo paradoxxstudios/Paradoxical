@@ -1,21 +1,6 @@
-import { MathUtils as MathUtilsModule } from "../../package/shared/simulation/mathUtils";
+import MathUtils from "../../package/shared/simulation/mathUtils";
 import { MoveType } from "./moveType";
 import { ChickyEnumAnimationChannels } from "../../package/shared/enums";
-import { RunService, ServerScriptService } from "@rbxts/services";
-import { RootProducer } from "../../../../server/store";
-import { store as clientStore, RootProducer as clientRoot } from "../../../../shared/store/client";
-
-// let store: clientRoot | RootProducer = clientStore;
-// if (RunService.IsServer()) {
-// 	store = (require(ServerScriptService.WaitForChild("common")?.WaitForChild("store") as ModuleScript) as {store: RootProducer}).store;
-// }
-
-const MathUtils = require(
-	script.Parent?.Parent?.Parent?.FindFirstChild("package")
-		?.FindFirstChild("shared")
-		?.FindFirstChild("simulation")
-		?.FindFirstChild("mathUtils") as ModuleScript,
-) as typeof MathUtilsModule;
 
 const module: MoveType = {
 	ModifySimulation(this, simulation) {
@@ -57,9 +42,6 @@ const module: MoveType = {
 	},
 
 	ActiveThink: (simulation, command) => {
-		// if (RunService.IsServer()) {
-		// 	simulation.constants.maxSpeed = store.getState().players.test[simulation.userId + ""]?.test as number;
-		// }
 		simulation.constants.maxSpeed = 16;
 		simulation.constants.airSpeed = 16;
 		simulation.constants.brakeFriction = 0.05;
