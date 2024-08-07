@@ -1,10 +1,17 @@
 import GizmoModule from "../../../../shared/packages/gizmo";
 import { ChickyEnumAnimationChannels } from "../../package/shared/enums";
-import MathUtils from "../../package/shared/simulation/mathUtils";
+import MathUtilsModule from "../../package/shared/simulation/mathUtils";
 import { MoveType } from "./moveType";
 
 const Workspace = game.GetService("Workspace");
 const ReplicatedStorage = game.GetService("ReplicatedStorage");
+
+const MathUtils = require(
+    script.Parent?.Parent?.Parent?.FindFirstChild("package")
+        ?.FindFirstChild("shared")
+        ?.FindFirstChild("simulation")
+        ?.FindFirstChild("mathUtils") as ModuleScript,
+) as typeof MathUtilsModule;
 
 const Gizmo = require(
     ReplicatedStorage.FindFirstChild("common")
