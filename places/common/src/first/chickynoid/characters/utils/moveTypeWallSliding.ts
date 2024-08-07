@@ -82,16 +82,18 @@ const module: MoveType = {
         // Turn out flatvel back into our vel
         simulation.state.vel = new Vector3(flatVel.X, simulation.state.vel.Y, flatVel.Z);
 
-        if (simulation.state.timeWallSliding >= 0.15 && command.y === 1) {
+        if (simulation.state.timeWallSliding >= 0.1 && command.y === 1) {
             let velX = simulation.state.vel.X;
             let velZ = simulation.state.vel.Z;
+            let jumpMulti = 1.25;
             if (simulation.state.moveDirection.X * simulation.state.wallSide < 0) {
-                velX = velX * 0.75 + simulation.state.wallNormal.X * 50;
-                velZ = velZ * 0.75 + simulation.state.wallNormal.Z * 50;
+                velX = velX * 0.65 + simulation.state.wallNormal.X * 40;
+                velZ = velZ * 0.65 + simulation.state.wallNormal.Z * 40;
                 simulation.state.sameWallCD = 0;
+                jumpMulti = 1;
             }
 
-            simulation.state.vel = new Vector3(velX, simulation.constants.jumpPunch, velZ);
+            simulation.state.vel = new Vector3(velX, simulation.constants.jumpPunch * jumpMulti, velZ);
             simulation.SetMoveState("Walking");
         }
 
