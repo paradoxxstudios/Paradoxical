@@ -51,7 +51,7 @@ const module: MoveType = {
             let flatVel = MathUtils.FlatVec(simulation.state.vel);
             flatVel = MathUtils.GroundAccelerate(
                 simulation.state.lastMoveDirection,
-                simulation.constants.maxSpeed * 5 * (simulation.state.dashDuration + 0.1),
+                simulation.constants.maxSpeed * 6 * (simulation.state.dashDuration + 0.1),
                 20,
                 flatVel,
                 command.deltaTime,

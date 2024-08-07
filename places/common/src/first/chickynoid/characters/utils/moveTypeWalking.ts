@@ -31,7 +31,7 @@ const module: MoveType = {
 
 		simulation.state.doubleJumped = command.y === 1 
 					&& !simulation.state.wasJumping 
-					&& simulation.state.jump !== 0.2 
+					&& simulation.state.jump !== 0.2
 					&& simulation.DoGroundCheck(simulation.state.pos) === undefined;
 
 		if (command.y === 1) {

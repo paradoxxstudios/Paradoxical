@@ -69,10 +69,11 @@ const module: MoveType = {
             return;
         }
 
+        simulation.state.vecAngle = simulation.state.wallNormal.Cross(Vector3.yAxis).mul(simulation.state.wallSide);
         let flatVel = MathUtils.FlatVec(simulation.state.vel);
         flatVel = MathUtils.Accelerate(
             simulation.state.vecAngle,
-            simulation.constants.maxSpeed * 2 * math.exp(-0.01 * simulation.state.timeWallSliding),
+            simulation.constants.maxSpeed * 3 * math.exp(-10 * simulation.state.timeWallSliding),
             20,
             flatVel,
             command.deltaTime,
@@ -103,7 +104,6 @@ const module: MoveType = {
         simulation.state.pos = result[0];
         simulation.state.vel = result[1];
 
-        simulation.state.vecAngle = simulation.state.wallNormal.Cross(Vector3.yAxis).mul(simulation.state.wallSide);
         simulation.characterData.PlayAnimation("WallSlide", ChickyEnumAnimationChannels.Channel0, false);
         simulation.state.timeWallSliding += command.deltaTime;
     },

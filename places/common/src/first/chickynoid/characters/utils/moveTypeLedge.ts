@@ -23,18 +23,16 @@ const module: MoveType = {
     AlwaysThink: (simulation, command) => {
         const onGround = simulation.DoGroundCheck(simulation.state.pos);
         if (onGround !== undefined) return;
-        if (simulation.GetMoveState().name === "Ledge") return;
+        //if (simulation.GetMoveState().name === "Ledge") return;
 
         const pos = simulation.state.pos;
         const dir = simulation.state.vecAngle;
         Gizmo.drawRay(pos.add(new Vector3(0, 2, 0)), dir.mul(2.5));
         Gizmo.drawRay(pos.add(new Vector3(0,3.5,0)), dir.mul(3.5));
-        Gizmo.drawRay(dir.mul(3.5).add(pos.add(new Vector3(0,3.5,0))), Vector3.yAxis.mul(-1));
         const bottomResult = Workspace.Raycast(pos.add(new Vector3(0,2,0)), dir.mul(2.5), raycastParams);
         const topResult = Workspace.Raycast(pos.add(new Vector3(0,3.5,0)), dir.mul(3.5), raycastParams);
-        const downResult = Workspace.Raycast(dir.mul(3.5).add(pos.add(new Vector3(0,3.5,0))), Vector3.yAxis.mul(-1), raycastParams);
 
-        if (bottomResult !== undefined && topResult === undefined && downResult !== undefined) {
+        if (bottomResult !== undefined && topResult === undefined) {
             if (simulation.state.doubleJumped) {
                 const newPos = bottomResult.Position.add(bottomResult.Normal);
                 simulation.state.pos = new Vector3(newPos.X, pos.Y, newPos.Z);

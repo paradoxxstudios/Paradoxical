@@ -57,7 +57,7 @@ const module: MoveType = {
                 // Moving along the ground under player input
                 flatVel = MathUtils.GroundAccelerate(
                     wishDir,
-                    simulation.constants.maxSpeed * 2 * multiplier,
+                    simulation.constants.maxSpeed * 2.5 * multiplier,
                     simulation.constants.accel,
                     flatVel,
                     command.deltaTime,
