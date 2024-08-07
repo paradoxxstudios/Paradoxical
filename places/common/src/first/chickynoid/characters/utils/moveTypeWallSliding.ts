@@ -19,7 +19,6 @@ raycastParams.FilterDescendantsInstances = [game.Workspace.FindFirstChild("gameA
 const module: MoveType = {
     ModifySimulation(this, simulation) {
         simulation.RegisterMoveState("WallSliding", this.ActiveThink, this.AlwaysThink, this.StartState, this.EndState);
-        simulation.state.canWallSlide = false;
         simulation.state.timeWallSliding = 0;
         simulation.state.wallSide = 1;
         simulation.state.sameWallCD = 0;
@@ -28,12 +27,9 @@ const module: MoveType = {
     AlwaysThink: (simulation, command) => {
         const onGround = simulation.DoGroundCheck(simulation.state.pos);
         if (onGround !== undefined) {
-            simulation.state.canWallSlide = false;
             simulation.state.sameWallCD = 0;
             return;
         }
-
-        simulation.state.canWallSlide = command.y === 1 && !simulation.state.wasJumping && simulation.state.jump !== 0.2;
 
         if (simulation.state.rightVector) {
             Gizmo.drawRay(simulation.state.pos, simulation.state.rightVector.mul(3));
@@ -55,7 +51,7 @@ const module: MoveType = {
             }
 
             simulation.state.sameWallCD = math.max(0, simulation.state.sameWallCD - command.deltaTime);
-            if (simulation.state.canWallSlide && simulation.GetMoveState().name !== "WallSliding" && simulation.state.sameWallCD === 0) {
+            if (simulation.state.doubleJumped && simulation.GetMoveState().name !== "WallSliding" && simulation.state.sameWallCD === 0) {
                 if (simulation.state.moveDirection.Magnitude !== 0) simulation.SetMoveState("WallSliding");
             }
         }

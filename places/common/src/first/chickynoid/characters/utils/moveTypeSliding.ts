@@ -13,8 +13,7 @@ const module: MoveType = {
     AlwaysThink: (simulation, command) => {
         if (simulation.GetMoveState().name !== "Walking") return;
 
-        let onGround = undefined;
-		onGround = simulation.DoGroundCheck(simulation.state.pos);
+		const onGround = simulation.DoGroundCheck(simulation.state.pos);
         if (onGround === undefined) return;
         
         if (simulation.state.slide > 0) {

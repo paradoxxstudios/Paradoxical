@@ -29,16 +29,30 @@ const module: MoveType = {
 			simulation.constants.turnSpeedFrac * command.deltaTime,
 		);
 
-		// Do jumping?
-		if (simulation.state.jump > 0 && !simulation.state.jumped) {
-			simulation.state.jumped = true;
+		simulation.state.doubleJumped = command.y === 1 
+					&& !simulation.state.wasJumping 
+					&& simulation.state.jump !== 0.2 
+					&& simulation.DoGroundCheck(simulation.state.pos) === undefined;
+
+		if (command.y === 1) {
+			// Set the flag to indicate the space key was pressed
+			simulation.state.wasJumping = true;
+		} else {
+			// Reset the flag when the space key is released
+			simulation.state.wasJumping = false;
+			simulation.state.canJumpAgain = true; // Allow jumping again when the key is released
+		}
+	
+		// Check if jump cooldown is active
+		if (simulation.state.jump > 0) {
 			simulation.state.jump -= command.deltaTime;
 			if (simulation.state.jump < 0) simulation.state.jump = 0;
-		} else if (command.y === 0) {
+		}
+	
+		// Reset the jumped flag when the space key is not held (command.y === 0)
+		if (command.y === 0) {
 			simulation.state.jumped = false;
 		}
-
-		simulation.state.wasJumping = simulation.state.jumped;
 	},
 
 	ActiveThink: (simulation, command) => {
@@ -163,13 +177,15 @@ const module: MoveType = {
 
 		if (onGround !== undefined) {
 			// Jump!
-			if (command.y > 0 && simulation.state.jump <= 0) {
+			if (command.y > 0 && simulation.state.jump <= 0 && simulation.state.canJumpAgain) {
 				simulation.state.vel = new Vector3(
 					simulation.state.vel.X,
 					simulation.constants.jumpPunch,
 					simulation.state.vel.Z,
 				);
+				simulation.state.canJumpAgain = false;
 				simulation.state.jump = 0.2;
+				simulation.state.jumped = true;
 				simulation.state.jumpThrust = simulation.constants.jumpThrustPower;
 				simulation.characterData.PlayAnimation("Jump", ChickyEnumAnimationChannels.Channel0, true, 0.2);
 			}

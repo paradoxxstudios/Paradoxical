@@ -24,6 +24,8 @@ export interface SimulationState {
 	jump: number;
 	wasJumping: boolean;
 	jumpThrust: number;
+	canJumpAgain: boolean;
+	doubleJumped: boolean;
 	
 	running: boolean;
 	runToggle: boolean;
@@ -36,7 +38,6 @@ export interface SimulationState {
 	dashDuration: number;
 	dashName: string;
 
-	canWallSlide: boolean;
 	wallNormal?: Vector3;
 	sameWallCD: number;
 	lastWallInstance: Instance;

@@ -55,6 +55,9 @@ function module:ServerSetup()
 	self:RegisterAnimation("WallSlideStart")
 	self:RegisterAnimation("WallSlide")
 	self:RegisterAnimation("WallSlideEnd")
+
+	self:RegisterAnimation("LedgeHold")
+	self:RegisterAnimation("LedgeMoveRight")
 end
 
 return module
