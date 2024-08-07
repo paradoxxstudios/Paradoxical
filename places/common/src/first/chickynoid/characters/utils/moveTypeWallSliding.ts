@@ -26,7 +26,7 @@ const module: MoveType = {
 
     AlwaysThink: (simulation, command) => {
         const onGround = simulation.DoGroundCheck(simulation.state.pos);
-        if (onGround !== undefined) {
+        if (onGround !== undefined || (simulation.state.moveDirection && simulation.state.moveDirection.Z > -0.7)) {
             simulation.state.sameWallCD = 0;
             return;
         }
@@ -52,7 +52,7 @@ const module: MoveType = {
 
             simulation.state.sameWallCD = math.max(0, simulation.state.sameWallCD - command.deltaTime);
             if (simulation.state.doubleJumped && simulation.GetMoveState().name !== "WallSliding" && simulation.state.sameWallCD === 0) {
-                if (simulation.state.moveDirection.Magnitude !== 0) simulation.SetMoveState("WallSliding");
+                simulation.SetMoveState("WallSliding");
             }
         }
     },
@@ -64,7 +64,7 @@ const module: MoveType = {
 
     ActiveThink: (simulation, command) => {
         const onGround = simulation.DoGroundCheck(simulation.state.pos);
-        if (onGround !== undefined || simulation.state.wallNormal === undefined) {
+        if (onGround !== undefined || simulation.state.wallNormal === undefined || simulation.state.moveDirection.Z > -0.7) {
             simulation.SetMoveState("Walking");
             return;
         }
