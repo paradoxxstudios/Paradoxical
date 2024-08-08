@@ -89,7 +89,7 @@ const module: MoveType = {
         // Turn out flatvel back into our vel
         simulation.state.vel = new Vector3(flatVel.X, simulation.state.vel.Y, flatVel.Z);
 
-        if (simulation.state.timeWallSliding >= 0.1 && command.y === 1) {
+        if (simulation.state.timeWallSliding >= 0.15 && command.y === 1) {
             let velX = simulation.state.vel.X;
             let velZ = simulation.state.vel.Z;
             let jumpMulti = 1.25;
