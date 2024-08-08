@@ -8,4 +8,5 @@ export interface ClientMod {
 
 	resetRequested?: boolean;
 	client: typeof ChickynoidClient;
+	shiftlock: boolean;
 }

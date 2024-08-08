@@ -19,6 +19,9 @@ function coreCall(method: keyof StarterGui, ...args: unknown[]) {
 }
 
 const UserInputService = game.GetService("UserInputService");
+const Players = game.GetService("Players");
+
+const player = Players.LocalPlayer;
 const camera = game.Workspace.CurrentCamera;
 let ControlModule: undefined | { [index: string]: unknown } = undefined;
 
@@ -40,6 +43,26 @@ function GetControlModule() {
 
 function Setup(this: ClientMod, _client: typeof ChickynoidClient) {
 	this.client = _client;
+	this.shiftlock = false;
+
+	UserInputService.InputBegan.Connect((input, gpe) => {
+		if (gpe) return;
+
+		if (input.KeyCode === Enum.KeyCode.RightShift || input.KeyCode === Enum.KeyCode.LeftShift) {
+			this.shiftlock = !this.shiftlock;
+			
+			const character = player.Character || player.CharacterAdded.Wait()[1];
+			const humanoid = character.WaitForChild("Humanoid") as Humanoid;
+
+			if (this.shiftlock) {
+				humanoid.CameraOffset = new Vector3(0, 1.75, 0);
+				player.GetMouse().Icon = "http://www.roblox.com/asset/?id=10546018744";
+			} else {
+				humanoid.CameraOffset = Vector3.zero;
+				player.GetMouse().Icon = "";
+			}
+		}
+	})
 
 	const resetBindable = new Instance("BindableEvent");
 	resetBindable.Event.Connect(() => {
@@ -75,7 +98,7 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 	if (!UserInputService.GetFocusedTextBox()) {
 		const jump = GetIsJumping();
 		const crouch = UserInputService.IsKeyDown(Enum.KeyCode.C);
-		const run = UserInputService.IsKeyDown(Enum.KeyCode.LeftShift);
+		const run = UserInputService.IsKeyDown(Enum.KeyCode.LeftAlt);
 		const dash = UserInputService.IsKeyDown(Enum.KeyCode.Q);
 
 		if (crouch) {
@@ -88,6 +111,7 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 		command.dash = dash ? 1 : 0;
 	}
 
+	UserInputService.MouseBehavior = this.shiftlock ? Enum.MouseBehavior.LockCenter : Enum.MouseBehavior.Default;
 	if (camera) command.cameraLookVector = new Vector3(camera.CFrame.LookVector.X, 0, camera.CFrame.LookVector.Z).Unit;
 
     command.fa = GetAimPoint(this);
