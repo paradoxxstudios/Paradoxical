@@ -100,6 +100,7 @@ const module: MoveType = {
                 jumpMulti = 1;
             }
 
+            simulation.state.jumped = true;
             simulation.state.vel = new Vector3(velX, simulation.constants.jumpPunch * jumpMulti, velZ);
             simulation.SetMoveState("Walking");
         }
