@@ -73,7 +73,7 @@ function GenerateCommand(this: ClientMod, command: Commands, _serverTime: number
 	command.model = this.client.characterModel?.model;
 
 	if (!UserInputService.GetFocusedTextBox()) {
-		const jump = UserInputService.IsKeyDown(Enum.KeyCode.Space);
+		const jump = GetIsJumping();
 		const crouch = UserInputService.IsKeyDown(Enum.KeyCode.C);
 		const run = UserInputService.IsKeyDown(Enum.KeyCode.LeftShift);
 		const dash = UserInputService.IsKeyDown(Enum.KeyCode.Q);
@@ -129,6 +129,15 @@ function GetAimPoint(clientMod: ClientMod): Vector3 {
 
 	// We hit the sky perhaps?
     return ray.Origin.add(ray.Direction.mul(2000));
+}
+
+function GetIsJumping(): boolean {
+	if (ControlModule === undefined) return false;
+	if (ControlModule.activeController === undefined) return false;
+
+	return (ControlModule as {activeController: {GetIsJumping(): boolean}}).activeController.GetIsJumping() ||
+				(ControlModule.touchJumpController !== undefined &&
+				(ControlModule as {touchJumpController: {GetIsJumping(): boolean}}).touchJumpController.GetIsJumping())
 }
 
 export = {
