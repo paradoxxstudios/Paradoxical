@@ -75,7 +75,6 @@ const module: MoveType = {
         if (simulation.state.doubleJumped) {
             simulation.characterData.PlayAnimation("Jump", ChickyEnumAnimationChannels.Channel0, true, 0.2);
             simulation.state.vel = simulation.state.vel.add(Vector3.yAxis.mul(50));
-            print(simulation.state.vel);
             simulation.SetMoveState("Walking");
         }
 
