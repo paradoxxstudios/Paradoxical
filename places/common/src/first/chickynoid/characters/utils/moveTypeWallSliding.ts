@@ -33,10 +33,11 @@ const module: MoveType = {
 
     AlwaysThink: (simulation, command) => {
         const onGround = simulation.DoGroundCheck(simulation.state.pos);
-        if (onGround !== undefined || (simulation.state.moveDirection && simulation.state.moveDirection.Z > -0.7)) {
+        if (onGround !== undefined) {
             simulation.state.sameWallCD = 0;
             return;
         }
+        if (simulation.state.moveDirection && simulation.state.moveDirection.Z > -0.7) return;
 
         if (simulation.state.rightVector) {
             Gizmo.drawRay(simulation.state.pos, simulation.state.rightVector.mul(3));

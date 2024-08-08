@@ -23,36 +23,71 @@ const raycastParams = new RaycastParams();
 raycastParams.FilterType = Enum.RaycastFilterType.Include;
 raycastParams.FilterDescendantsInstances = [game.Workspace.FindFirstChild("gameArea") as Instance];
 
+function partCheck(ledge: CFrame, raycastPrams: RaycastParams): boolean {
+    Gizmo.drawRay(ledge.Position.add(new Vector3(0, -1, 0)).add(ledge.LookVector), ledge.UpVector.mul(1.75));
+	const ledgeCheck = Workspace.Raycast(
+		ledge.Position.add(new Vector3(0, -1, 0)).add(ledge.LookVector),
+		ledge.UpVector.mul(1.75),
+		raycastPrams,
+	);
+	return ledgeCheck === undefined;
+}
+
 const module: MoveType = {
     ModifySimulation(this, simulation) {
-        simulation.RegisterMoveState("Ledge", this.ActiveThink, this.AlwaysThink);
+        simulation.RegisterMoveState("Ledge", this.ActiveThink, this.AlwaysThink, undefined, this.EndState);
+        simulation.state.ledgeHoldCD = 0;
     },
 
     AlwaysThink: (simulation, command) => {
         const onGround = simulation.DoGroundCheck(simulation.state.pos);
         if (onGround !== undefined) return;
-        //if (simulation.GetMoveState().name === "Ledge") return;
+        if (simulation.GetMoveState().name === "Ledge" || simulation.GetMoveState().name === "WallSliding") return;
 
-        const pos = simulation.state.pos;
-        const dir = simulation.state.vecAngle;
-        Gizmo.drawRay(pos.add(new Vector3(0, 2, 0)), dir.mul(2.5));
-        Gizmo.drawRay(pos.add(new Vector3(0,3.5,0)), dir.mul(3.5));
-        const bottomResult = Workspace.Raycast(pos.add(new Vector3(0,2,0)), dir.mul(2.5), raycastParams);
-        const topResult = Workspace.Raycast(pos.add(new Vector3(0,3.5,0)), dir.mul(3.5), raycastParams);
+        if (simulation.state.ledgeHoldCD > 0) {
+            simulation.state.ledgeHoldCD -= command.deltaTime;
+            if (simulation.state.ledgeHoldCD < 0) simulation.state.ledgeHoldCD = 0;
+        }
+        if (simulation.state.ledgeHoldCD > 0) return;
+        if (!simulation.state.doubleJumped) return;
 
-        if (bottomResult !== undefined && topResult === undefined) {
-            if (simulation.state.doubleJumped) {
-                const newPos = bottomResult.Position.add(bottomResult.Normal);
-                simulation.state.pos = new Vector3(newPos.X, pos.Y, newPos.Z);
+        Gizmo.drawRay(simulation.state.pos, simulation.state.vecAngle.mul(5));
+        const result = Workspace.Raycast(simulation.state.pos, simulation.state.vecAngle.mul(5), raycastParams);
+        if (result === undefined) return;
 
-                simulation.state.vecAngle = bottomResult.Normal.mul(-1);
-                simulation.SetMoveState("Ledge");
-            }
+        const constPos = result.Instance.CFrame.PointToObjectSpace(result.Position);
+        const constLedgePos = new Vector3(constPos.X, result.Instance.Size.Y / 2, constPos.Z);
+        const ledgePos = result.Instance.CFrame.PointToWorldSpace(constLedgePos);
+        const ledgeOffset = CFrame.lookAt(ledgePos, ledgePos.sub(result.Normal));
+
+        const magnitude = ledgePos.sub(simulation.state.headPos).Magnitude;
+		if (magnitude < 2 && partCheck(ledgeOffset, raycastParams)) {
+            simulation.state.pos = ledgeOffset.Position.add(new Vector3(0,-2.2,0)).add(ledgeOffset.LookVector.mul(-1.1));
+            simulation.state.vecAngle = result.Normal.mul(-1);
+            simulation.SetMoveState("Ledge");
         }
     },
 
     ActiveThink: (simulation, command) => {
+        //simulation.state.pos = simulation.state.ledgePos;
+        simulation.state.vel = Vector3.zero;
+
+        if (simulation.state.doubleJumped) {
+            simulation.characterData.PlayAnimation("Jump", ChickyEnumAnimationChannels.Channel0, true, 0.2);
+            simulation.state.vel = simulation.state.vel.add(Vector3.yAxis.mul(50));
+            print(simulation.state.vel);
+            simulation.SetMoveState("Walking");
+        }
+
+        const result = simulation.ProjectVelocity(simulation.state.pos, simulation.state.vel, command.deltaTime);
+        simulation.state.pos = result[0];
+        simulation.state.vel = result[1];
+
         simulation.characterData.PlayAnimation("LedgeHold", ChickyEnumAnimationChannels.Channel0, false);
+    },
+
+    EndState: (simulation, _) => {
+        simulation.state.ledgeHoldCD = 0.15;
     },
 }
 

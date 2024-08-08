@@ -1,5 +1,6 @@
 export interface SimulationState {
 	pos: Vector3;
+	headPos: Vector3;
 	previousPos: Vector3;
 	deltaPos: Vector3;
 	vel: Vector3;
@@ -44,4 +45,7 @@ export interface SimulationState {
 	wallInstance: Instance;
 	timeWallSliding: number;
 	wallSide: 1 | -1;
+
+	ledgeHoldCD: number;
+	ledgePos: Vector3;
 }
